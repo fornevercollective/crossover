@@ -1,11 +1,261 @@
 {
-  "exportedAt": "2026-06-10T23:31:19.021040+00:00",
+  "exportedAt": "2026-06-10T23:48:37.750043+00:00",
+  "catalog": {
+    "followedLists": 11,
+    "curatedLists": 6,
+    "customLists": 4,
+    "discoverable": 12,
+    "indexes": 7,
+    "unique_symbols": 5458
+  },
+  "sections": [
+    {
+      "id": "curated",
+      "label": "Robinhood Curated",
+      "lists": [
+        {
+          "id": "948914f1-7530-58fd-8eaa-777db8450191",
+          "display_name": "China",
+          "owner_type": "robinhood",
+          "item_count": 302
+        },
+        {
+          "id": "3abb2fa2-5599-4357-97ae-e9a113bba139",
+          "display_name": "Technology",
+          "owner_type": "robinhood",
+          "item_count": 991
+        },
+        {
+          "id": "2ac39394-043f-41dc-9af4-a11c2393f261",
+          "display_name": "Energy & Water",
+          "owner_type": "robinhood",
+          "item_count": 333
+        },
+        {
+          "id": "79651aa7-6744-41fb-af15-21545a18172c",
+          "display_name": "ETFs",
+          "owner_type": "robinhood",
+          "item_count": 2920
+        },
+        {
+          "id": "9f4466d7-5cf8-47cf-be40-d17454d33ff9",
+          "display_name": "Manufacturing & Materials",
+          "owner_type": "robinhood",
+          "item_count": 1404
+        },
+        {
+          "id": "8ce9f620-5bb0-4b6a-8c61-5a06763f7a8b",
+          "display_name": "IPO Access",
+          "owner_type": "robinhood",
+          "item_count": 45
+        }
+      ]
+    },
+    {
+      "id": "custom",
+      "label": "My Watchlists",
+      "lists": [
+        {
+          "id": "b4432fc4-6c1a-40b9-b112-a208aab56ff3",
+          "display_name": "My First List",
+          "owner_type": "custom",
+          "item_count": 46
+        },
+        {
+          "id": "d84327c2-0536-40bb-a272-32f49c9d4f8a",
+          "display_name": "Cryptos to Watch",
+          "owner_type": "custom",
+          "item_count": 4
+        },
+        {
+          "id": "0edfbd6f-ca4f-444b-a90d-214026b66179",
+          "display_name": "M",
+          "owner_type": "custom",
+          "item_count": 7
+        },
+        {
+          "id": "69a2b0b6-d740-42f7-9dbd-ab842f3d103a",
+          "display_name": "Agentic",
+          "owner_type": "custom",
+          "item_count": 2
+        }
+      ]
+    },
+    {
+      "id": "options",
+      "label": "Options",
+      "lists": [
+        {
+          "id": "d55beb35-dc58-409e-b620-5390e9eb7d54",
+          "display_name": "Options Watchlist",
+          "owner_type": "custom",
+          "item_count": 0
+        }
+      ]
+    },
+    {
+      "id": "discover",
+      "label": "Robinhood Browse (follow in app)",
+      "lists": [
+        {
+          "display_name": "Healthcare",
+          "section": "curated"
+        },
+        {
+          "display_name": "Finance",
+          "section": "curated"
+        },
+        {
+          "display_name": "Entertainment & Media",
+          "section": "curated"
+        },
+        {
+          "display_name": "Shopping & Retail",
+          "section": "curated"
+        },
+        {
+          "display_name": "Transportation",
+          "section": "curated"
+        },
+        {
+          "display_name": "Real Estate",
+          "section": "curated"
+        },
+        {
+          "display_name": "Cannabis",
+          "section": "curated"
+        },
+        {
+          "display_name": "100 Most Popular",
+          "section": "popular"
+        },
+        {
+          "display_name": "Daily Movers",
+          "section": "popular"
+        },
+        {
+          "display_name": "Upcoming Earnings",
+          "section": "popular"
+        },
+        {
+          "display_name": "Newly Listed",
+          "section": "popular"
+        },
+        {
+          "display_name": "100 Most Popular Crypto",
+          "section": "crypto"
+        }
+      ]
+    },
+    {
+      "id": "indexes",
+      "label": "Market Indexes",
+      "items": [
+        {
+          "symbol": "SPX",
+          "yahoo": "^GSPC",
+          "name": "S&P 500"
+        },
+        {
+          "symbol": "NDX",
+          "yahoo": "^NDX",
+          "name": "Nasdaq 100"
+        },
+        {
+          "symbol": "DJI",
+          "yahoo": "^DJI",
+          "name": "Dow Jones"
+        },
+        {
+          "symbol": "RUT",
+          "yahoo": "^RUT",
+          "name": "Russell 2000"
+        },
+        {
+          "symbol": "VIX",
+          "yahoo": "^VIX",
+          "name": "VIX"
+        },
+        {
+          "symbol": "XAU",
+          "yahoo": "^XAU",
+          "name": "Gold index"
+        },
+        {
+          "symbol": "HUI",
+          "yahoo": "^HUI",
+          "name": "Gold miners"
+        }
+      ]
+    },
+    {
+      "id": "exchanges",
+      "label": "Exchanges",
+      "items": [
+        {
+          "id": "NYSE",
+          "name": "New York Stock Exchange"
+        },
+        {
+          "id": "NASDAQ",
+          "name": "Nasdaq"
+        },
+        {
+          "id": "AMEX",
+          "name": "NYSE American"
+        },
+        {
+          "id": "OTC",
+          "name": "OTC Markets"
+        },
+        {
+          "id": "ARCA",
+          "name": "NYSE Arca"
+        },
+        {
+          "id": "BATS",
+          "name": "Cboe BZX"
+        }
+      ]
+    },
+    {
+      "id": "markets",
+      "label": "Markets",
+      "items": [
+        {
+          "id": "US",
+          "name": "United States"
+        },
+        {
+          "id": "ADR",
+          "name": "ADRs / Foreign"
+        },
+        {
+          "id": "ETF",
+          "name": "ETFs"
+        },
+        {
+          "id": "CRYPTO",
+          "name": "Crypto"
+        },
+        {
+          "id": "INDEX",
+          "name": "Indexes"
+        },
+        {
+          "id": "FUTURES",
+          "name": "Futures"
+        }
+      ]
+    }
+  ],
   "lists": [
     {
       "id": "b4432fc4-6c1a-40b9-b112-a208aab56ff3",
       "display_name": "My First List",
       "owner_type": "custom",
       "item_count": 46,
+      "section": "custom",
       "symbols": [
         "QCOM",
         "GM",
@@ -60,6 +310,7 @@
       "display_name": "Cryptos to Watch",
       "owner_type": "custom",
       "item_count": 4,
+      "section": "custom",
       "symbols": [
         "LTC-USD",
         "ETH-USD",
@@ -72,6 +323,7 @@
       "display_name": "China",
       "owner_type": "robinhood",
       "item_count": 302,
+      "section": "curated",
       "symbols": [
         "TCEHY",
         "IDCBY",
@@ -382,6 +634,7 @@
       "display_name": "Technology",
       "owner_type": "robinhood",
       "item_count": 991,
+      "section": "curated",
       "symbols": [
         "NVDA",
         "GOOGL",
@@ -1380,14 +1633,22 @@
       "id": "2ac39394-043f-41dc-9af4-a11c2393f261",
       "display_name": "Energy & Water",
       "owner_type": "robinhood",
-      "item_count": 0,
-      "symbols": []
+      "item_count": 5,
+      "section": "curated",
+      "symbols": [
+        "XOM",
+        "CVX",
+        "COP",
+        "SLB",
+        "EOG"
+      ]
     },
     {
       "id": "79651aa7-6744-41fb-af15-21545a18172c",
       "display_name": "ETFs",
       "owner_type": "robinhood",
       "item_count": 2920,
+      "section": "curated",
       "symbols": [
         "VOO",
         "IVV",
@@ -4316,6 +4577,7 @@
       "display_name": "Manufacturing & Materials",
       "owner_type": "robinhood",
       "item_count": 1404,
+      "section": "curated",
       "symbols": [
         "SPCX",
         "TSLA",
@@ -5728,6 +5990,7 @@
       "display_name": "M",
       "owner_type": "custom",
       "item_count": 7,
+      "section": "custom",
       "symbols": [
         "GOOGL",
         "GOOG",
@@ -5743,6 +6006,7 @@
       "display_name": "IPO Access",
       "owner_type": "robinhood",
       "item_count": 45,
+      "section": "curated",
       "symbols": [
         "SPCX",
         "LFTO",
@@ -5792,13 +6056,38 @@
       ]
     },
     {
+      "id": "d55beb35-dc58-409e-b620-5390e9eb7d54",
+      "display_name": "Options Watchlist",
+      "owner_type": "custom",
+      "item_count": 0,
+      "section": "options",
+      "symbols": []
+    },
+    {
       "id": "69a2b0b6-d740-42f7-9dbd-ab842f3d103a",
       "display_name": "Agentic",
       "owner_type": "custom",
       "item_count": 2,
+      "section": "custom",
       "symbols": [
         "AAL",
         "KO"
+      ]
+    },
+    {
+      "id": "__indexes__",
+      "display_name": "Market Indexes",
+      "owner_type": "robinhood",
+      "section": "indexes",
+      "item_count": 7,
+      "symbols": [
+        "^GSPC",
+        "^NDX",
+        "^DJI",
+        "^RUT",
+        "^VIX",
+        "^XAU",
+        "^HUI"
       ]
     }
   ],
@@ -9810,6 +10099,21 @@
     ],
     "GME+": [
       "Technology"
+    ],
+    "XOM": [
+      "Energy & Water"
+    ],
+    "CVX": [
+      "Energy & Water"
+    ],
+    "COP": [
+      "Energy & Water"
+    ],
+    "SLB": [
+      "Energy & Water"
+    ],
+    "EOG": [
+      "Energy & Water"
     ],
     "VOO": [
       "ETFs"
@@ -22415,6 +22719,27 @@
     ],
     "KO": [
       "Agentic"
+    ],
+    "^GSPC": [
+      "Market Indexes"
+    ],
+    "^NDX": [
+      "Market Indexes"
+    ],
+    "^DJI": [
+      "Market Indexes"
+    ],
+    "^RUT": [
+      "Market Indexes"
+    ],
+    "^VIX": [
+      "Market Indexes"
+    ],
+    "^XAU": [
+      "Market Indexes"
+    ],
+    "^HUI": [
+      "Market Indexes"
     ]
   }
 }

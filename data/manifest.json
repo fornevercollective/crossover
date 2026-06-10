@@ -17,7 +17,7 @@
     "intraday": "yahoo 60m",
     "live": "flip-board server /api/live"
   },
-  "publishedAt": "2026-06-10T23:32:53.822579+00:00",
-  "listCount": 10,
-  "watchlistSymbols": 5446
+  "publishedAt": "2026-06-10T23:49:31.636759+00:00",
+  "listCount": 12,
+  "watchlistSymbols": 5458
 }
