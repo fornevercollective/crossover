@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" data-base="/crossover" data-static="1">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Flip Board — Multi-Timeframe Crossovers</title>
+  <link rel="stylesheet" href="/crossover/styles.css" />
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Flip Board</h1>
+      <p class="sub" id="meta">Loading…</p>
+    </div>
+    <div class="controls">
+      <input id="search" type="search" placeholder="Search symbol, name…" />
+      <select id="watchlist"><option value="">All watchlists</option></select>
+      <select id="country"><option value="">All countries</option></select>
+      <select id="exchange"><option value="">All exchanges</option></select>
+      <select id="biasFilter">
+        <option value="">All MACD bias (day)</option>
+        <option value="bullish">Day bullish</option>
+        <option value="bearish">Day bearish</option>
+      </select>
+      <button id="refreshLive" type="button">Refresh live (page)</button>
+      <button id="reload" type="button">Reload data</button>
+    </div>
+  </header>
+
+  <section class="legend">
+    <span><i class="bull"></i> Bullish MACD</span>
+    <span><i class="bear"></i> Bearish MACD</span>
+    <span>Click column headers to sort · hover cells for detail</span>
+    <span class="frames">Q · M · W · D · 5h · 1h · Live</span>
+  </section>
+
+  <div class="table-wrap">
+    <table id="board">
+      <thead>
+        <tr>
+          <th data-sort="id" class="sortable">Symbol</th>
+          <th data-sort="exchange" class="sortable">Market</th>
+          <th data-sort="sector" class="sortable">Sector / List</th>
+          <th data-sort="quarter" class="sortable">Q</th>
+          <th data-sort="month" class="sortable">M</th>
+          <th data-sort="week" class="sortable">W</th>
+          <th data-sort="day" class="sortable">D</th>
+          <th data-sort="5h" class="sortable">5h</th>
+          <th data-sort="1h" class="sortable">1h</th>
+          <th data-sort="live" class="sortable">Live</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <footer>
+    <button id="prev" type="button">← Prev</button>
+    <span id="pager">—</span>
+    <button id="next" type="button">Next →</button>
+  </footer>
+
+  <script src="/crossover/app.js"></script>
+</body>
+</html>

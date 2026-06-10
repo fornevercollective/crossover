@@ -1,0 +1,23 @@
+{
+  "generatedAt": "2026-06-10T23:01:23.106168+00:00",
+  "preset": "focus",
+  "symbolCount": 52,
+  "errors": 0,
+  "timeframes": [
+    "quarter",
+    "month",
+    "week",
+    "day",
+    "5h",
+    "1h",
+    "live"
+  ],
+  "sources": {
+    "daily": "yahoo/train",
+    "intraday": "yahoo 60m",
+    "live": "flip-board server /api/live"
+  },
+  "publishedAt": "2026-06-10T23:32:53.822579+00:00",
+  "listCount": 10,
+  "watchlistSymbols": 5446
+}
