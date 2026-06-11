@@ -295,6 +295,7 @@
             <div class="backtest-panel" id="backtestPanel" aria-live="polite">
               <p class="backtest-empty muted">Loading backtest summary…</p>
             </div>
+            <div class="backtest-sector-patterns" id="backtestSectorPatterns" hidden></div>
           </div>
         </div>
       </section>
@@ -322,6 +323,17 @@
           <div class="chart-flip-tooltip" id="chartFlipTooltip" hidden></div>
         </div>
         <div class="chart-flips" id="chartFlips"></div>
+      </section>
+
+      <section class="timeline-cluster-panel" id="timelineClusterPanel" hidden>
+        <div class="timeline-cluster-head">
+          <div>
+            <span class="timeline-cluster-eyebrow muted">Flip timeline</span>
+            <h2 class="timeline-cluster-title" id="timelineClusterTitle">—</h2>
+            <p class="timeline-cluster-meta muted" id="timelineClusterMeta">Select a symbol to view milestone clusters</p>
+          </div>
+        </div>
+        <div id="timelineClusterBranches" class="timeline-cluster-branches" aria-label="Flip and squeeze milestones by branch"></div>
       </section>
 
       <section class="legend">
@@ -375,6 +387,7 @@
   <script src="/crossover/list-header.js"></script>
   <script src="/crossover/panel-collapse.js"></script>
   <script src="/crossover/chart.js"></script>
+  <script src="/crossover/timeline-cluster.js"></script>
   <script src="/crossover/paper-brief.js"></script>
   <script src="/crossover/app.js"></script>
 </body>

@@ -451,12 +451,14 @@
       renderChart(data);
       renderFlips(data.flips);
       updateHeader(data);
+      window.TimelineCluster?.update(state.symbol, state.yahoo, data);
     } catch (e) {
       if (reqId !== state.reqId) return;
       state.data = null;
       clearCanvas();
       setStatus(String(e.message || e));
       renderFlips([]);
+      window.TimelineCluster?.hide?.();
     } finally {
       if (reqId === state.reqId) state.loading = false;
     }
