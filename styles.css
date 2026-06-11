@@ -271,6 +271,129 @@ button:disabled { opacity: 0.45; cursor: not-allowed; }
   grid-column: auto;
 }
 
+.rh-filter-card--imminent {
+  margin-top: 12px;
+  grid-template-columns: 1fr;
+  border-color: rgba(230, 192, 104, 0.18);
+}
+
+.rh-filter-col--full {
+  grid-column: 1 / -1;
+}
+
+.imminent-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.imminent-count {
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.imminent-blurb {
+  margin: 0 0 8px;
+  font-size: 12px;
+}
+
+.imminent-flips-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 220px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.imminent-row {
+  display: grid;
+  grid-template-columns: 36px 56px 1fr 40px 64px auto;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: rgba(15, 17, 20, 0.6);
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.imminent-row:hover {
+  border-color: var(--accent);
+  background: rgba(122, 162, 247, 0.08);
+}
+
+.imminent-rank-score {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--gold);
+  font-size: 13px;
+}
+
+.imminent-sym {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.imminent-chip {
+  font-size: 10px;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.imminent-days {
+  font-size: 11px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.imminent-bias {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.imminent-bias.bull { color: var(--bull); }
+.imminent-bias.bear { color: var(--bear); }
+.imminent-bias.flat { color: var(--muted); }
+
+.imminent-foam {
+  font-size: 10px;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+.imminent-tags {
+  grid-column: 2 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: -2px;
+}
+
+.imminent-tag {
+  font-size: 9px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: rgba(122, 162, 247, 0.12);
+  color: var(--accent);
+  letter-spacing: 0.02em;
+}
+
+.imminent-empty {
+  margin: 0;
+  font-size: 12px;
+  padding: 12px 0;
+}
+
 .rh-filter-col {
   display: flex;
   flex-direction: column;

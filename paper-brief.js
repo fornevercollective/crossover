@@ -252,6 +252,20 @@
       $("paperBriefSignalBias").title = `Last flip: ${signal.lastFlip.type} @ ${signal.lastFlip.date}`;
     }
 
+    const row = window.FlipBoard?.getRow?.(ticker);
+    if (row && window.TradingConcepts) {
+      const sectorStats = window.TradingConcepts.buildSectorStats(
+        window.FlipBoard?.getAllRows?.() || [row],
+      );
+      const concepts = window.TradingConcepts.analyze(row, sectorStats);
+      if (concepts.foamScore >= 25) {
+        const tags = window.TradingConcepts.formatTags(concepts.tags).join(" · ");
+        const skim =
+          concepts.skimSignal !== "neutral" ? ` · skim ${concepts.skimSignal}` : "";
+        $("paperBriefActionHint").textContent = `Foam ${concepts.foamScore}${skim} — ${tags || concepts.hints[0] || conf.hint}`;
+      }
+    }
+
     const confEl = $("paperBriefConfluence");
     confEl.dataset.kind = conf.kind;
     $("paperBriefConfluenceReadout").textContent = conf.readout;

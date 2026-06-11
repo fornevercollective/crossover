@@ -321,6 +321,7 @@ function renderBoard() {
   });
 
   if (window.ListHeader) window.ListHeader.update(filtered);
+  if (window.ImminentFlips) window.ImminentFlips.update(filtered);
 
   const page = Math.floor(state.offset / PAGE) + 1;
   const pages = Math.max(1, Math.ceil(state.total / PAGE));
@@ -584,7 +585,9 @@ bind();
 window.FlipBoard = {
   getRow: (sym) =>
     state.allRows.find((r) => r.id === sym || r.yahoo === sym || r.id === sym?.toUpperCase()),
+  getAllRows: () => state.allRows,
   profitMeta,
+  selectSymbol,
   get watchlists() {
     return state.watchlists;
   },
