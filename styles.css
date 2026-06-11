@@ -599,6 +599,144 @@ td.meta { color: var(--muted); max-width: 120px; overflow: hidden; text-overflow
 .cell.bear { background: rgba(240, 113, 120, 0.15); color: var(--bear); }
 .cell.na { color: var(--neutral); }
 
+.rh-sector-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  margin-top: 6px;
+}
+
+.rh-sector-key {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.rh-sector-key i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--sector-color, var(--accent));
+  box-shadow: 0 0 6px color-mix(in srgb, var(--sector-color, var(--accent)) 55%, transparent);
+}
+
+.sector-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 10px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+
+.sector-filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(15, 17, 20, 0.6);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+
+.sector-filter-chip i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--sector-color, var(--accent));
+}
+
+.sector-filter-chip .chip-count {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.75;
+}
+
+.sector-filter-chip:hover {
+  border-color: color-mix(in srgb, var(--sector-color, var(--accent)) 45%, var(--border));
+  color: var(--text);
+}
+
+.sector-filter-chip.active {
+  border-color: color-mix(in srgb, var(--sector-color, var(--accent)) 55%, var(--border));
+  background: color-mix(in srgb, var(--sector-color, var(--accent)) 14%, rgba(15, 17, 20, 0.7));
+  color: var(--text);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--sector-color, var(--accent)) 18%, transparent);
+}
+
+.sector-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  max-width: 100%;
+  font-size: 11px;
+  color: var(--text);
+}
+
+.sector-chip i {
+  flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--sector-color, var(--accent));
+}
+
+td.sector-cell {
+  max-width: 150px;
+}
+
+tr.sector-row td:first-child {
+  border-left: 3px solid var(--sector-color, transparent);
+  padding-left: 6px;
+}
+
+tr.sector-row:hover td {
+  background: color-mix(in srgb, var(--sector-color, var(--accent)) 6%, transparent);
+}
+
+tr.sector-group-header td {
+  padding: 8px 10px;
+  background: color-mix(in srgb, var(--sector-color, var(--accent)) 10%, var(--panel));
+  border-bottom: 1px solid color-mix(in srgb, var(--sector-color, var(--accent)) 28%, var(--border));
+  border-top: 1px solid color-mix(in srgb, var(--sector-color, var(--accent)) 18%, var(--border));
+  position: sticky;
+  top: 28px;
+  z-index: 1;
+}
+
+.sector-group-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--sector-color, var(--text));
+  text-transform: uppercase;
+}
+
+.sector-group-label i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--sector-color, var(--accent));
+  box-shadow: 0 0 10px color-mix(in srgb, var(--sector-color, var(--accent)) 50%, transparent);
+}
+
+.sector-group-count {
+  margin-left: 10px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
 footer {
   display: flex;
   gap: 12px;

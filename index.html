@@ -214,6 +214,7 @@
           <div class="rh-filter-col rh-filter-col--wide">
             <span class="rh-filter-label">Sector breakdown · day MACD</span>
             <canvas id="listSectorChart" height="132" aria-label="Sector day bias breakdown"></canvas>
+            <div class="rh-sector-legend" id="listSectorLegend" aria-label="Sector color key"></div>
           </div>
           <div class="rh-filter-col rh-filter-col--wide">
             <span class="rh-filter-label">Day profit potential · Q→D alignment</span>
@@ -250,9 +251,11 @@
         <span><i class="profit-ring demo long"></i> Profit rings (Q→D alignment)</span>
         <span><i class="bull"></i> Bullish MACD</span>
         <span><i class="bear"></i> Bearish MACD</span>
-        <span>Click headers to sort</span>
+        <span>Click headers to sort · grouped by sector</span>
         <span class="frames">Q · M · W · D · 5h · 1h · Live</span>
       </section>
+
+      <div class="sector-filters" id="sectorChips" aria-label="Filter by Robinhood list category"></div>
 
       <div class="table-wrap">
         <table id="board">
@@ -283,6 +286,7 @@
     </main>
   </div>
 
+  <script src="/crossover/sector-colors.js"></script>
   <script src="/crossover/list-header.js"></script>
   <script src="/crossover/chart.js"></script>
   <script src="/crossover/paper-brief.js"></script>

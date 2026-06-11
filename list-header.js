@@ -108,8 +108,10 @@
     };
   }
 
+  const SC = () => window.SectorColors;
+
   function sectorKey(row) {
-    return row.sector || row.lists?.[0] || "Other";
+    return SC()?.sectorKey(row) || row.sector || row.lists?.[0] || "Other";
   }
 
   function setupCanvas(canvas) {
@@ -181,7 +183,11 @@
       else bucket.neutral++;
     }
 
-    const sectors = [...bySector.entries()].sort((a, b) => b[1].total - a[1].total).slice(0, 8);
+    const sorted = SC()?.sortSectors([...bySector.keys()]) || [...bySector.keys()];
+    const sectors = sorted
+      .map((name) => [name, bySector.get(name)])
+      .sort((a, b) => b[1].total - a[1].total)
+      .slice(0, 8);
     if (!sectors.length) {
       ctx.fillStyle = PAL.text;
       ctx.font = "11px system-ui,sans-serif";
@@ -193,7 +199,7 @@
     const labelW = Math.min(108, w * 0.34);
     const padY = 6;
     const rowH = Math.min(14, (h - padY * 2) / sectors.length - 2);
-    const barX = labelW + 8;
+    const barX = labelW + 14;
     const barW = w - barX - 36;
     const maxTotal = Math.max(1, ...sectors.map(([, s]) => s.total));
 
@@ -205,11 +211,21 @@
       const scale = barW / maxTotal;
       const bw = stats.total * scale;
       let x = barX;
+      const accent = SC()?.colorFor(name) || PAL.accent;
 
-      ctx.fillStyle = PAL.textBright;
+      ctx.beginPath();
+      ctx.arc(labelW - 6, y, 4, 0, Math.PI * 2);
+      ctx.fillStyle = accent;
+      ctx.fill();
+
+      ctx.fillStyle = accent;
       ctx.textAlign = "right";
       const short = name.length > 14 ? `${name.slice(0, 13)}…` : name;
       ctx.fillText(short, labelW, y);
+
+      if (bw > 0) {
+        roundBar(ctx, barX, y - rowH / 2 + 1, bw, rowH - 2, SC()?.tint(accent, 0.22) || "rgba(122,162,247,0.22)", 3);
+      }
 
       const segments = [
         { n: stats.bull, colors: PAL.bull },
@@ -225,10 +241,23 @@
         x += sw;
       }
 
-      ctx.fillStyle = PAL.accent;
+      ctx.fillStyle = PAL.text;
       ctx.textAlign = "left";
       ctx.fillText(String(stats.total), barX + bw + 4, y);
     });
+
+    renderSectorLegend(sectors.map(([n]) => n));
+  }
+
+  function renderSectorLegend(names) {
+    const el = $("listSectorLegend");
+    if (!el || !SC()) return;
+    el.innerHTML = names
+      .map((name) => {
+        const c = SC().colorFor(name);
+        return `<span class="rh-sector-key" style="--sector-color:${c}"><i></i>${name}</span>`;
+      })
+      .join("");
   }
 
   function drawProfitChart(rows) {

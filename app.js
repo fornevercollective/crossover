@@ -12,12 +12,21 @@ const state = {
   rows: [],
   allRows: [],
   liveCache: {},
-  sortKey: "profit",
-  sortDir: -1,
+  sortKey: "sector",
+  sortDir: 1,
+  sectorFilter: "",
   manifest: {},
   watchlists: { lists: [], sections: [] },
   lastProbe: null,
 };
+
+function sectorKey(row) {
+  return window.SectorColors?.sectorKey(row) || row.sector || row.lists?.[0] || "Other";
+}
+
+function sectorColor(name) {
+  return window.SectorColors?.colorFor(name) || "#6b7280";
+}
 
 const FLIP_SHORT = {
   macd_bullish: "MB↑",
@@ -96,7 +105,13 @@ function sortValue(row, key) {
   if (key === "profit") return profitMeta(row).score;
   if (key === "id") return row.id.toLowerCase();
   if (key === "exchange") return `${row.exchange}|${row.country}`.toLowerCase();
-  if (key === "sector") return (row.sector || row.lists?.[0] || "").toLowerCase();
+  if (key === "sector") {
+    const sk = sectorKey(row);
+    const order = window.SectorColors?.SECTOR_ORDER || [];
+    const idx = order.indexOf(sk);
+    const rank = idx >= 0 ? idx : 999;
+    return `${String(rank).padStart(4, "0")}|${sk.toLowerCase()}`;
+  }
   if (FRAMES.includes(key)) {
     const st = { ...row.frames, ...(state.liveCache[row.yahoo]?.frames ?? {}) }[key];
     const br = biasRank(st?.macdBias);
@@ -135,6 +150,7 @@ function applyFilters(rows) {
         if (section !== "indexes") return false;
       }
     }
+    if (state.sectorFilter && sectorKey(row) !== state.sectorFilter) return false;
     if (biasFilter) {
       const day = row.frames?.day;
       if (day?.macdBias !== biasFilter) return false;
@@ -150,13 +166,18 @@ function applyFilters(rows) {
 function sortRows(rows) {
   const key = state.sortKey;
   const dir = state.sortDir;
-  return [...rows].sort((a, b) => {
+  const sorted = [...rows].sort((a, b) => {
     const av = sortValue(a, key);
     const bv = sortValue(b, key);
     if (av < bv) return -dir;
     if (av > bv) return dir;
-    return a.id.localeCompare(b.id) * dir;
+    if (key === "sector") {
+      const ps = profitMeta(b).score - profitMeta(a).score;
+      if (ps) return ps;
+    }
+    return a.id.localeCompare(b.id) * (key === "sector" ? 1 : dir);
   });
+  return sorted;
 }
 
 function cellHtml(frame, st) {
@@ -178,17 +199,31 @@ function cellHtml(frame, st) {
   return `<span class="cell ${bias}" title="${tip}">${tag}${age}</span>`;
 }
 
+function sectorChipHtml(name) {
+  const c = sectorColor(name);
+  return `<span class="sector-chip" style="--sector-color:${c}"><i></i>${name}</span>`;
+}
+
+function renderGroupHeader(sector, count) {
+  const c = sectorColor(sector);
+  return `<tr class="sector-group-header" data-sector-group="${sector}" style="--sector-color:${c}">
+    <td colspan="11"><span class="sector-group-label"><i></i>${sector}</span><span class="sector-group-count">${count.toLocaleString()}</span></td>
+  </tr>`;
+}
+
 function renderRow(row) {
   const livePatch = state.liveCache[row.yahoo]?.frames ?? {};
   const frames = { ...row.frames, ...livePatch };
   const cells = FRAMES.map((f) => `<td>${cellHtml(f, frames[f])}</td>`).join("");
+  const sk = sectorKey(row);
+  const c = sectorColor(sk);
   const listHint = (row.lists || []).slice(0, 2).join(", ");
-  const sector = row.sector || listHint || "—";
-  return `<tr data-symbol="${row.id}"${row.buildError ? ' class="row-error"' : ""}>
+  const sectorLabel = row.sector || listHint || "—";
+  return `<tr data-symbol="${row.id}" data-sector="${sk}" style="--sector-color:${c}"${row.buildError ? ' class="row-error sector-row"' : ' class="sector-row"'}>
     <td>${profitCirclesHtml(row)}</td>
     <td class="sym" title="${row.name}${row.buildError ? " · " + row.buildError : ""}${row.lists?.length ? " · " + row.lists.join(", ") : ""}">${row.id}<br><small>${row.yahoo}</small></td>
     <td class="meta">${row.exchange || "—"}<br>${row.country || "—"}</td>
-    <td class="meta" title="${(row.lists || []).join(", ")}">${sector}</td>
+    <td class="meta sector-cell" title="${(row.lists || []).join(", ")}">${sectorChipHtml(sk !== "Other" ? sk : sectorLabel)}</td>
     ${cells}
   </tr>`;
 }
@@ -213,13 +248,63 @@ function updateHeroCounts(filteredCount) {
   }
 }
 
+function buildTableBody(rows, fullFiltered) {
+  if (state.sortKey !== "sector") return rows.map(renderRow).join("");
+
+  const parts = [];
+  let lastSector = null;
+  const groupCounts = new Map();
+  for (const row of fullFiltered || rows) {
+    const sk = sectorKey(row);
+    groupCounts.set(sk, (groupCounts.get(sk) || 0) + 1);
+  }
+  for (const row of rows) {
+    const sk = sectorKey(row);
+    if (sk !== lastSector) {
+      parts.push(renderGroupHeader(sk, groupCounts.get(sk) || 0));
+      lastSector = sk;
+    }
+    parts.push(renderRow(row));
+  }
+  return parts.join("");
+}
+
+function renderSectorChips(rows) {
+  const el = document.getElementById("sectorChips");
+  if (!el || !window.SectorColors) return;
+  const counts = new Map();
+  for (const row of rows) {
+    const sk = sectorKey(row);
+    counts.set(sk, (counts.get(sk) || 0) + 1);
+  }
+  const names = window.SectorColors.sortSectors([...counts.keys()]);
+  const active = state.sectorFilter;
+  el.innerHTML =
+    `<button type="button" class="sector-filter-chip${active ? "" : " active"}" data-sector="">All sectors</button>` +
+    names
+      .map((name) => {
+        const c = sectorColor(name);
+        const on = active === name ? " active" : "";
+        return `<button type="button" class="sector-filter-chip${on}" data-sector="${name}" style="--sector-color:${c}"><i></i>${name} <span class="chip-count">${counts.get(name)}</span></button>`;
+      })
+      .join("");
+  el.querySelectorAll(".sector-filter-chip").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      state.sectorFilter = btn.dataset.sector || "";
+      state.offset = 0;
+      renderBoard();
+    });
+  });
+}
+
 function renderBoard() {
   const filtered = sortRows(applyFilters(state.allRows));
   state.total = filtered.length;
   state.rows = filtered.slice(state.offset, state.offset + PAGE);
 
   const tbody = document.getElementById("tbody");
-  tbody.innerHTML = state.rows.map(renderRow).join("");
+  tbody.innerHTML = buildTableBody(state.rows, filtered);
+  renderSectorChips(filtered);
 
   tbody.querySelectorAll(".sym").forEach((el) => {
     el.addEventListener("click", () => {
