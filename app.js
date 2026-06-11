@@ -106,7 +106,7 @@ function sortValue(row, key) {
   return "";
 }
 
-function marketFilterMatch(value: string, rowValue: string | undefined) {
+function marketFilterMatch(value, rowValue) {
   const v = (rowValue || "").trim();
   if (value === "__blank__") return !v;
   if (!value) return true;
