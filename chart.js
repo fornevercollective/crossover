@@ -50,6 +50,8 @@
     data: null,
     loading: false,
     reqId: 0,
+    flipHits: [],
+    pad: { l: 48, r: 12, t: 8, b: 18 },
   };
 
   // ── Indicators (static / client fallback) ─────────────────────────────
@@ -261,28 +263,91 @@
     return parseYahooBars(result, useDateTime);
   }
 
+  /** Snap flip date to exact bar index in chart window (handles resampled keys). */
+  function snapFlipIndex(flipDate, pointDates) {
+    const fd = flipDate.slice(0, 10);
+    let idx = pointDates.findIndex((d) => d === flipDate || d.slice(0, 10) === fd);
+    if (idx >= 0) return idx;
+    let best = -1;
+    let bestDist = Infinity;
+    for (let i = 0; i < pointDates.length; i++) {
+      const d = pointDates[i].slice(0, 10);
+      const dist = Math.abs(new Date(d).getTime() - new Date(fd).getTime());
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = i;
+      }
+    }
+    return best;
+  }
+
+  function enrichFlips(flips, pointDates, tableLastFlip) {
+    const seen = new Set();
+    const out = [];
+    for (const f of flips) {
+      const idx = snapFlipIndex(f.date, pointDates);
+      if (idx < 0 || seen.has(idx)) continue;
+      seen.add(idx);
+      out.push({
+        ...f,
+        barIndex: idx,
+        barDate: pointDates[idx],
+        tableMatch: Boolean(
+          tableLastFlip &&
+            tableLastFlip.type === f.type &&
+            tableLastFlip.date.slice(0, 10) === f.date.slice(0, 10),
+        ),
+      });
+    }
+    if (tableLastFlip) {
+      const idx = snapFlipIndex(tableLastFlip.date, pointDates);
+      const exists = out.some((f) => f.barIndex === idx && f.type === tableLastFlip.type);
+      if (idx >= 0 && !exists) {
+        out.push({
+          date: tableLastFlip.date,
+          type: tableLastFlip.type,
+          indicator: tableLastFlip.type.startsWith("bb_") ? "bollinger" : "macd",
+          price: tableLastFlip.price,
+          barIndex: idx,
+          barDate: pointDates[idx],
+          tableMatch: true,
+        });
+      }
+    }
+    return out.sort((a, b) => a.barIndex - b.barIndex);
+  }
+
   function buildPayloadFromBars(bars, symbol, yahoo, tf, limit) {
     const closes = bars.map((b) => b.close);
     const macd = computeMacd(closes);
     const bb = computeBollinger(closes);
+    const squeeze = window.BBSqueeze?.analyzeFromCloses(closes) ?? null;
     const start = Math.max(0, bars.length - limit);
     const windowStart = bars[start].date;
     const points = [];
     for (let i = start; i < bars.length; i++) {
       const m = macd[i];
       const b = bb[i];
+      const mid = b.middle;
+      const bw =
+        mid != null && !Number.isNaN(mid) && mid !== 0 ? (b.upper - b.lower) / mid : null;
       points.push({
         date: bars[i].date,
         close: bars[i].close,
         bbUpper: Number.isNaN(b.upper) ? null : b.upper,
         bbMiddle: Number.isNaN(b.middle) ? null : b.middle,
         bbLower: Number.isNaN(b.lower) ? null : b.lower,
+        bbWidth: bw,
         macd: m.macd,
         signal: m.signal,
         histogram: m.histogram,
       });
     }
-    const flips = findFlips(bars, macd, bb).filter((f) => f.date >= windowStart);
+    const pointDates = points.map((p) => p.date);
+    const row = window.FlipBoard?.getRow?.(symbol);
+    const tableLastFlip = row?.frames?.[tf]?.lastFlip ?? null;
+    const rawFlips = findFlips(bars, macd, bb).filter((f) => f.date >= windowStart);
+    const flips = enrichFlips(rawFlips, pointDates, tableLastFlip);
     const last = bars[bars.length - 1];
     return {
       symbol,
@@ -292,6 +357,8 @@
       close: last.close,
       points,
       flips,
+      squeeze,
+      closes,
     };
   }
 
@@ -327,6 +394,16 @@
     return buildPayloadFromBars(bars, symbol, yahoo, tf, limit);
   }
 
+  function enrichChartPayload(data) {
+    if (!data.closes?.length && data.points?.length) {
+      data.closes = data.points.map((p) => p.close).filter((v) => v != null);
+    }
+    if (!data.squeeze && data.closes?.length >= 26) {
+      data.squeeze = window.BBSqueeze?.analyzeFromCloses(data.closes) ?? null;
+    }
+    return data;
+  }
+
   async function loadChart() {
     if (!state.symbol) return;
     const reqId = ++state.reqId;
@@ -345,10 +422,14 @@
         const res = await fetch(`/api/chart?${p}`);
         const json = await res.json();
         if (!res.ok) throw new Error(json.error || res.statusText);
-        data = json;
+        data = enrichChartPayload(json);
       }
       if (reqId !== state.reqId) return;
       state.data = data;
+      const row = window.FlipBoard?.getRow?.(state.symbol);
+      if (row && data.closes?.length >= 26) {
+        window.ChartCloses?.attach(row, data.closes);
+      }
       renderChart(data);
       renderFlips(data.flips);
       updateHeader(data);
@@ -374,10 +455,36 @@
     if (el) el.textContent = msg;
   }
 
+  function squeezeChipHtml(sq) {
+    if (!sq) return "";
+    const label = window.BBSqueeze?.label(sq) || "—";
+    const cls = sq.release ? "squeeze-chip--release" : sq.on ? "squeeze-chip--on" : "squeeze-chip--off";
+    return `<span class="squeeze-chip ${cls}" title="Width pctile ${sq.widthPctile}% · score ${sq.squeezeScore}">${label} ${sq.squeezeScore}</span>`;
+  }
+
+  function predictedFlipHint(data) {
+    const sq = data.squeeze;
+    if (!sq?.predicted && !sq?.macdNearCross) return "";
+    const dir = data.points.at(-1)?.histogram >= 0 ? "bullish" : "bearish";
+    if (sq.release) return ` · release → ${dir} flip likely`;
+    if (sq.on && sq.macdNearCross) return ` · MACD near cross (${dir})`;
+    return "";
+  }
+
   function updateHeader(data) {
     $("chartSymbol").textContent = data.symbol;
-    $("chartMeta").textContent = `${TF_LABELS[data.timeframe] || data.timeframe} · as of ${data.asOf} · close ${formatPrice(data.close)}`;
-    setStatus(`${data.flips.length} flips in window`);
+    const sq = data.squeeze;
+    const sqPart = sq ? ` · ${window.BBSqueeze?.label(sq)} ${sq.squeezeScore}` : "";
+    $("chartMeta").innerHTML =
+      `${TF_LABELS[data.timeframe] || data.timeframe} · as of ${data.asOf} · close ${formatPrice(data.close)}${sqPart}${predictedFlipHint(data)}`;
+    const chipEl = $("chartSqueezeChip");
+    if (chipEl) {
+      chipEl.innerHTML = squeezeChipHtml(sq);
+      if (sq) {
+        chipEl.title = `squeeze=${sq.on ? "ON" : "off"} release=${sq.release} score=${sq.squeezeScore} widthPctile=${sq.widthPctile}% predicted=${sq.predicted}${predictedFlipHint(data)}`;
+      }
+    }
+    setStatus(`${data.flips.length} flips · hover lines for detail`);
   }
 
   function formatPrice(n) {
@@ -447,30 +554,34 @@
     ctx.stroke();
   }
 
-  function drawFlipMarkers(ctx, dates, pointDates, min, max, pad, w, h) {
-    const dateToIdx = new Map(pointDates.map((d, i) => [d, i]));
-    for (const flip of dates) {
-      const idx = dateToIdx.get(flip.date);
-      if (idx == null) continue;
-      const x = xAt(idx, pointDates.length, pad.l, pad.r, w);
-      ctx.strokeStyle = FLIP_COLORS[flip.type] || "#9aa0a6";
-      ctx.globalAlpha = 0.45;
-      ctx.lineWidth = 1;
-      ctx.setLineDash([3, 3]);
+  function drawFlipMarkers(ctx, flips, n, pad, w, h, hits) {
+    for (const flip of flips) {
+      const idx = flip.barIndex;
+      if (idx == null || idx < 0) continue;
+      const x = xAt(idx, n, pad.l, pad.r, w);
+      ctx.strokeStyle = flip.tableMatch ? "#f07178" : FLIP_COLORS[flip.type] || "#9aa0a6";
+      ctx.globalAlpha = flip.tableMatch ? 0.85 : 0.5;
+      ctx.lineWidth = flip.tableMatch ? 1.5 : 1;
+      ctx.setLineDash([4, 4]);
       ctx.beginPath();
       ctx.moveTo(x, pad.t);
       ctx.lineTo(x, h - pad.b);
       ctx.stroke();
       ctx.setLineDash([]);
       ctx.globalAlpha = 1;
+      hits.push({
+        x,
+        flip,
+        label: FLIP_SHORT[flip.type] || flip.type,
+      });
     }
   }
 
-  function renderPricePanel(data) {
+  function renderPricePanel(data, hits) {
     const canvas = $("chartPrice");
     if (!canvas) return;
     const { ctx, w, h } = setupCanvas(canvas);
-    const pad = { l: 48, r: 12, t: 8, b: 18 };
+    const pad = state.pad;
     const pts = data.points;
     const closes = pts.map((p) => p.close);
     const uppers = pts.map((p) => p.bbUpper);
@@ -510,7 +621,7 @@
     drawLine(ctx, uppers, range.min, range.max, pad, w, h, "rgba(122, 162, 247, 0.45)", 1);
     drawLine(ctx, closes, range.min, range.max, pad, w, h, "#e8eaed", 2);
 
-    drawFlipMarkers(ctx, data.flips, pts.map((p) => p.date), range.min, range.max, pad, w, h);
+    drawFlipMarkers(ctx, data.flips, pts.length, pad, w, h, hits);
 
     // Y labels
     ctx.fillStyle = "#9aa0a6";
@@ -532,11 +643,11 @@
     }
   }
 
-  function renderMacdPanel(data) {
+  function renderMacdPanel(data, hits) {
     const canvas = $("chartMacd");
     if (!canvas) return;
     const { ctx, w, h } = setupCanvas(canvas);
-    const pad = { l: 48, r: 12, t: 8, b: 18 };
+    const pad = state.pad;
     const pts = data.points;
     const macd = pts.map((p) => p.macd);
     const signal = pts.map((p) => p.signal);
@@ -569,7 +680,15 @@
     drawLine(ctx, macd, range.min, range.max, pad, w, h, "#7aa2f7", 1.5);
     drawLine(ctx, signal, range.min, range.max, pad, w, h, "#e6c068", 1.2);
 
-    drawFlipMarkers(ctx, data.flips.filter((f) => f.indicator === "macd"), pts.map((p) => p.date), range.min, range.max, pad, w, h);
+    drawFlipMarkers(
+      ctx,
+      data.flips.filter((f) => f.indicator === "macd"),
+      pts.length,
+      pad,
+      w,
+      h,
+      hits,
+    );
 
     ctx.fillStyle = "#9aa0a6";
     ctx.font = "10px ui-sans-serif, system-ui, sans-serif";
@@ -585,9 +704,48 @@
     return d.slice(2);
   }
 
+  function showFlipTooltip(hit, canvas) {
+    const tip = $("chartFlipTooltip");
+    if (!tip || !hit) {
+      if (tip) tip.hidden = true;
+      return;
+    }
+    const f = hit.flip;
+    tip.hidden = false;
+    tip.textContent = `${hit.label} · ${f.barDate || f.date} · $${formatPrice(f.price)}`;
+    const rect = canvas.getBoundingClientRect();
+    const panel = canvas.closest(".chart-canvases")?.getBoundingClientRect();
+    if (!panel) return;
+    tip.style.left = `${rect.left - panel.left + hit.x}px`;
+    tip.style.top = `${rect.top - panel.top + 4}px`;
+  }
+
+  function flipAtX(x, hits, tol = 8) {
+    let best = null;
+    let bestDist = tol;
+    for (const h of hits) {
+      const d = Math.abs(h.x - x);
+      if (d <= bestDist) {
+        bestDist = d;
+        best = h;
+      }
+    }
+    return best;
+  }
+
+  function onChartHover(e) {
+    if (!state.data?.flips?.length) return;
+    const canvas = e.target;
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const hit = flipAtX(x, state.flipHits);
+    showFlipTooltip(hit, canvas);
+  }
+
   function renderChart(data) {
-    renderPricePanel(data);
-    renderMacdPanel(data);
+    state.flipHits = [];
+    renderPricePanel(data, state.flipHits);
+    renderMacdPanel(data, state.flipHits);
   }
 
   function renderFlips(flips) {
@@ -629,6 +787,12 @@
     document.querySelectorAll(".chart-tf").forEach((btn) => {
       btn.addEventListener("click", () => setTimeframe(btn.dataset.tf));
     });
+    for (const id of ["chartPrice", "chartMacd"]) {
+      const c = $(id);
+      if (!c) continue;
+      c.addEventListener("mousemove", onChartHover);
+      c.addEventListener("mouseleave", () => showFlipTooltip(null));
+    }
     window.addEventListener("resize", () => {
       if (state.data) renderChart(state.data);
     });

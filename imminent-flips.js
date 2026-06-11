@@ -52,8 +52,18 @@
     }
 
     if (day?.bbPosition === "inside" && week?.bbPosition === "inside") {
-      score += 18;
-      parts.push("BB squeeze");
+      score += 12;
+      parts.push("BB inside");
+    }
+    const closes = window.ChartCloses?.getCloses(row);
+    const sq = closes?.length >= 26 ? window.BBSqueeze?.analyzeFromCloses(closes) : null;
+    if (sq?.on) {
+      score += Math.min(20, 10 + Math.round(sq.squeezeScore / 5));
+      parts.push(`squeeze ${sq.widthPctile}%`);
+    }
+    if (sq?.release || sq?.predicted) {
+      score += 14;
+      parts.push(sq.release ? "release" : "flip due");
     }
 
     let bulls = 0;
@@ -83,6 +93,7 @@
       days: dDays === 999 ? null : dDays,
       parts,
       foamScore: concepts?.foamScore ?? 0,
+      squeezeScore: sq?.squeezeScore ?? 0,
       skimSignal: concepts?.skimSignal ?? "neutral",
       conceptTags: concepts?.tags ?? [],
     };

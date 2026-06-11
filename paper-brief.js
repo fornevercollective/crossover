@@ -259,6 +259,12 @@
         window.FlipBoard?.getAllRows?.() || [row],
       );
       const concepts = window.TradingConcepts.analyze(row, sectorStats);
+      const closes = window.ChartCloses?.getCloses(row) || row._chartCloses;
+      const sq = closes?.length >= 26 ? window.BBSqueeze?.analyzeFromCloses(closes) : null;
+      if (sq?.squeezeScore >= 25) {
+        const sqLabel = window.BBSqueeze?.label(sq) || "squeeze";
+        actionHint = `${sqLabel} (${sq.squeezeScore}) — ${actionHint}`;
+      }
       if (concepts.foamScore >= 25) {
         const tags = window.TradingConcepts.formatTags(concepts.tags).join(" · ");
         const skim =

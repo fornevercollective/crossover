@@ -394,6 +394,150 @@ button:disabled { opacity: 0.45; cursor: not-allowed; }
   padding: 12px 0;
 }
 
+/* Collapsible panels */
+.panel-collapse-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.panel-collapse-title {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.panel-collapse-toggle {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: rgba(15, 17, 20, 0.7);
+  color: var(--muted);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.panel-collapse-toggle:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.panel-collapse-chevron {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg) translate(-1px, -1px);
+  transition: transform 0.2s ease;
+}
+
+.collapsible-panel.is-collapsed .panel-collapse-chevron {
+  transform: rotate(-45deg) translate(-1px, 1px);
+}
+
+.panel-collapse-body {
+  overflow: hidden;
+  max-height: 1200px;
+  opacity: 1;
+  transition: max-height 0.25s ease, opacity 0.2s ease;
+}
+
+.collapsible-panel.is-collapsed .panel-collapse-body {
+  max-height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.rh-filter-card--swing {
+  margin-top: 12px;
+  grid-template-columns: 1fr;
+  border-color: rgba(61, 214, 140, 0.16);
+}
+
+.swing-breakouts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 6px;
+  max-height: 240px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.swing-row {
+  display: grid;
+  grid-template-columns: 1fr auto 36px 36px;
+  grid-template-rows: auto auto;
+  gap: 4px 8px;
+  align-items: center;
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: rgba(15, 17, 20, 0.6);
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.swing-row:hover {
+  border-color: var(--bull);
+  background: rgba(61, 214, 140, 0.08);
+}
+
+.swing-chip {
+  grid-column: 1 / -1;
+  font-size: 10px;
+  max-width: 100%;
+}
+
+.swing-sym {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.swing-score {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--bull);
+  font-size: 13px;
+}
+
+.swing-days {
+  font-size: 11px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.swing-bias {
+  grid-column: 4;
+  grid-row: 2;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.swing-bias.bull { color: var(--bull); }
+.swing-bias.bear { color: var(--bear); }
+.swing-bias.flat { color: var(--muted); }
+
+.swing-empty {
+  margin: 0;
+  font-size: 12px;
+  padding: 8px 0;
+}
+
 .rh-filter-card--skim {
   margin-top: 12px;
 }
@@ -639,6 +783,7 @@ button:disabled { opacity: 0.45; cursor: not-allowed; }
   display: flex;
   flex-direction: column;
   gap: 4px;
+  position: relative;
 }
 
 .chart-canvases canvas {
@@ -670,6 +815,31 @@ button:disabled { opacity: 0.45; cursor: not-allowed; }
 }
 
 .flip-chip small { color: var(--muted); margin-left: 4px; }
+
+.chart-flip-tooltip {
+  position: absolute;
+  transform: translateX(-50%);
+  pointer-events: none;
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(18, 21, 26, 0.92);
+  border: 1px solid var(--border);
+  color: var(--text);
+  white-space: nowrap;
+  z-index: 2;
+}
+
+.squeeze-chip {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  margin-left: 8px;
+  border: 1px solid var(--border);
+}
+.squeeze-chip--on { color: #e6c068; border-color: #e6c06855; background: #e6c06818; }
+.squeeze-chip--release { color: #3dd68c; border-color: #3dd68c55; background: #3dd68c18; }
+.squeeze-chip--off { color: var(--muted); }
 
 tr.selected td { background: rgba(122, 162, 247, 0.08); }
 

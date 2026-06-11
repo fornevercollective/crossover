@@ -227,25 +227,50 @@
           </div>
         </div>
 
-        <div class="rh-filter-card rh-filter-card--imminent">
+        <div class="rh-filter-card rh-filter-card--imminent collapsible-panel" id="imminentFlipsPanel">
           <div class="rh-filter-col rh-filter-col--full">
-            <div class="imminent-head">
-              <span class="rh-filter-label">Flips imminent · top watch</span>
-              <span class="imminent-count muted" id="imminentFlipsCount">—</span>
+            <div class="imminent-head panel-collapse-head">
+              <div class="panel-collapse-title">
+                <span class="rh-filter-label">Flips imminent · top watch</span>
+                <span class="imminent-count muted" id="imminentFlipsCount">—</span>
+              </div>
+              <button type="button" class="panel-collapse-toggle" aria-label="Toggle Flips imminent panel" aria-expanded="true" aria-controls="imminentFlipsBody">
+                <span class="panel-collapse-chevron" aria-hidden="true"></span>
+              </button>
             </div>
-            <p class="imminent-blurb muted">Symbols scored by histogram/MACD tension, BB squeeze, flip age, and foam-skim concepts.</p>
-            <div class="imminent-flips-list" id="imminentFlipsList" aria-label="Top imminent flip candidates"></div>
+            <div class="panel-collapse-body" id="imminentFlipsBody">
+              <p class="imminent-blurb muted">Symbols scored by histogram/MACD tension, BB squeeze, flip age, and foam-skim concepts.</p>
+              <div class="imminent-flips-list" id="imminentFlipsList" aria-label="Top imminent flip candidates"></div>
+            </div>
           </div>
         </div>
 
-        <div class="rh-filter-card rh-filter-card--secondary rh-filter-card--skim">
-          <div class="rh-filter-col rh-filter-col--wide">
+        <div class="rh-filter-card rh-filter-card--swing">
+          <div class="rh-filter-col rh-filter-col--full">
             <div class="imminent-head">
-              <span class="rh-filter-label">Skim scanner · condor / div lane</span>
-              <span class="imminent-count muted" id="skimScannerCount">—</span>
+              <span class="rh-filter-label">3-Day Swing Breakouts</span>
+              <span class="imminent-count muted" id="swingBreakoutsCount">—</span>
             </div>
-            <p class="imminent-blurb muted">Range-bound BB + foam setups ranked for 65% skim targets. Live options/dividends via <code>POLYGON_API_KEY</code>.</p>
-            <div class="skim-scanner-list" id="skimScannerList" aria-label="Skim and condor candidates"></div>
+            <p class="imminent-blurb muted">Top pick per sector — imminent flip + squeeze release + Q→D profit + fresh day flip + foam/skim.</p>
+            <div class="swing-breakouts-grid" id="swingBreakoutsList" aria-label="3-day swing breakout picks by sector"></div>
+          </div>
+        </div>
+
+        <div class="rh-filter-card rh-filter-card--secondary rh-filter-card--skim collapsible-panel" id="skimScannerPanel">
+          <div class="rh-filter-col rh-filter-col--wide">
+            <div class="imminent-head panel-collapse-head">
+              <div class="panel-collapse-title">
+                <span class="rh-filter-label">Skim scanner · condor / div lane</span>
+                <span class="imminent-count muted" id="skimScannerCount">—</span>
+              </div>
+              <button type="button" class="panel-collapse-toggle" aria-label="Toggle Skim scanner panel" aria-expanded="true" aria-controls="skimScannerBody">
+                <span class="panel-collapse-chevron" aria-hidden="true"></span>
+              </button>
+            </div>
+            <div class="panel-collapse-body" id="skimScannerBody">
+              <p class="imminent-blurb muted">Range-bound BB + foam setups ranked for 65% skim targets. Live options/dividends via <code>POLYGON_API_KEY</code>.</p>
+              <div class="skim-scanner-list" id="skimScannerList" aria-label="Skim and condor candidates"></div>
+            </div>
           </div>
           <div class="rh-filter-col rh-filter-col--wide">
             <span class="rh-filter-label">Paper backtest · Q→D signals</span>
@@ -261,6 +286,7 @@
           <div class="chart-title">
             <span class="chart-symbol" id="chartSymbol">—</span>
             <span class="chart-meta muted" id="chartMeta">Click a symbol to view MACD / Bollinger flips</span>
+            <span id="chartSqueezeChip"></span>
           </div>
           <div class="chart-tfs">
             <button type="button" class="chart-tf" data-tf="quarter">Q</button>
@@ -275,6 +301,7 @@
         <div class="chart-canvases">
           <canvas id="chartPrice" aria-label="Price and Bollinger Bands"></canvas>
           <canvas id="chartMacd" aria-label="MACD histogram"></canvas>
+          <div class="chart-flip-tooltip" id="chartFlipTooltip" hidden></div>
         </div>
         <div class="chart-flips" id="chartFlips"></div>
       </section>
@@ -319,11 +346,15 @@
   </div>
 
   <script src="/crossover/sector-colors.js"></script>
+  <script src="/crossover/squeeze.js"></script>
+  <script src="/crossover/chart-closes.js"></script>
   <script src="/crossover/trading-concepts.js"></script>
   <script src="/crossover/imminent-flips.js"></script>
+  <script src="/crossover/swing-breakouts.js"></script>
   <script src="/crossover/skim-scanner.js"></script>
   <script src="/crossover/backtest-panel.js"></script>
   <script src="/crossover/list-header.js"></script>
+  <script src="/crossover/panel-collapse.js"></script>
   <script src="/crossover/chart.js"></script>
   <script src="/crossover/paper-brief.js"></script>
   <script src="/crossover/app.js"></script>

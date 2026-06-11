@@ -18,6 +18,7 @@ const state = {
   manifest: {},
   watchlists: { lists: [], sections: [] },
   lastProbe: null,
+  scannerReqId: 0,
 };
 
 function sectorKey(row) {
@@ -321,8 +322,7 @@ function renderBoard() {
   });
 
   if (window.ListHeader) window.ListHeader.update(filtered);
-  if (window.ImminentFlips) window.ImminentFlips.update(filtered);
-  if (window.SkimScanner) window.SkimScanner.update(filtered);
+  refreshScanners(filtered);
 
   const page = Math.floor(state.offset / PAGE) + 1;
   const pages = Math.max(1, Math.ceil(state.total / PAGE));
@@ -332,6 +332,21 @@ function renderBoard() {
   document.getElementById("next").disabled = state.offset + PAGE >= state.total;
   updateSortHeaders();
   updateHeroCounts(state.total);
+}
+
+async function refreshScanners(filtered) {
+  const reqId = ++state.scannerReqId;
+  if (window.ChartCloses) {
+    try {
+      await window.ChartCloses.prefetch(filtered, { max: 300, concurrency: 12 });
+    } catch {
+      /* ranking still works from board-only signals */
+    }
+  }
+  if (reqId !== state.scannerReqId) return;
+  if (window.ImminentFlips) window.ImminentFlips.update(filtered);
+  if (window.SkimScanner) window.SkimScanner.update(filtered);
+  if (window.SwingBreakouts) window.SwingBreakouts.update(filtered);
 }
 
 function addMarketOptions(sel, values) {

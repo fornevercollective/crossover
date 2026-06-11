@@ -47,14 +47,24 @@
     }
 
     const bb = day?.bbPosition;
-    if (bb === "below_lower" || bb === "above_upper") {
+    const closes = window.ChartCloses?.getCloses(row);
+    const sq = closes?.length >= 26 ? window.BBSqueeze?.analyzeFromCloses(closes) : null;
+    if (sq?.on) {
+      tags.push("bb_squeeze");
+      foam += 12 + Math.min(8, Math.round(sq.squeezeScore / 15));
+      hints.push(`BB squeeze ON (width pctile ${sq.widthPctile}%) — breakout or flip may follow.`);
+    } else if (sq?.release) {
+      tags.push("squeeze_release");
+      foam += 18;
+      hints.push("Squeeze release — momentum flip window open.");
+    } else if (bb === "below_lower" || bb === "above_upper") {
       tags.push("mean_reversion_bb");
       foam += 16;
       hints.push("Price at BB extreme — foam skim / fade candidate.");
     } else if (bb === "inside" && week?.bbPosition === "inside") {
       tags.push("bb_squeeze");
-      foam += 12;
-      hints.push("BB squeeze — breakout or flip may follow.");
+      foam += 8;
+      hints.push("BB inside bands on D+W — range compression.");
     }
 
     if (histogramTension(day)) {
@@ -143,6 +153,7 @@
       momentum_burst: "Momentum",
       mean_reversion_bb: "BB fade",
       bb_squeeze: "Squeeze",
+      squeeze_release: "Release",
       histogram_cross_pending: "Hist×MACD",
       week_histogram_tension: "W tension",
       multi_tf_confluence: "Q→D stack",
