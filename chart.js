@@ -224,6 +224,29 @@
     return bars;
   }
 
+  function parseCompactBars(compact, useDateTime) {
+    if (!compact?.d?.length) return [];
+    const bars = [];
+    for (let i = 0; i < compact.d.length; i++) {
+      bars.push({
+        date: compact.d[i],
+        open: compact.o[i],
+        high: compact.h[i],
+        low: compact.l[i],
+        close: compact.c[i],
+        volume: compact.v[i] ?? 0,
+      });
+    }
+    return bars;
+  }
+
+  async function loadStaticChartCache(yahoo) {
+    const url = `${BASE}/data/charts/${encodeURIComponent(yahoo)}.json`;
+    const res = await fetch(url);
+    if (!res.ok) return null;
+    return res.json();
+  }
+
   async function fetchYahooClient(yahoo, interval, range, useDateTime) {
     const url =
       `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(yahoo)}?` +
@@ -273,6 +296,25 @@
   }
 
   async function fetchChartClient(yahoo, symbol, tf, limit) {
+    if (STATIC) {
+      const cached = await loadStaticChartCache(yahoo);
+      if (!cached?.daily) {
+        throw new Error("Chart cache missing — run npm run charts:export then site:publish");
+      }
+      let bars;
+      if (tf === "1h" || tf === "5h") {
+        if (!cached.hourly) {
+          throw new Error("1h/5h charts need npm run board:serve locally");
+        }
+        const hourly = parseCompactBars(cached.hourly, true);
+        bars = tf === "5h" ? resampleHourly(hourly, 5) : hourly;
+      } else {
+        bars = resampleDaily(parseCompactBars(cached.daily, false), tf);
+      }
+      if (bars.length < 26) throw new Error(`Insufficient bars (${bars.length})`);
+      return buildPayloadFromBars(bars, symbol, yahoo, tf, limit);
+    }
+
     let bars;
     if (tf === "1h" || tf === "5h") {
       const hourly = await fetchYahooClient(yahoo, "60m", "60d", true);
