@@ -252,6 +252,7 @@
       $("paperBriefSignalBias").title = `Last flip: ${signal.lastFlip.type} @ ${signal.lastFlip.date}`;
     }
 
+    let actionHint = conf.hint;
     const row = window.FlipBoard?.getRow?.(ticker);
     if (row && window.TradingConcepts) {
       const sectorStats = window.TradingConcepts.buildSectorStats(
@@ -262,14 +263,27 @@
         const tags = window.TradingConcepts.formatTags(concepts.tags).join(" · ");
         const skim =
           concepts.skimSignal !== "neutral" ? ` · skim ${concepts.skimSignal}` : "";
-        $("paperBriefActionHint").textContent = `Foam ${concepts.foamScore}${skim} — ${tags || concepts.hints[0] || conf.hint}`;
+        actionHint = `Foam ${concepts.foamScore}${skim} — ${tags || concepts.hints[0] || conf.hint}`;
       }
     }
 
     const confEl = $("paperBriefConfluence");
     confEl.dataset.kind = conf.kind;
     $("paperBriefConfluenceReadout").textContent = conf.readout;
-    $("paperBriefActionHint").textContent = conf.hint;
+    $("paperBriefActionHint").textContent = actionHint;
+
+    const srcEl = $("paperBriefQuoteSrc");
+    if (srcEl) {
+      const probe = quoteWrap.probe?.comparison;
+      const delta = probe?.priceDeltaPct;
+      const agree = probe?.biasAgreement;
+      if (delta != null && agree) {
+        const sign = delta >= 0 ? "+" : "";
+        srcEl.textContent = `${quoteWrap.source} · board Δ ${sign}${delta.toFixed(2)}% · ${agree}`;
+      } else {
+        srcEl.textContent = quoteWrap.source || "—";
+      }
+    }
 
     if (position?.position) {
       const p = position.position;

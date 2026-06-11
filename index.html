@@ -73,6 +73,10 @@
             <span class="muted">Prev</span>
             <span id="paperBriefPrev">—</span>
           </div>
+          <div class="paperBrief__quoteRow">
+            <span class="muted">Src</span>
+            <span id="paperBriefQuoteSrc">—</span>
+          </div>
         </div>
 
         <section class="paperBrief__block" aria-label="Technical structure">
@@ -233,6 +237,23 @@
             <div class="imminent-flips-list" id="imminentFlipsList" aria-label="Top imminent flip candidates"></div>
           </div>
         </div>
+
+        <div class="rh-filter-card rh-filter-card--secondary rh-filter-card--skim">
+          <div class="rh-filter-col rh-filter-col--wide">
+            <div class="imminent-head">
+              <span class="rh-filter-label">Skim scanner · condor / div lane</span>
+              <span class="imminent-count muted" id="skimScannerCount">—</span>
+            </div>
+            <p class="imminent-blurb muted">Range-bound BB + foam setups ranked for 65% skim targets. Live options/dividends via <code>POLYGON_API_KEY</code>.</p>
+            <div class="skim-scanner-list" id="skimScannerList" aria-label="Skim and condor candidates"></div>
+          </div>
+          <div class="rh-filter-col rh-filter-col--wide">
+            <span class="rh-filter-label">Paper backtest · Q→D signals</span>
+            <div class="backtest-panel" id="backtestPanel" aria-live="polite">
+              <p class="backtest-empty muted">Loading backtest summary…</p>
+            </div>
+          </div>
+        </div>
       </section>
 
       <section class="chart-panel" id="chartPanel">
@@ -300,6 +321,8 @@
   <script src="/crossover/sector-colors.js"></script>
   <script src="/crossover/trading-concepts.js"></script>
   <script src="/crossover/imminent-flips.js"></script>
+  <script src="/crossover/skim-scanner.js"></script>
+  <script src="/crossover/backtest-panel.js"></script>
   <script src="/crossover/list-header.js"></script>
   <script src="/crossover/chart.js"></script>
   <script src="/crossover/paper-brief.js"></script>

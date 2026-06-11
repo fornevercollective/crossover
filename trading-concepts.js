@@ -79,6 +79,23 @@
       foam += 12;
     }
 
+    const spread = Math.abs(bulls - bears);
+    if (
+      spread <= 2 &&
+      day?.bbPosition === "inside" &&
+      week?.bbPosition === "inside" &&
+      dFlip >= 5
+    ) {
+      tags.push("iron_condor_range");
+      foam += 14;
+      hints.push("Range-bound squeeze — iron condor / skim lane (offline proxy).");
+    }
+
+    if (foam >= 50) {
+      tags.push("skim_take_profit");
+      hints.push("High foam — consider 50–70% skim target on premium/range trades.");
+    }
+
     const sk = sectorKey(row);
     const sec = sectorStats?.[sk];
     if (sec && sec.total >= 5) {
@@ -129,6 +146,8 @@
       histogram_cross_pending: "Hist×MACD",
       week_histogram_tension: "W tension",
       multi_tf_confluence: "Q→D stack",
+      iron_condor_range: "Condor",
+      skim_take_profit: "Skim 65%",
       sector_strength: "Sector↑",
       sector_weakness: "Sector↓",
     };

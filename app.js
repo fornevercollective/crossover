@@ -322,6 +322,7 @@ function renderBoard() {
 
   if (window.ListHeader) window.ListHeader.update(filtered);
   if (window.ImminentFlips) window.ImminentFlips.update(filtered);
+  if (window.SkimScanner) window.SkimScanner.update(filtered);
 
   const page = Math.floor(state.offset / PAGE) + 1;
   const pages = Math.max(1, Math.ceil(state.total / PAGE));

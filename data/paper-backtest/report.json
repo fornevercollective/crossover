@@ -1,0 +1,1308 @@
+{
+  "generatedAt": "2026-06-11T05:27:52.169784+00:00",
+  "window": {
+    "start": "2026-03-13",
+    "end": "2026-06-11",
+    "months": 3
+  },
+  "params": {
+    "holdDays": 10,
+    "stopPct": 0.05,
+    "symbols": 30
+  },
+  "summary": {
+    "tradeCount": 125,
+    "winRate": 38.4,
+    "avgReturnPct": -0.851,
+    "maxDrawdownPct": 83.209,
+    "bySector": {
+      "China": {
+        "trades": 24,
+        "winRate": 29.2,
+        "avgReturnPct": -0.824
+      },
+      "ETFs": {
+        "trades": 50,
+        "winRate": 46.0,
+        "avgReturnPct": 0.01
+      },
+      "M": {
+        "trades": 6,
+        "winRate": 33.3,
+        "avgReturnPct": -1.012
+      },
+      "Manufacturing & Materials": {
+        "trades": 37,
+        "winRate": 32.4,
+        "avgReturnPct": -1.856
+      },
+      "My First List": {
+        "trades": 3,
+        "winRate": 100.0,
+        "avgReturnPct": 4.43
+      },
+      "Technology": {
+        "trades": 5,
+        "winRate": 20.0,
+        "avgReturnPct": -5.126
+      }
+    }
+  },
+  "trades": [
+    {
+      "symbol": "AA",
+      "sector": "Manufacturing & Materials",
+      "side": "long",
+      "entryDate": "2026-03-13",
+      "exitDate": "2026-03-19",
+      "returnPct": -7.769,
+      "holdDays": 6,
+      "rationale": "long Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "AA",
+      "sector": "Manufacturing & Materials",
+      "side": "short",
+      "entryDate": "2026-03-24",
+      "exitDate": "2026-03-30",
+      "returnPct": -11.538,
+      "holdDays": 6,
+      "rationale": "short Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "AA",
+      "sector": "Manufacturing & Materials",
+      "side": "long",
+      "entryDate": "2026-04-01",
+      "exitDate": "2026-04-16",
+      "returnPct": -2.29,
+      "holdDays": 15,
+      "rationale": "long Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "AA",
+      "sector": "Manufacturing & Materials",
+      "side": "short",
+      "entryDate": "2026-04-23",
+      "exitDate": "2026-05-07",
+      "returnPct": 4.176,
+      "holdDays": 14,
+      "rationale": "short Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "AA",
+      "sector": "Manufacturing & Materials",
+      "side": "long",
+      "entryDate": "2026-05-13",
+      "exitDate": "2026-05-15",
+      "returnPct": -8.635,
+      "holdDays": 2,
+      "rationale": "long Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "AA",
+      "sector": "Manufacturing & Materials",
+      "side": "long",
+      "entryDate": "2026-05-15",
+      "exitDate": "2026-05-18",
+      "returnPct": 0.096,
+      "holdDays": 3,
+      "rationale": "long Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "AA",
+      "sector": "Manufacturing & Materials",
+      "side": "short",
+      "entryDate": "2026-05-20",
+      "exitDate": "2026-05-21",
+      "returnPct": -3.321,
+      "holdDays": 1,
+      "rationale": "short Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "AA",
+      "sector": "Manufacturing & Materials",
+      "side": "long",
+      "entryDate": "2026-05-21",
+      "exitDate": "2026-06-05",
+      "returnPct": 8.48,
+      "holdDays": 15,
+      "rationale": "long Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "AACAY",
+      "sector": "China",
+      "side": "short",
+      "entryDate": "2026-03-20",
+      "exitDate": "2026-03-23",
+      "returnPct": -8.184,
+      "holdDays": 3,
+      "rationale": "short Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "AACAY",
+      "sector": "China",
+      "side": "long",
+      "entryDate": "2026-04-17",
+      "exitDate": "2026-04-28",
+      "returnPct": -9.165,
+      "holdDays": 11,
+      "rationale": "long Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "AACAY",
+      "sector": "China",
+      "side": "short",
+      "entryDate": "2026-05-04",
+      "exitDate": "2026-05-05",
+      "returnPct": -6.383,
+      "holdDays": 1,
+      "rationale": "short Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "AACAY",
+      "sector": "China",
+      "side": "short",
+      "entryDate": "2026-05-05",
+      "exitDate": "2026-05-07",
+      "returnPct": 2.0,
+      "holdDays": 2,
+      "rationale": "short Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "AACAY",
+      "sector": "China",
+      "side": "long",
+      "entryDate": "2026-05-07",
+      "exitDate": "2026-05-21",
+      "returnPct": 9.796,
+      "holdDays": 14,
+      "rationale": "long Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "AACAY",
+      "sector": "China",
+      "side": "short",
+      "entryDate": "2026-06-08",
+      "exitDate": "2026-06-09",
+      "returnPct": -0.874,
+      "holdDays": 1,
+      "rationale": "short Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "AACAY",
+      "sector": "China",
+      "side": "short",
+      "entryDate": "2026-06-09",
+      "exitDate": "2026-06-09",
+      "returnPct": -0.0,
+      "holdDays": 0,
+      "rationale": "short Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "AACG",
+      "sector": "China",
+      "side": "long",
+      "entryDate": "2026-03-19",
+      "exitDate": "2026-03-30",
+      "returnPct": -11.224,
+      "holdDays": 11,
+      "rationale": "long Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "AACG",
+      "sector": "China",
+      "side": "short",
+      "entryDate": "2026-04-07",
+      "exitDate": "2026-04-08",
+      "returnPct": -2.02,
+      "holdDays": 1,
+      "rationale": "short Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "AACG",
+      "sector": "China",
+      "side": "long",
+      "entryDate": "2026-04-08",
+      "exitDate": "2026-04-14",
+      "returnPct": -5.941,
+      "holdDays": 6,
+      "rationale": "long Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "AACG",
+      "sector": "China",
+      "side": "long",
+      "entryDate": "2026-04-16",
+      "exitDate": "2026-04-30",
+      "returnPct": 14.563,
+      "holdDays": 14,
+      "rationale": "long Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "AADR",
+      "sector": "ETFs",
+      "side": "long",
+      "entryDate": "2026-04-09",
+      "exitDate": "2026-04-23",
+      "returnPct": -3.901,
+      "holdDays": 14,
+      "rationale": "long Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "AADR",
+      "sector": "ETFs",
+      "side": "short",
+      "entryDate": "2026-05-19",
+      "exitDate": "2026-05-21",
+      "returnPct": -2.364,
+      "holdDays": 2,
+      "rationale": "short Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "AADR",
+      "sector": "ETFs",
+      "side": "short",
+      "entryDate": "2026-06-02",
+      "exitDate": "2026-06-10",
+      "returnPct": 5.793,
+      "holdDays": 8,
+      "rationale": "short Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "AAEQ",
+      "sector": "ETFs",
+      "side": "short",
+      "entryDate": "2026-03-13",
+      "exitDate": "2026-03-27",
+      "returnPct": 4.031,
+      "holdDays": 14,
+      "rationale": "short Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "AAEQ",
+      "sector": "ETFs",
+      "side": "long",
+      "entryDate": "2026-04-02",
+      "exitDate": "2026-04-17",
+      "returnPct": 8.196,
+      "holdDays": 15,
+      "rationale": "long Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "AAEQ",
+      "sector": "ETFs",
+      "side": "short",
+      "entryDate": "2026-05-18",
+      "exitDate": "2026-06-02",
+      "returnPct": -2.587,
+      "holdDays": 15,
+      "rationale": "short Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "AAL",
+      "sector": "Manufacturing & Materials",
+      "side": "long",
+      "entryDate": "2026-03-23",
+      "exitDate": "2026-03-30",
+      "returnPct": -5.828,
+      "holdDays": 7,
+      "rationale": "long Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "AAL",
+      "sector": "Manufacturing & Materials",
+      "side": "long",
+      "entryDate": "2026-04-14",
+      "exitDate": "2026-04-22",
+      "returnPct": -5.194,
+      "holdDays": 8,
+      "rationale": "long Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "AAL",
+      "sector": "Manufacturing & Materials",
+      "side": "short",
+      "entryDate": "2026-04-29",
+      "exitDate": "2026-05-04",
+      "returnPct": -4.421,
+      "holdDays": 5,
+      "rationale": "short Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "AAL",
+      "sector": "Manufacturing & Materials",
+      "side": "long",
+      "entryDate": "2026-05-06",
+      "exitDate": "2026-05-18",
+      "returnPct": -4.482,
+      "holdDays": 12,
+      "rationale": "long Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "AAL",
+      "sector": "Manufacturing & Materials",
+      "side": "long",
+      "entryDate": "2026-05-22",
+      "exitDate": "2026-06-04",
+      "returnPct": -3.971,
+      "holdDays": 13,
+      "rationale": "long Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "AAOI",
+      "sector": "Technology",
+      "side": "long",
+      "entryDate": "2026-04-08",
+      "exitDate": "2026-04-22",
+      "returnPct": 12.6,
+      "holdDays": 14,
+      "rationale": "long Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "AAOI",
+      "sector": "Technology",
+      "side": "long",
+      "entryDate": "2026-05-01",
+      "exitDate": "2026-05-04",
+      "returnPct": -5.738,
+      "holdDays": 3,
+      "rationale": "long Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "AAOI",
+      "sector": "Technology",
+      "side": "long",
+      "entryDate": "2026-05-06",
+      "exitDate": "2026-05-07",
+      "returnPct": -11.756,
+      "holdDays": 1,
+      "rationale": "long Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "AAOI",
+      "sector": "Technology",
+      "side": "long",
+      "entryDate": "2026-05-12",
+      "exitDate": "2026-05-18",
+      "returnPct": -7.977,
+      "holdDays": 6,
+      "rationale": "long Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "AAOI",
+      "sector": "Technology",
+      "side": "long",
+      "entryDate": "2026-06-04",
+      "exitDate": "2026-06-05",
+      "returnPct": -12.761,
+      "holdDays": 1,
+      "rationale": "long Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "AAON",
+      "sector": "Manufacturing & Materials",
+      "side": "short",
+      "entryDate": "2026-03-13",
+      "exitDate": "2026-03-27",
+      "returnPct": 2.884,
+      "holdDays": 14,
+      "rationale": "short Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "AAON",
+      "sector": "Manufacturing & Materials",
+      "side": "long",
+      "entryDate": "2026-04-28",
+      "exitDate": "2026-04-29",
+      "returnPct": -1.828,
+      "holdDays": 1,
+      "rationale": "long Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "AAON",
+      "sector": "Manufacturing & Materials",
+      "side": "short",
+      "entryDate": "2026-04-29",
+      "exitDate": "2026-04-30",
+      "returnPct": -7.91,
+      "holdDays": 1,
+      "rationale": "short Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "AAON",
+      "sector": "Manufacturing & Materials",
+      "side": "short",
+      "entryDate": "2026-04-30",
+      "exitDate": "2026-05-06",
+      "returnPct": -5.348,
+      "holdDays": 6,
+      "rationale": "short Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "AAON",
+      "sector": "Manufacturing & Materials",
+      "side": "long",
+      "entryDate": "2026-05-08",
+      "exitDate": "2026-05-19",
+      "returnPct": -6.723,
+      "holdDays": 11,
+      "rationale": "long Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "AAPG",
+      "sector": "China",
+      "side": "short",
+      "entryDate": "2026-03-20",
+      "exitDate": "2026-03-23",
+      "returnPct": -16.797,
+      "holdDays": 3,
+      "rationale": "short Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "AAPG",
+      "sector": "China",
+      "side": "short",
+      "entryDate": "2026-03-25",
+      "exitDate": "2026-03-30",
+      "returnPct": -3.441,
+      "holdDays": 5,
+      "rationale": "short Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "AAPG",
+      "sector": "China",
+      "side": "long",
+      "entryDate": "2026-04-06",
+      "exitDate": "2026-04-09",
+      "returnPct": -5.582,
+      "holdDays": 3,
+      "rationale": "long Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "AAPG",
+      "sector": "China",
+      "side": "short",
+      "entryDate": "2026-05-18",
+      "exitDate": "2026-05-20",
+      "returnPct": -6.573,
+      "holdDays": 2,
+      "rationale": "short Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "AAPG",
+      "sector": "China",
+      "side": "short",
+      "entryDate": "2026-05-20",
+      "exitDate": "2026-05-22",
+      "returnPct": -6.218,
+      "holdDays": 2,
+      "rationale": "short Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "AAPG",
+      "sector": "China",
+      "side": "short",
+      "entryDate": "2026-06-02",
+      "exitDate": "2026-06-09",
+      "returnPct": 7.48,
+      "holdDays": 7,
+      "rationale": "short Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "AAPL",
+      "sector": "My First List",
+      "side": "short",
+      "entryDate": "2026-03-13",
+      "exitDate": "2026-03-27",
+      "returnPct": 0.528,
+      "holdDays": 14,
+      "rationale": "short Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "AAPL",
+      "sector": "My First List",
+      "side": "long",
+      "entryDate": "2026-04-02",
+      "exitDate": "2026-04-17",
+      "returnPct": 5.592,
+      "holdDays": 15,
+      "rationale": "long Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "AAPL",
+      "sector": "My First List",
+      "side": "long",
+      "entryDate": "2026-05-01",
+      "exitDate": "2026-05-15",
+      "returnPct": 7.171,
+      "holdDays": 14,
+      "rationale": "long Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "AAUC",
+      "sector": "Manufacturing & Materials",
+      "side": "short",
+      "entryDate": "2026-03-23",
+      "exitDate": "2026-04-07",
+      "returnPct": -0.934,
+      "holdDays": 15,
+      "rationale": "short Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "AAUC",
+      "sector": "Manufacturing & Materials",
+      "side": "short",
+      "entryDate": "2026-04-27",
+      "exitDate": "2026-05-11",
+      "returnPct": 1.675,
+      "holdDays": 14,
+      "rationale": "short Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "AAUC",
+      "sector": "Manufacturing & Materials",
+      "side": "short",
+      "entryDate": "2026-05-20",
+      "exitDate": "2026-06-04",
+      "returnPct": 0.114,
+      "holdDays": 15,
+      "rationale": "short Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "AAUM",
+      "sector": "ETFs",
+      "side": "short",
+      "entryDate": "2026-03-13",
+      "exitDate": "2026-03-18",
+      "returnPct": -2.721,
+      "holdDays": 5,
+      "rationale": "short Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "AAUM",
+      "sector": "ETFs",
+      "side": "long",
+      "entryDate": "2026-03-20",
+      "exitDate": "2026-04-06",
+      "returnPct": 1.456,
+      "holdDays": 17,
+      "rationale": "long Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "AAUM",
+      "sector": "ETFs",
+      "side": "long",
+      "entryDate": "2026-04-20",
+      "exitDate": "2026-04-28",
+      "returnPct": -5.208,
+      "holdDays": 8,
+      "rationale": "long Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "AAUM",
+      "sector": "ETFs",
+      "side": "long",
+      "entryDate": "2026-05-05",
+      "exitDate": "2026-05-13",
+      "returnPct": -1.515,
+      "holdDays": 8,
+      "rationale": "long Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "AAUS",
+      "sector": "ETFs",
+      "side": "short",
+      "entryDate": "2026-03-13",
+      "exitDate": "2026-03-27",
+      "returnPct": 4.11,
+      "holdDays": 14,
+      "rationale": "short Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "AAUS",
+      "sector": "ETFs",
+      "side": "long",
+      "entryDate": "2026-06-01",
+      "exitDate": "2026-06-03",
+      "returnPct": -0.709,
+      "holdDays": 2,
+      "rationale": "long Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "AAXJ",
+      "sector": "ETFs",
+      "side": "short",
+      "entryDate": "2026-03-30",
+      "exitDate": "2026-04-06",
+      "returnPct": -4.366,
+      "holdDays": 7,
+      "rationale": "short Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "AAXJ",
+      "sector": "ETFs",
+      "side": "long",
+      "entryDate": "2026-04-09",
+      "exitDate": "2026-04-23",
+      "returnPct": 4.033,
+      "holdDays": 14,
+      "rationale": "long Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "AAXJ",
+      "sector": "ETFs",
+      "side": "long",
+      "entryDate": "2026-05-05",
+      "exitDate": "2026-05-15",
+      "returnPct": 0.178,
+      "holdDays": 10,
+      "rationale": "long Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "AAXJ",
+      "sector": "ETFs",
+      "side": "long",
+      "entryDate": "2026-05-28",
+      "exitDate": "2026-06-05",
+      "returnPct": -5.817,
+      "holdDays": 8,
+      "rationale": "long Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "ABAT",
+      "sector": "Manufacturing & Materials",
+      "side": "long",
+      "entryDate": "2026-03-13",
+      "exitDate": "2026-03-16",
+      "returnPct": -1.807,
+      "holdDays": 3,
+      "rationale": "long Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "ABAT",
+      "sector": "Manufacturing & Materials",
+      "side": "short",
+      "entryDate": "2026-03-18",
+      "exitDate": "2026-04-01",
+      "returnPct": 11.688,
+      "holdDays": 14,
+      "rationale": "short Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "ABAT",
+      "sector": "Manufacturing & Materials",
+      "side": "long",
+      "entryDate": "2026-04-08",
+      "exitDate": "2026-04-22",
+      "returnPct": 25.087,
+      "holdDays": 14,
+      "rationale": "long Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "ABAT",
+      "sector": "Manufacturing & Materials",
+      "side": "long",
+      "entryDate": "2026-04-29",
+      "exitDate": "2026-05-07",
+      "returnPct": 0.325,
+      "holdDays": 8,
+      "rationale": "long Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "ABAT",
+      "sector": "Manufacturing & Materials",
+      "side": "short",
+      "entryDate": "2026-05-11",
+      "exitDate": "2026-05-13",
+      "returnPct": -6.928,
+      "holdDays": 2,
+      "rationale": "short Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "ABAT",
+      "sector": "Manufacturing & Materials",
+      "side": "long",
+      "entryDate": "2026-05-13",
+      "exitDate": "2026-05-15",
+      "returnPct": -11.831,
+      "holdDays": 2,
+      "rationale": "long Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "ABAT",
+      "sector": "Manufacturing & Materials",
+      "side": "short",
+      "entryDate": "2026-05-15",
+      "exitDate": "2026-05-26",
+      "returnPct": -12.46,
+      "holdDays": 11,
+      "rationale": "short Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "ABAT",
+      "sector": "Manufacturing & Materials",
+      "side": "long",
+      "entryDate": "2026-06-02",
+      "exitDate": "2026-06-03",
+      "returnPct": -8.122,
+      "holdDays": 1,
+      "rationale": "long Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "ABAT",
+      "sector": "Manufacturing & Materials",
+      "side": "long",
+      "entryDate": "2026-06-03",
+      "exitDate": "2026-06-05",
+      "returnPct": -14.088,
+      "holdDays": 2,
+      "rationale": "long Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "ABAT",
+      "sector": "Manufacturing & Materials",
+      "side": "long",
+      "entryDate": "2026-06-05",
+      "exitDate": "2026-06-09",
+      "returnPct": 4.18,
+      "holdDays": 4,
+      "rationale": "long Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "ABBRF",
+      "sector": "Manufacturing & Materials",
+      "side": "short",
+      "entryDate": "2026-03-20",
+      "exitDate": "2026-03-23",
+      "returnPct": -10.055,
+      "holdDays": 3,
+      "rationale": "short Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "ABBRF",
+      "sector": "Manufacturing & Materials",
+      "side": "short",
+      "entryDate": "2026-03-25",
+      "exitDate": "2026-03-31",
+      "returnPct": -7.936,
+      "holdDays": 6,
+      "rationale": "short Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "ABBRF",
+      "sector": "Manufacturing & Materials",
+      "side": "long",
+      "entryDate": "2026-04-02",
+      "exitDate": "2026-04-17",
+      "returnPct": 33.11,
+      "holdDays": 15,
+      "rationale": "long Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "ABBRF",
+      "sector": "Manufacturing & Materials",
+      "side": "long",
+      "entryDate": "2026-05-01",
+      "exitDate": "2026-05-04",
+      "returnPct": -4.956,
+      "holdDays": 3,
+      "rationale": "long Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "ABBRF",
+      "sector": "Manufacturing & Materials",
+      "side": "long",
+      "entryDate": "2026-05-07",
+      "exitDate": "2026-05-15",
+      "returnPct": -5.642,
+      "holdDays": 8,
+      "rationale": "long Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "ABBRF",
+      "sector": "Manufacturing & Materials",
+      "side": "short",
+      "entryDate": "2026-06-05",
+      "exitDate": "2026-06-09",
+      "returnPct": 3.537,
+      "holdDays": 4,
+      "rationale": "short Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "ABCS",
+      "sector": "ETFs",
+      "side": "short",
+      "entryDate": "2026-03-16",
+      "exitDate": "2026-03-26",
+      "returnPct": -0.384,
+      "holdDays": 10,
+      "rationale": "short Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "ABCS",
+      "sector": "ETFs",
+      "side": "long",
+      "entryDate": "2026-03-31",
+      "exitDate": "2026-04-15",
+      "returnPct": 4.936,
+      "holdDays": 15,
+      "rationale": "long Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "ABCS",
+      "sector": "ETFs",
+      "side": "long",
+      "entryDate": "2026-04-22",
+      "exitDate": "2026-05-05",
+      "returnPct": 0.125,
+      "holdDays": 13,
+      "rationale": "long Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "ABCS",
+      "sector": "ETFs",
+      "side": "long",
+      "entryDate": "2026-05-27",
+      "exitDate": "2026-06-10",
+      "returnPct": 0.813,
+      "holdDays": 14,
+      "rationale": "long Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "ABEQ",
+      "sector": "ETFs",
+      "side": "short",
+      "entryDate": "2026-03-23",
+      "exitDate": "2026-04-06",
+      "returnPct": -0.949,
+      "holdDays": 14,
+      "rationale": "short Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "ABEQ",
+      "sector": "ETFs",
+      "side": "long",
+      "entryDate": "2026-04-21",
+      "exitDate": "2026-04-22",
+      "returnPct": 0.106,
+      "holdDays": 1,
+      "rationale": "long Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "ABEQ",
+      "sector": "ETFs",
+      "side": "short",
+      "entryDate": "2026-04-22",
+      "exitDate": "2026-05-06",
+      "returnPct": 0.796,
+      "holdDays": 14,
+      "rationale": "short Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "ABEQ",
+      "sector": "ETFs",
+      "side": "long",
+      "entryDate": "2026-05-13",
+      "exitDate": "2026-05-28",
+      "returnPct": -0.839,
+      "holdDays": 15,
+      "rationale": "long Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "ABEQ",
+      "sector": "ETFs",
+      "side": "long",
+      "entryDate": "2026-06-04",
+      "exitDate": "2026-06-10",
+      "returnPct": -0.81,
+      "holdDays": 6,
+      "rationale": "long Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "ABFL",
+      "sector": "ETFs",
+      "side": "short",
+      "entryDate": "2026-03-13",
+      "exitDate": "2026-03-27",
+      "returnPct": 1.442,
+      "holdDays": 14,
+      "rationale": "short Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "ABFL",
+      "sector": "ETFs",
+      "side": "long",
+      "entryDate": "2026-04-15",
+      "exitDate": "2026-04-29",
+      "returnPct": 1.327,
+      "holdDays": 14,
+      "rationale": "long Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "ABFL",
+      "sector": "ETFs",
+      "side": "long",
+      "entryDate": "2026-05-05",
+      "exitDate": "2026-05-18",
+      "returnPct": -0.223,
+      "holdDays": 13,
+      "rationale": "long Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "ABFL",
+      "sector": "ETFs",
+      "side": "long",
+      "entryDate": "2026-06-02",
+      "exitDate": "2026-06-05",
+      "returnPct": -2.835,
+      "holdDays": 3,
+      "rationale": "long Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "ABI",
+      "sector": "ETFs",
+      "side": "short",
+      "entryDate": "2026-04-10",
+      "exitDate": "2026-04-15",
+      "returnPct": -0.141,
+      "holdDays": 5,
+      "rationale": "short Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "ABI",
+      "sector": "ETFs",
+      "side": "short",
+      "entryDate": "2026-05-11",
+      "exitDate": "2026-05-22",
+      "returnPct": -0.101,
+      "holdDays": 11,
+      "rationale": "short Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "ABIG",
+      "sector": "ETFs",
+      "side": "short",
+      "entryDate": "2026-03-13",
+      "exitDate": "2026-03-27",
+      "returnPct": 4.374,
+      "holdDays": 14,
+      "rationale": "short Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "ABIG",
+      "sector": "ETFs",
+      "side": "long",
+      "entryDate": "2026-06-01",
+      "exitDate": "2026-06-03",
+      "returnPct": -1.335,
+      "holdDays": 2,
+      "rationale": "long Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "ABLD",
+      "sector": "ETFs",
+      "side": "long",
+      "entryDate": "2026-04-01",
+      "exitDate": "2026-04-16",
+      "returnPct": 1.416,
+      "holdDays": 15,
+      "rationale": "long Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "ABLD",
+      "sector": "ETFs",
+      "side": "short",
+      "entryDate": "2026-04-28",
+      "exitDate": "2026-05-12",
+      "returnPct": -1.549,
+      "holdDays": 14,
+      "rationale": "short Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "ABLD",
+      "sector": "ETFs",
+      "side": "short",
+      "entryDate": "2026-05-20",
+      "exitDate": "2026-06-04",
+      "returnPct": -0.074,
+      "holdDays": 15,
+      "rationale": "short Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "ABLG",
+      "sector": "ETFs",
+      "side": "short",
+      "entryDate": "2026-03-13",
+      "exitDate": "2026-03-27",
+      "returnPct": 2.501,
+      "holdDays": 14,
+      "rationale": "short Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "ABLG",
+      "sector": "ETFs",
+      "side": "long",
+      "entryDate": "2026-04-08",
+      "exitDate": "2026-04-22",
+      "returnPct": 1.245,
+      "holdDays": 14,
+      "rationale": "long Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "ABLG",
+      "sector": "ETFs",
+      "side": "long",
+      "entryDate": "2026-04-28",
+      "exitDate": "2026-04-29",
+      "returnPct": -0.325,
+      "holdDays": 1,
+      "rationale": "long Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "ABLG",
+      "sector": "ETFs",
+      "side": "short",
+      "entryDate": "2026-04-29",
+      "exitDate": "2026-05-06",
+      "returnPct": -6.015,
+      "holdDays": 7,
+      "rationale": "short Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "ABLG",
+      "sector": "ETFs",
+      "side": "long",
+      "entryDate": "2026-05-08",
+      "exitDate": "2026-05-15",
+      "returnPct": -2.884,
+      "holdDays": 7,
+      "rationale": "long Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "ABLG",
+      "sector": "ETFs",
+      "side": "long",
+      "entryDate": "2026-05-28",
+      "exitDate": "2026-06-05",
+      "returnPct": -4.764,
+      "holdDays": 8,
+      "rationale": "long Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "ABLG",
+      "sector": "ETFs",
+      "side": "short",
+      "entryDate": "2026-06-09",
+      "exitDate": "2026-06-10",
+      "returnPct": 1.78,
+      "holdDays": 1,
+      "rationale": "short Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "ABLG",
+      "sector": "ETFs",
+      "side": "short",
+      "entryDate": "2026-06-10",
+      "exitDate": "2026-06-10",
+      "returnPct": -0.0,
+      "holdDays": 0,
+      "rationale": "short Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "ABLS",
+      "sector": "ETFs",
+      "side": "short",
+      "entryDate": "2026-03-13",
+      "exitDate": "2026-03-27",
+      "returnPct": -0.626,
+      "holdDays": 14,
+      "rationale": "short Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "ABLV",
+      "sector": "China",
+      "side": "long",
+      "entryDate": "2026-03-31",
+      "exitDate": "2026-04-10",
+      "returnPct": -5.616,
+      "holdDays": 10,
+      "rationale": "long Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "ABLV",
+      "sector": "China",
+      "side": "long",
+      "entryDate": "2026-04-16",
+      "exitDate": "2026-04-30",
+      "returnPct": 12.586,
+      "holdDays": 14,
+      "rationale": "long Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "ABLV",
+      "sector": "China",
+      "side": "long",
+      "entryDate": "2026-05-08",
+      "exitDate": "2026-05-22",
+      "returnPct": 27.318,
+      "holdDays": 14,
+      "rationale": "long Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "ABNB",
+      "sector": "M",
+      "side": "short",
+      "entryDate": "2026-03-27",
+      "exitDate": "2026-04-08",
+      "returnPct": -6.942,
+      "holdDays": 12,
+      "rationale": "short Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "ABNB",
+      "sector": "M",
+      "side": "long",
+      "entryDate": "2026-04-15",
+      "exitDate": "2026-04-29",
+      "returnPct": 2.014,
+      "holdDays": 14,
+      "rationale": "long Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "ABNB",
+      "sector": "M",
+      "side": "long",
+      "entryDate": "2026-06-02",
+      "exitDate": "2026-06-03",
+      "returnPct": -0.566,
+      "holdDays": 1,
+      "rationale": "long Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "ABNB",
+      "sector": "M",
+      "side": "long",
+      "entryDate": "2026-06-08",
+      "exitDate": "2026-06-09",
+      "returnPct": -2.291,
+      "holdDays": 1,
+      "rationale": "long Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "ABNB",
+      "sector": "M",
+      "side": "short",
+      "entryDate": "2026-06-09",
+      "exitDate": "2026-06-10",
+      "returnPct": 1.713,
+      "holdDays": 1,
+      "rationale": "short Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "ABNB",
+      "sector": "M",
+      "side": "short",
+      "entryDate": "2026-06-10",
+      "exitDate": "2026-06-10",
+      "returnPct": -0.0,
+      "holdDays": 0,
+      "rationale": "short Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "ABOT",
+      "sector": "ETFs",
+      "side": "short",
+      "entryDate": "2026-03-20",
+      "exitDate": "2026-04-02",
+      "returnPct": 0.143,
+      "holdDays": 13,
+      "rationale": "short Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "ABOT",
+      "sector": "ETFs",
+      "side": "long",
+      "entryDate": "2026-04-22",
+      "exitDate": "2026-05-06",
+      "returnPct": 1.743,
+      "holdDays": 14,
+      "rationale": "long Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "ABOT",
+      "sector": "ETFs",
+      "side": "long",
+      "entryDate": "2026-05-12",
+      "exitDate": "2026-05-27",
+      "returnPct": 4.463,
+      "holdDays": 15,
+      "rationale": "long Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "ABOT",
+      "sector": "ETFs",
+      "side": "long",
+      "entryDate": "2026-06-03",
+      "exitDate": "2026-06-05",
+      "returnPct": -2.782,
+      "holdDays": 2,
+      "rationale": "long Q\u2192D + fresh day flip; exit=opposing_flip"
+    },
+    {
+      "symbol": "ABOT",
+      "sector": "ETFs",
+      "side": "short",
+      "entryDate": "2026-06-05",
+      "exitDate": "2026-06-09",
+      "returnPct": 1.314,
+      "holdDays": 4,
+      "rationale": "short Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "ABTS",
+      "sector": "China",
+      "side": "short",
+      "entryDate": "2026-03-26",
+      "exitDate": "2026-04-10",
+      "returnPct": 40.704,
+      "holdDays": 15,
+      "rationale": "short Q\u2192D + fresh day flip; exit=hold"
+    },
+    {
+      "symbol": "ABTS",
+      "sector": "China",
+      "side": "long",
+      "entryDate": "2026-06-01",
+      "exitDate": "2026-06-05",
+      "returnPct": -7.009,
+      "holdDays": 4,
+      "rationale": "long Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "ABTS",
+      "sector": "China",
+      "side": "long",
+      "entryDate": "2026-06-05",
+      "exitDate": "2026-06-08",
+      "returnPct": -39.196,
+      "holdDays": 3,
+      "rationale": "long Q\u2192D + fresh day flip; exit=stop"
+    },
+    {
+      "symbol": "ABTS",
+      "sector": "China",
+      "side": "long",
+      "entryDate": "2026-06-10",
+      "exitDate": "2026-06-10",
+      "returnPct": 0.0,
+      "holdDays": 0,
+      "rationale": "long Q\u2192D + fresh day flip; exit=hold"
+    }
+  ],
+  "notes": {
+    "dataSource": "Yahoo daily + flip-board/charts cache",
+    "polygon": "Set POLYGON_API_KEY for volume/gap features",
+    "robinhood": "Set RH credentials for official fill prices"
+  }
+}
