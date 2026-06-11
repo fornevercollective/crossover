@@ -1,0 +1,1066 @@
+{
+  "generatedAt": "2026-06-11T23:18:38.620853+00:00",
+  "defaultMonths": 6,
+  "params": {
+    "holdDays": 10,
+    "stopPct": 0.05,
+    "strict": false,
+    "limitPerSector": 100
+  },
+  "patternCatalog": [
+    "fresh_flip",
+    "q_d_align",
+    "week_day_align",
+    "squeeze_release",
+    "squeeze_expanding",
+    "hist_accel",
+    "foam_skim",
+    "strict_filter"
+  ],
+  "sectors": {
+    "China": {
+      "sectorLaunch": "2018-06-01",
+      "primaryEra": "pre_ai",
+      "backtestStart": "2025-12-13",
+      "backtestEnd": "2026-06-11",
+      "symbolCount": 100,
+      "failedSymbols": 0,
+      "summary": {
+        "tradeCount": 957,
+        "winRate": 28.0,
+        "avgReturnPct": -3.95,
+        "maxDrawdownPct": 100.0,
+        "bySector": {
+          "China": {
+            "trades": 957,
+            "winRate": 28.0,
+            "avgReturnPct": -3.95
+          }
+        },
+        "byMonth": {
+          "2025-12": {
+            "trades": 135,
+            "winRate": 26.7,
+            "avgReturnPct": -1.44
+          },
+          "2026-01": {
+            "trades": 170,
+            "winRate": 27.6,
+            "avgReturnPct": -21.17
+          },
+          "2026-02": {
+            "trades": 136,
+            "winRate": 29.4,
+            "avgReturnPct": -3.089
+          },
+          "2026-03": {
+            "trades": 157,
+            "winRate": 26.8,
+            "avgReturnPct": -2.337
+          },
+          "2026-04": {
+            "trades": 142,
+            "winRate": 27.5,
+            "avgReturnPct": 3.06
+          },
+          "2026-05": {
+            "trades": 146,
+            "winRate": 30.1,
+            "avgReturnPct": -1.558
+          },
+          "2026-06": {
+            "trades": 71,
+            "winRate": 28.2,
+            "avgReturnPct": 8.358
+          }
+        },
+        "byLaunchEra": {
+          "ipo_roadshow": {
+            "trades": 957,
+            "winRate": 28.0,
+            "avgReturnPct": -3.95
+          }
+        },
+        "byPatternTag": {
+          "fresh_flip": {
+            "trades": 957,
+            "winRate": 28.0,
+            "avgReturnPct": -3.95
+          },
+          "q_d_align": {
+            "trades": 957,
+            "winRate": 28.0,
+            "avgReturnPct": -3.95
+          },
+          "hist_accel": {
+            "trades": 660,
+            "winRate": 28.5,
+            "avgReturnPct": -1.043
+          },
+          "week_day_align": {
+            "trades": 654,
+            "winRate": 28.1,
+            "avgReturnPct": -0.044
+          },
+          "squeeze_expanding": {
+            "trades": 348,
+            "winRate": 31.0,
+            "avgReturnPct": -9.558
+          },
+          "squeeze_on": {
+            "trades": 256,
+            "winRate": 28.9,
+            "avgReturnPct": -1.277
+          },
+          "foam_skim": {
+            "trades": 231,
+            "winRate": 29.9,
+            "avgReturnPct": -0.92
+          },
+          "squeeze_release": {
+            "trades": 160,
+            "winRate": 32.5,
+            "avgReturnPct": 0.479
+          }
+        }
+      },
+      "topPatterns": [
+        {
+          "pattern": "squeeze_release",
+          "trades": 160,
+          "winRate": 32.5,
+          "avgReturnPct": 0.479
+        },
+        {
+          "pattern": "squeeze_expanding",
+          "trades": 348,
+          "winRate": 31.0,
+          "avgReturnPct": -9.558
+        },
+        {
+          "pattern": "foam_skim",
+          "trades": 231,
+          "winRate": 29.9,
+          "avgReturnPct": -0.92
+        },
+        {
+          "pattern": "squeeze_on",
+          "trades": 256,
+          "winRate": 28.9,
+          "avgReturnPct": -1.277
+        },
+        {
+          "pattern": "hist_accel",
+          "trades": 660,
+          "winRate": 28.5,
+          "avgReturnPct": -1.043
+        },
+        {
+          "pattern": "week_day_align",
+          "trades": 654,
+          "winRate": 28.1,
+          "avgReturnPct": -0.044
+        },
+        {
+          "pattern": "fresh_flip",
+          "trades": 957,
+          "winRate": 28.0,
+          "avgReturnPct": -3.95
+        },
+        {
+          "pattern": "q_d_align",
+          "trades": 957,
+          "winRate": 28.0,
+          "avgReturnPct": -3.95
+        }
+      ],
+      "grokMilestones": [
+        {
+          "sort": "2018-07",
+          "id": "us-china-tariffs",
+          "title": "US\u2013China tariff escalation (approx)"
+        },
+        {
+          "sort": "2021-07",
+          "id": "china-tech-crackdown",
+          "title": "China tech regulation wave (approx)"
+        }
+      ]
+    },
+    "ETFs": {
+      "sectorLaunch": "2015-06-01",
+      "primaryEra": "pre_ai",
+      "backtestStart": "2025-12-13",
+      "backtestEnd": "2026-06-11",
+      "symbolCount": 100,
+      "failedSymbols": 7,
+      "summary": {
+        "tradeCount": 843,
+        "winRate": 34.5,
+        "avgReturnPct": -0.103,
+        "maxDrawdownPct": 77.612,
+        "bySector": {
+          "ETFs": {
+            "trades": 843,
+            "winRate": 34.5,
+            "avgReturnPct": -0.103
+          }
+        },
+        "byMonth": {
+          "2025-12": {
+            "trades": 131,
+            "winRate": 18.3,
+            "avgReturnPct": -1.053
+          },
+          "2026-01": {
+            "trades": 142,
+            "winRate": 32.4,
+            "avgReturnPct": 0.536
+          },
+          "2026-02": {
+            "trades": 124,
+            "winRate": 29.8,
+            "avgReturnPct": -0.561
+          },
+          "2026-03": {
+            "trades": 148,
+            "winRate": 51.4,
+            "avgReturnPct": 0.349
+          },
+          "2026-04": {
+            "trades": 115,
+            "winRate": 64.3,
+            "avgReturnPct": 1.593
+          },
+          "2026-05": {
+            "trades": 137,
+            "winRate": 16.1,
+            "avgReturnPct": -1.402
+          },
+          "2026-06": {
+            "trades": 46,
+            "winRate": 26.1,
+            "avgReturnPct": 0.049
+          }
+        },
+        "byLaunchEra": {
+          "ipo_roadshow": {
+            "trades": 843,
+            "winRate": 34.5,
+            "avgReturnPct": -0.103
+          }
+        },
+        "byPatternTag": {
+          "fresh_flip": {
+            "trades": 843,
+            "winRate": 34.5,
+            "avgReturnPct": -0.103
+          },
+          "q_d_align": {
+            "trades": 843,
+            "winRate": 34.5,
+            "avgReturnPct": -0.103
+          },
+          "hist_accel": {
+            "trades": 660,
+            "winRate": 34.1,
+            "avgReturnPct": -0.189
+          },
+          "week_day_align": {
+            "trades": 593,
+            "winRate": 31.4,
+            "avgReturnPct": -0.353
+          },
+          "squeeze_expanding": {
+            "trades": 311,
+            "winRate": 41.8,
+            "avgReturnPct": 0.188
+          },
+          "foam_skim": {
+            "trades": 188,
+            "winRate": 41.0,
+            "avgReturnPct": -0.176
+          },
+          "squeeze_on": {
+            "trades": 185,
+            "winRate": 35.1,
+            "avgReturnPct": 0.018
+          },
+          "squeeze_release": {
+            "trades": 131,
+            "winRate": 37.4,
+            "avgReturnPct": 0.228
+          }
+        }
+      },
+      "topPatterns": [
+        {
+          "pattern": "squeeze_expanding",
+          "trades": 311,
+          "winRate": 41.8,
+          "avgReturnPct": 0.188
+        },
+        {
+          "pattern": "foam_skim",
+          "trades": 188,
+          "winRate": 41.0,
+          "avgReturnPct": -0.176
+        },
+        {
+          "pattern": "squeeze_release",
+          "trades": 131,
+          "winRate": 37.4,
+          "avgReturnPct": 0.228
+        },
+        {
+          "pattern": "squeeze_on",
+          "trades": 185,
+          "winRate": 35.1,
+          "avgReturnPct": 0.018
+        },
+        {
+          "pattern": "fresh_flip",
+          "trades": 843,
+          "winRate": 34.5,
+          "avgReturnPct": -0.103
+        },
+        {
+          "pattern": "q_d_align",
+          "trades": 843,
+          "winRate": 34.5,
+          "avgReturnPct": -0.103
+        },
+        {
+          "pattern": "hist_accel",
+          "trades": 660,
+          "winRate": 34.1,
+          "avgReturnPct": -0.189
+        },
+        {
+          "pattern": "week_day_align",
+          "trades": 593,
+          "winRate": 31.4,
+          "avgReturnPct": -0.353
+        }
+      ],
+      "grokMilestones": [
+        {
+          "sort": "2020-03",
+          "id": "covid-crash",
+          "title": "COVID market shock (approx)"
+        },
+        {
+          "sort": "2022-01",
+          "id": "fed-hike-cycle",
+          "title": "Fed tightening cycle (approx)"
+        }
+      ]
+    },
+    "Energy & Water": {
+      "sectorLaunch": "2019-01-01",
+      "primaryEra": "pre_ai",
+      "backtestStart": "2025-12-13",
+      "backtestEnd": "2026-06-11",
+      "symbolCount": 5,
+      "failedSymbols": 0,
+      "summary": {
+        "tradeCount": 41,
+        "winRate": 46.3,
+        "avgReturnPct": -0.105,
+        "maxDrawdownPct": 28.181,
+        "bySector": {
+          "Energy & Water": {
+            "trades": 41,
+            "winRate": 46.3,
+            "avgReturnPct": -0.105
+          }
+        },
+        "byMonth": {
+          "2025-12": {
+            "trades": 6,
+            "winRate": 33.3,
+            "avgReturnPct": -2.626
+          },
+          "2026-01": {
+            "trades": 8,
+            "winRate": 87.5,
+            "avgReturnPct": 5.581
+          },
+          "2026-02": {
+            "trades": 1,
+            "winRate": 100.0,
+            "avgReturnPct": 8.023
+          },
+          "2026-03": {
+            "trades": 7,
+            "winRate": 57.1,
+            "avgReturnPct": 1.535
+          },
+          "2026-04": {
+            "trades": 6,
+            "winRate": 33.3,
+            "avgReturnPct": -3.758
+          },
+          "2026-05": {
+            "trades": 7,
+            "winRate": 0.0,
+            "avgReturnPct": -3.934
+          },
+          "2026-06": {
+            "trades": 6,
+            "winRate": 50.0,
+            "avgReturnPct": -0.314
+          }
+        },
+        "byLaunchEra": {
+          "ipo_roadshow": {
+            "trades": 41,
+            "winRate": 46.3,
+            "avgReturnPct": -0.105
+          }
+        },
+        "byPatternTag": {
+          "fresh_flip": {
+            "trades": 41,
+            "winRate": 46.3,
+            "avgReturnPct": -0.105
+          },
+          "q_d_align": {
+            "trades": 41,
+            "winRate": 46.3,
+            "avgReturnPct": -0.105
+          },
+          "hist_accel": {
+            "trades": 34,
+            "winRate": 44.1,
+            "avgReturnPct": -0.39
+          },
+          "week_day_align": {
+            "trades": 30,
+            "winRate": 53.3,
+            "avgReturnPct": 0.901
+          },
+          "squeeze_expanding": {
+            "trades": 16,
+            "winRate": 62.5,
+            "avgReturnPct": 2.529
+          },
+          "foam_skim": {
+            "trades": 12,
+            "winRate": 66.7,
+            "avgReturnPct": 2.116
+          },
+          "squeeze_release": {
+            "trades": 6,
+            "winRate": 66.7,
+            "avgReturnPct": 2.562
+          },
+          "squeeze_on": {
+            "trades": 5,
+            "winRate": 20.0,
+            "avgReturnPct": -1.417
+          }
+        }
+      },
+      "topPatterns": [
+        {
+          "pattern": "squeeze_release",
+          "trades": 6,
+          "winRate": 66.7,
+          "avgReturnPct": 2.562
+        },
+        {
+          "pattern": "foam_skim",
+          "trades": 12,
+          "winRate": 66.7,
+          "avgReturnPct": 2.116
+        },
+        {
+          "pattern": "squeeze_expanding",
+          "trades": 16,
+          "winRate": 62.5,
+          "avgReturnPct": 2.529
+        },
+        {
+          "pattern": "week_day_align",
+          "trades": 30,
+          "winRate": 53.3,
+          "avgReturnPct": 0.901
+        },
+        {
+          "pattern": "fresh_flip",
+          "trades": 41,
+          "winRate": 46.3,
+          "avgReturnPct": -0.105
+        },
+        {
+          "pattern": "q_d_align",
+          "trades": 41,
+          "winRate": 46.3,
+          "avgReturnPct": -0.105
+        },
+        {
+          "pattern": "hist_accel",
+          "trades": 34,
+          "winRate": 44.1,
+          "avgReturnPct": -0.39
+        },
+        {
+          "pattern": "squeeze_on",
+          "trades": 5,
+          "winRate": 20.0,
+          "avgReturnPct": -1.417
+        }
+      ],
+      "grokMilestones": [
+        {
+          "sort": "2022-03",
+          "id": "energy-shock",
+          "title": "Post-Ukraine energy shock (approx)"
+        }
+      ]
+    },
+    "IPO Access": {
+      "sectorLaunch": "2021-04-14",
+      "primaryEra": "ipo_roadshow",
+      "backtestStart": "2025-12-13",
+      "backtestEnd": "2026-06-11",
+      "symbolCount": 45,
+      "failedSymbols": 10,
+      "summary": {
+        "tradeCount": 335,
+        "winRate": 30.7,
+        "avgReturnPct": -0.233,
+        "maxDrawdownPct": 97.412,
+        "bySector": {
+          "IPO Access": {
+            "trades": 192,
+            "winRate": 29.2,
+            "avgReturnPct": -0.265
+          },
+          "Manufacturing & Materials": {
+            "trades": 19,
+            "winRate": 21.1,
+            "avgReturnPct": -3.003
+          },
+          "My First List": {
+            "trades": 19,
+            "winRate": 26.3,
+            "avgReturnPct": -1.633
+          },
+          "Technology": {
+            "trades": 105,
+            "winRate": 36.2,
+            "avgReturnPct": 0.581
+          }
+        },
+        "byMonth": {
+          "2025-12": {
+            "trades": 31,
+            "winRate": 35.5,
+            "avgReturnPct": -0.506
+          },
+          "2026-01": {
+            "trades": 62,
+            "winRate": 29.0,
+            "avgReturnPct": 0.973
+          },
+          "2026-02": {
+            "trades": 56,
+            "winRate": 37.5,
+            "avgReturnPct": 3.199
+          },
+          "2026-03": {
+            "trades": 54,
+            "winRate": 29.6,
+            "avgReturnPct": -1.967
+          },
+          "2026-04": {
+            "trades": 51,
+            "winRate": 41.2,
+            "avgReturnPct": 0.335
+          },
+          "2026-05": {
+            "trades": 57,
+            "winRate": 22.8,
+            "avgReturnPct": -1.818
+          },
+          "2026-06": {
+            "trades": 24,
+            "winRate": 12.5,
+            "avgReturnPct": -4.543
+          }
+        },
+        "byLaunchEra": {
+          "ipo_roadshow": {
+            "trades": 335,
+            "winRate": 30.7,
+            "avgReturnPct": -0.233
+          }
+        },
+        "byPatternTag": {
+          "fresh_flip": {
+            "trades": 335,
+            "winRate": 30.7,
+            "avgReturnPct": -0.233
+          },
+          "q_d_align": {
+            "trades": 335,
+            "winRate": 30.7,
+            "avgReturnPct": -0.233
+          },
+          "hist_accel": {
+            "trades": 234,
+            "winRate": 32.5,
+            "avgReturnPct": 0.064
+          },
+          "week_day_align": {
+            "trades": 204,
+            "winRate": 27.5,
+            "avgReturnPct": -1.472
+          },
+          "squeeze_expanding": {
+            "trades": 124,
+            "winRate": 35.5,
+            "avgReturnPct": 0.09
+          },
+          "foam_skim": {
+            "trades": 77,
+            "winRate": 41.6,
+            "avgReturnPct": 1.66
+          },
+          "squeeze_on": {
+            "trades": 71,
+            "winRate": 32.4,
+            "avgReturnPct": 0.26
+          },
+          "squeeze_release": {
+            "trades": 44,
+            "winRate": 38.6,
+            "avgReturnPct": 0.208
+          }
+        }
+      },
+      "topPatterns": [
+        {
+          "pattern": "foam_skim",
+          "trades": 77,
+          "winRate": 41.6,
+          "avgReturnPct": 1.66
+        },
+        {
+          "pattern": "squeeze_release",
+          "trades": 44,
+          "winRate": 38.6,
+          "avgReturnPct": 0.208
+        },
+        {
+          "pattern": "squeeze_expanding",
+          "trades": 124,
+          "winRate": 35.5,
+          "avgReturnPct": 0.09
+        },
+        {
+          "pattern": "hist_accel",
+          "trades": 234,
+          "winRate": 32.5,
+          "avgReturnPct": 0.064
+        },
+        {
+          "pattern": "squeeze_on",
+          "trades": 71,
+          "winRate": 32.4,
+          "avgReturnPct": 0.26
+        },
+        {
+          "pattern": "fresh_flip",
+          "trades": 335,
+          "winRate": 30.7,
+          "avgReturnPct": -0.233
+        },
+        {
+          "pattern": "q_d_align",
+          "trades": 335,
+          "winRate": 30.7,
+          "avgReturnPct": -0.233
+        },
+        {
+          "pattern": "week_day_align",
+          "trades": 204,
+          "winRate": 27.5,
+          "avgReturnPct": -1.472
+        }
+      ],
+      "grokMilestones": [
+        {
+          "sort": "2021-04",
+          "id": "rh-ipo-access",
+          "title": "Robinhood IPO Access launch (approx)"
+        },
+        {
+          "sort": "2021-04",
+          "id": "coin-ipo",
+          "title": "Coinbase IPO (COIN)"
+        }
+      ]
+    },
+    "Manufacturing & Materials": {
+      "sectorLaunch": "2016-01-01",
+      "primaryEra": "colossus_scale",
+      "backtestStart": "2025-12-13",
+      "backtestEnd": "2026-06-11",
+      "symbolCount": 100,
+      "failedSymbols": 2,
+      "summary": {
+        "tradeCount": 846,
+        "winRate": 38.3,
+        "avgReturnPct": 0.438,
+        "maxDrawdownPct": 95.403,
+        "bySector": {
+          "China": {
+            "trades": 17,
+            "winRate": 29.4,
+            "avgReturnPct": -0.323
+          },
+          "Manufacturing & Materials": {
+            "trades": 813,
+            "winRate": 38.3,
+            "avgReturnPct": 0.384
+          },
+          "Technology": {
+            "trades": 16,
+            "winRate": 50.0,
+            "avgReturnPct": 3.99
+          }
+        },
+        "byMonth": {
+          "2025-12": {
+            "trades": 92,
+            "winRate": 32.6,
+            "avgReturnPct": -0.148
+          },
+          "2026-01": {
+            "trades": 127,
+            "winRate": 48.8,
+            "avgReturnPct": 1.619
+          },
+          "2026-02": {
+            "trades": 122,
+            "winRate": 28.7,
+            "avgReturnPct": -1.391
+          },
+          "2026-03": {
+            "trades": 144,
+            "winRate": 45.8,
+            "avgReturnPct": 2.959
+          },
+          "2026-04": {
+            "trades": 136,
+            "winRate": 46.3,
+            "avgReturnPct": 2.358
+          },
+          "2026-05": {
+            "trades": 161,
+            "winRate": 26.7,
+            "avgReturnPct": -2.562
+          },
+          "2026-06": {
+            "trades": 64,
+            "winRate": 39.1,
+            "avgReturnPct": 0.219
+          }
+        },
+        "byLaunchEra": {
+          "ipo_roadshow": {
+            "trades": 846,
+            "winRate": 38.3,
+            "avgReturnPct": 0.438
+          }
+        },
+        "byPatternTag": {
+          "fresh_flip": {
+            "trades": 846,
+            "winRate": 38.3,
+            "avgReturnPct": 0.438
+          },
+          "q_d_align": {
+            "trades": 846,
+            "winRate": 38.3,
+            "avgReturnPct": 0.438
+          },
+          "hist_accel": {
+            "trades": 646,
+            "winRate": 39.3,
+            "avgReturnPct": 0.512
+          },
+          "week_day_align": {
+            "trades": 584,
+            "winRate": 36.3,
+            "avgReturnPct": -0.103
+          },
+          "squeeze_expanding": {
+            "trades": 353,
+            "winRate": 43.1,
+            "avgReturnPct": 0.825
+          },
+          "foam_skim": {
+            "trades": 235,
+            "winRate": 43.4,
+            "avgReturnPct": 0.759
+          },
+          "squeeze_on": {
+            "trades": 213,
+            "winRate": 34.7,
+            "avgReturnPct": 0.278
+          },
+          "squeeze_release": {
+            "trades": 161,
+            "winRate": 44.1,
+            "avgReturnPct": 1.371
+          }
+        }
+      },
+      "topPatterns": [
+        {
+          "pattern": "squeeze_release",
+          "trades": 161,
+          "winRate": 44.1,
+          "avgReturnPct": 1.371
+        },
+        {
+          "pattern": "foam_skim",
+          "trades": 235,
+          "winRate": 43.4,
+          "avgReturnPct": 0.759
+        },
+        {
+          "pattern": "squeeze_expanding",
+          "trades": 353,
+          "winRate": 43.1,
+          "avgReturnPct": 0.825
+        },
+        {
+          "pattern": "hist_accel",
+          "trades": 646,
+          "winRate": 39.3,
+          "avgReturnPct": 0.512
+        },
+        {
+          "pattern": "fresh_flip",
+          "trades": 846,
+          "winRate": 38.3,
+          "avgReturnPct": 0.438
+        },
+        {
+          "pattern": "q_d_align",
+          "trades": 846,
+          "winRate": 38.3,
+          "avgReturnPct": 0.438
+        },
+        {
+          "pattern": "week_day_align",
+          "trades": 584,
+          "winRate": 36.3,
+          "avgReturnPct": -0.103
+        },
+        {
+          "pattern": "squeeze_on",
+          "trades": 213,
+          "winRate": 34.7,
+          "avgReturnPct": 0.278
+        }
+      ],
+      "grokMilestones": [
+        {
+          "sort": "2024-06",
+          "id": "colossus-announce",
+          "title": "Colossus announced \u00b7 fab/GPU demand"
+        }
+      ]
+    },
+    "Technology": {
+      "sectorLaunch": "2013-01-01",
+      "primaryEra": "ai_wave",
+      "backtestStart": "2025-12-13",
+      "backtestEnd": "2026-06-11",
+      "symbolCount": 100,
+      "failedSymbols": 2,
+      "summary": {
+        "tradeCount": 925,
+        "winRate": 33.9,
+        "avgReturnPct": 0.933,
+        "maxDrawdownPct": 100.168,
+        "bySector": {
+          "China": {
+            "trades": 40,
+            "winRate": 30.0,
+            "avgReturnPct": 13.217
+          },
+          "My First List": {
+            "trades": 14,
+            "winRate": 64.3,
+            "avgReturnPct": 2.477
+          },
+          "Technology": {
+            "trades": 871,
+            "winRate": 33.6,
+            "avgReturnPct": 0.344
+          }
+        },
+        "byMonth": {
+          "2025-12": {
+            "trades": 111,
+            "winRate": 31.5,
+            "avgReturnPct": -2.927
+          },
+          "2026-01": {
+            "trades": 169,
+            "winRate": 36.1,
+            "avgReturnPct": 0.407
+          },
+          "2026-02": {
+            "trades": 133,
+            "winRate": 35.3,
+            "avgReturnPct": 1.732
+          },
+          "2026-03": {
+            "trades": 154,
+            "winRate": 27.9,
+            "avgReturnPct": -0.729
+          },
+          "2026-04": {
+            "trades": 130,
+            "winRate": 52.3,
+            "avgReturnPct": 9.128
+          },
+          "2026-05": {
+            "trades": 168,
+            "winRate": 28.0,
+            "avgReturnPct": 0.159
+          },
+          "2026-06": {
+            "trades": 60,
+            "winRate": 21.7,
+            "avgReturnPct": -3.547
+          }
+        },
+        "byLaunchEra": {
+          "ipo_roadshow": {
+            "trades": 925,
+            "winRate": 33.9,
+            "avgReturnPct": 0.933
+          }
+        },
+        "byPatternTag": {
+          "fresh_flip": {
+            "trades": 925,
+            "winRate": 33.9,
+            "avgReturnPct": 0.933
+          },
+          "q_d_align": {
+            "trades": 925,
+            "winRate": 33.9,
+            "avgReturnPct": 0.933
+          },
+          "hist_accel": {
+            "trades": 677,
+            "winRate": 34.3,
+            "avgReturnPct": 1.1
+          },
+          "week_day_align": {
+            "trades": 645,
+            "winRate": 33.8,
+            "avgReturnPct": 0.907
+          },
+          "squeeze_expanding": {
+            "trades": 390,
+            "winRate": 39.0,
+            "avgReturnPct": 1.631
+          },
+          "foam_skim": {
+            "trades": 245,
+            "winRate": 35.9,
+            "avgReturnPct": 1.192
+          },
+          "squeeze_on": {
+            "trades": 198,
+            "winRate": 29.3,
+            "avgReturnPct": -0.661
+          },
+          "squeeze_release": {
+            "trades": 155,
+            "winRate": 36.1,
+            "avgReturnPct": 1.191
+          }
+        }
+      },
+      "topPatterns": [
+        {
+          "pattern": "squeeze_expanding",
+          "trades": 390,
+          "winRate": 39.0,
+          "avgReturnPct": 1.631
+        },
+        {
+          "pattern": "squeeze_release",
+          "trades": 155,
+          "winRate": 36.1,
+          "avgReturnPct": 1.191
+        },
+        {
+          "pattern": "foam_skim",
+          "trades": 245,
+          "winRate": 35.9,
+          "avgReturnPct": 1.192
+        },
+        {
+          "pattern": "hist_accel",
+          "trades": 677,
+          "winRate": 34.3,
+          "avgReturnPct": 1.1
+        },
+        {
+          "pattern": "fresh_flip",
+          "trades": 925,
+          "winRate": 33.9,
+          "avgReturnPct": 0.933
+        },
+        {
+          "pattern": "q_d_align",
+          "trades": 925,
+          "winRate": 33.9,
+          "avgReturnPct": 0.933
+        },
+        {
+          "pattern": "week_day_align",
+          "trades": 645,
+          "winRate": 33.8,
+          "avgReturnPct": 0.907
+        },
+        {
+          "pattern": "squeeze_on",
+          "trades": 198,
+          "winRate": 29.3,
+          "avgReturnPct": -0.661
+        }
+      ],
+      "grokMilestones": [
+        {
+          "sort": "2023-07",
+          "id": "xai-founded",
+          "title": "xAI announced"
+        },
+        {
+          "sort": "2023-11",
+          "id": "grok-preview",
+          "title": "Grok preview on X Premium+"
+        },
+        {
+          "sort": "2024-03",
+          "id": "grok-1-oss",
+          "title": "Grok-1 open source"
+        }
+      ]
+    }
+  }
+}
