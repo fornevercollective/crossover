@@ -146,6 +146,7 @@
         status: "neutral",
         bias: "neutral",
         side: "neutral",
+        aligned: 0,
         bb: null,
         lastFlip: null,
       };
@@ -166,6 +167,7 @@
       status,
       bias,
       side: meta.side,
+      aligned: meta.aligned,
       bb: day?.bbPosition ?? null,
       lastFlip: day?.lastFlip ?? null,
     };
@@ -182,6 +184,39 @@
     if (!el) return;
     el.textContent = text;
     el.dataset.kind = kind;
+  }
+
+  function renderFlipMeter(signal) {
+    const wrap = $("paperBriefMeterWrap");
+    const track = $("paperBriefMeter");
+    const fill = $("paperBriefMeterFill");
+    const valueEl = $("paperBriefMeterValue");
+    if (!wrap || !track || !fill) return;
+
+    const hasData = signal?.score != null && !Number.isNaN(signal.score);
+    const score = hasData ? Math.max(0, Math.min(100, Math.round(signal.score))) : 0;
+    const bias = hasData ? normalizeBias(signal.bias ?? signal.side) : "neutral";
+    const aligned = hasData ? Math.max(0, Math.min(4, signal.aligned ?? 0)) : 0;
+
+    wrap.dataset.bias = bias;
+    fill.style.width = hasData ? `${score}%` : "0%";
+    valueEl.textContent = hasData ? `${score}%` : "—";
+
+    track.setAttribute("aria-valuenow", hasData ? String(score) : "0");
+    track.setAttribute(
+      "aria-label",
+      hasData
+        ? `MACD flip signal strength ${score} percent, ${bias}`
+        : "MACD flip signal strength, no symbol selected"
+    );
+
+    wrap.querySelectorAll(".paperBrief__meterTick").forEach((tick, i) => {
+      tick.classList.toggle("paperBrief__meterTick--on", i < aligned);
+    });
+
+    wrap.querySelectorAll(".paperBrief__meterTfRow span").forEach((span, i) => {
+      span.classList.toggle("paperBrief__meterTf--on", i < aligned);
+    });
   }
 
   function renderBrief(ticker, quoteWrap, signal, position, ta) {
@@ -212,6 +247,7 @@
     $("paperBriefScore").textContent = signal.score != null ? `${signal.score}%` : "—";
     setPill($("paperBriefStatusPill"), signal.status, signal.status);
     $("paperBriefSignalBias").textContent = signal.bias;
+    renderFlipMeter(signal);
     if (signal.lastFlip) {
       $("paperBriefSignalBias").title = `Last flip: ${signal.lastFlip.type} @ ${signal.lastFlip.date}`;
     }
@@ -282,6 +318,7 @@
       $("paperBriefFootStatus").textContent = String(e.message || e);
       $("paperBrief").hidden = false;
       $("paperBriefTicker").textContent = currentTicker;
+      renderFlipMeter(fetchSignal(currentTicker));
     }
   }
 
@@ -342,4 +379,5 @@
 
   window.PaperBrief = { load, stubTaFromQuote, confluenceReadout };
   bind();
+  renderFlipMeter(null);
 })();

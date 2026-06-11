@@ -223,6 +223,15 @@ button:disabled { opacity: 0.45; cursor: not-allowed; }
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
 }
 
+.rh-filter-card--secondary {
+  margin-top: 12px;
+  grid-template-columns: 1.2fr 1fr;
+}
+
+.rh-filter-card--secondary .rh-filter-col--wide:first-child {
+  grid-column: auto;
+}
+
 .rh-filter-col {
   display: flex;
   flex-direction: column;
@@ -243,11 +252,41 @@ button:disabled { opacity: 0.45; cursor: not-allowed; }
   color: #4b5563;
 }
 
-#listDistChart {
+#listDistChart,
+#listSectorChart,
+#listProfitChart {
   width: 100%;
-  height: 56px;
   border-radius: 6px;
 }
+
+#listDistChart {
+  height: 56px;
+}
+
+#listSectorChart {
+  height: 132px;
+}
+
+#listProfitChart {
+  height: 88px;
+}
+
+.rh-profit-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  font-size: 11px;
+  color: #4b5563;
+  line-height: 1.35;
+}
+
+.rh-profit-stats strong {
+  color: #111827;
+  font-weight: 600;
+}
+
+.rh-profit-stat--long { color: #008a04; }
+.rh-profit-stat--short { color: #d44a00; }
 
 .rh-filter-chips {
   display: flex;

@@ -33,6 +33,33 @@
           <span class="paperBrief__phase muted" id="paperBriefPhaseBadge">Paper · demo</span>
         </div>
 
+        <div class="paperBrief__meter" id="paperBriefMeterWrap" data-bias="neutral">
+          <div class="paperBrief__meterHead">
+            <span class="paperBrief__meterLabel muted">MACD flip strength</span>
+            <span class="paperBrief__meterValue" id="paperBriefMeterValue">—</span>
+          </div>
+          <div
+            class="paperBrief__meterTrack"
+            id="paperBriefMeter"
+            role="meter"
+            aria-label="MACD flip signal strength"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+          >
+            <div class="paperBrief__meterTicks" aria-hidden="true">
+              <span class="paperBrief__meterTick" data-tf="Q"></span>
+              <span class="paperBrief__meterTick" data-tf="M"></span>
+              <span class="paperBrief__meterTick" data-tf="W"></span>
+              <span class="paperBrief__meterTick" data-tf="D"></span>
+            </div>
+            <div class="paperBrief__meterFill" id="paperBriefMeterFill"></div>
+          </div>
+          <div class="paperBrief__meterTfRow" aria-hidden="true">
+            <span>Q</span><span>M</span><span>W</span><span>D</span>
+          </div>
+        </div>
+
         <div class="paperBrief__quote" aria-label="Reference quote">
           <div class="paperBrief__quoteRow" id="paperBriefChgRow">
             <span class="muted">Last</span>
@@ -180,6 +207,18 @@
           <div class="rh-filter-col rh-filter-col--wide">
             <span class="rh-filter-label">About</span>
             <p class="rh-list-blurb" id="listBlurb">Multi-timeframe MACD &amp; Bollinger flips from Robinhood lists.</p>
+          </div>
+        </div>
+
+        <div class="rh-filter-card rh-filter-card--secondary">
+          <div class="rh-filter-col rh-filter-col--wide">
+            <span class="rh-filter-label">Sector breakdown · day MACD</span>
+            <canvas id="listSectorChart" height="132" aria-label="Sector day bias breakdown"></canvas>
+          </div>
+          <div class="rh-filter-col rh-filter-col--wide">
+            <span class="rh-filter-label">Day profit potential · Q→D alignment</span>
+            <canvas id="listProfitChart" height="88" aria-label="Day profit score distribution"></canvas>
+            <div class="rh-profit-stats" id="listProfitStats"></div>
           </div>
         </div>
       </section>
