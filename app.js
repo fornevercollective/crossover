@@ -36,6 +36,18 @@ function asset(path) {
   return `${BASE}${path}`;
 }
 
+function selectSymbol(sym, row) {
+  if (!sym) return;
+  const r = row || state.allRows.find((x) => x.id === sym || x.yahoo === sym);
+  document.getElementById("tickerInput").value = sym;
+  if (window.FlipChart) window.FlipChart.select(sym, r?.yahoo ?? sym);
+  if (window.PaperBrief) window.PaperBrief.load(sym);
+}
+
+function getFilteredRows() {
+  return sortRows(applyFilters(state.allRows));
+}
+
 function profitMeta(row) {
   const frames = { ...row.frames, ...(state.liveCache[row.yahoo]?.frames ?? {}) };
   let bull = 0;
@@ -94,6 +106,13 @@ function sortValue(row, key) {
   return "";
 }
 
+function marketFilterMatch(value: string, rowValue: string | undefined) {
+  const v = (rowValue || "").trim();
+  if (value === "__blank__") return !v;
+  if (!value) return true;
+  return v === value;
+}
+
 function applyFilters(rows) {
   const q = document.getElementById("search").value.trim().toLowerCase();
   const country = document.getElementById("country").value;
@@ -103,8 +122,8 @@ function applyFilters(rows) {
   const section = document.getElementById("sectionFilter").value;
 
   return rows.filter((row) => {
-    if (country && row.country !== country) return false;
-    if (exchange && row.exchange !== exchange) return false;
+    if (!marketFilterMatch(country, row.country)) return false;
+    if (!marketFilterMatch(exchange, row.exchange)) return false;
     if (watchlist && !(row.lists || []).includes(watchlist)) return false;
     if (section) {
       const lists = row.lists || [];
@@ -165,9 +184,9 @@ function renderRow(row) {
   const cells = FRAMES.map((f) => `<td>${cellHtml(f, frames[f])}</td>`).join("");
   const listHint = (row.lists || []).slice(0, 2).join(", ");
   const sector = row.sector || listHint || "—";
-  return `<tr data-symbol="${row.id}">
+  return `<tr data-symbol="${row.id}"${row.buildError ? ' class="row-error"' : ""}>
     <td>${profitCirclesHtml(row)}</td>
-    <td class="sym" title="${row.name}${row.lists?.length ? " · " + row.lists.join(", ") : ""}">${row.id}<br><small>${row.yahoo}</small></td>
+    <td class="sym" title="${row.name}${row.buildError ? " · " + row.buildError : ""}${row.lists?.length ? " · " + row.lists.join(", ") : ""}">${row.id}<br><small>${row.yahoo}</small></td>
     <td class="meta">${row.exchange || "—"}<br>${row.country || "—"}</td>
     <td class="meta" title="${(row.lists || []).join(", ")}">${sector}</td>
     ${cells}
@@ -204,12 +223,19 @@ function renderBoard() {
 
   tbody.querySelectorAll(".sym").forEach((el) => {
     el.addEventListener("click", () => {
-      const sym = el.closest("tr")?.dataset.symbol;
+      const tr = el.closest("tr");
+      const sym = tr?.dataset.symbol;
       if (!sym) return;
-      document.getElementById("paperSymbol").value = sym;
-      runPaperProbe();
+      const row = state.rows.find((r) => r.id === sym) || state.allRows.find((r) => r.id === sym);
+      selectSymbol(sym, row);
+      tr?.classList.add("selected");
+      tbody.querySelectorAll("tr.selected").forEach((r) => {
+        if (r !== tr) r.classList.remove("selected");
+      });
     });
   });
+
+  if (window.ListHeader) window.ListHeader.update(filtered);
 
   const page = Math.floor(state.offset / PAGE) + 1;
   const pages = Math.max(1, Math.ceil(state.total / PAGE));
@@ -221,26 +247,29 @@ function renderBoard() {
   updateHeroCounts(state.total);
 }
 
+function addMarketOptions(sel, values) {
+  for (const v of values) {
+    const o = document.createElement("option");
+    o.value = v;
+    o.textContent = v === "__blank__" ? "— (blank)" : v;
+    sel.appendChild(o);
+  }
+}
+
 function populateFilters(rows) {
-  const countries = [...new Set(rows.map((r) => r.country).filter(Boolean))].sort();
-  const exchanges = [...new Set(rows.map((r) => r.exchange).filter(Boolean))].sort();
+  const countries = [
+    ...new Set(rows.map((r) => (r.country || "").trim() || "__blank__")),
+  ].sort((a, b) => (a === "__blank__" ? -1 : b === "__blank__" ? 1 : a.localeCompare(b)));
+  const exchanges = [
+    ...new Set(rows.map((r) => (r.exchange || "").trim() || "__blank__")),
+  ].sort((a, b) => (a === "__blank__" ? -1 : b === "__blank__" ? 1 : a.localeCompare(b)));
   const cSel = document.getElementById("country");
   const eSel = document.getElementById("exchange");
   const wSel = document.getElementById("watchlist");
   const sSel = document.getElementById("sectionFilter");
 
-  for (const c of countries) {
-    const o = document.createElement("option");
-    o.value = c;
-    o.textContent = c;
-    cSel.appendChild(o);
-  }
-  for (const e of exchanges) {
-    const o = document.createElement("option");
-    o.value = e;
-    o.textContent = e;
-    eSel.appendChild(o);
-  }
+  addMarketOptions(cSel, countries);
+  addMarketOptions(eSel, exchanges);
 
   const sectionLabels = {
     curated: "Robinhood Curated",
@@ -310,13 +339,13 @@ async function loadFiltersApi() {
   for (const c of countries) {
     const o = document.createElement("option");
     o.value = c;
-    o.textContent = c;
+    o.textContent = c === "__blank__" ? "— (blank)" : c;
     cSel.appendChild(o);
   }
   for (const e of exchanges) {
     const o = document.createElement("option");
     o.value = e;
-    o.textContent = e;
+    o.textContent = e === "__blank__" ? "— (blank)" : e;
     eSel.appendChild(o);
   }
 
@@ -363,7 +392,7 @@ async function loadBoardApi() {
   if (exchange) p.set("exchange", exchange);
   if (watchlist) p.set("list", watchlist);
   p.set("offset", "0");
-  p.set("limit", "10000");
+  p.set("limit", "20000");
 
   const res = await fetch(`/api/board?${p}`);
   const data = await res.json();
@@ -372,55 +401,6 @@ async function loadBoardApi() {
   state.manifest = await fetch("/api/manifest").then((r) => r.json());
   updateMeta();
   renderBoard();
-}
-
-function formatProbe(data) {
-  const rh = data.robinhood;
-  const pt = data.paperTrade;
-  const lines = [
-    `<span class="rh">Robinhood (${rh.source})</span>`,
-    `  Last: ${rh.lastTradePrice ?? "—"}`,
-    `  Adj prev close: ${rh.adjustedPreviousClose ?? "—"}`,
-    `  Daily %: ${rh.dailyChangePct != null ? rh.dailyChangePct.toFixed(2) + "%" : "—"}`,
-    rh.note || "",
-    "",
-    `<span class="ours">Our MACD/BB (not RH)</span>`,
-    `  Day bias: ${data.ours.macdBias?.day ?? "—"} · BB: ${data.ours.bbPosition?.day ?? "—"}`,
-    `  Q/M/W/D: ${["quarter", "month", "week", "day"].map((f) => (data.ours.macdBias?.[f] === "bullish" ? "B" : data.ours.macdBias?.[f] === "bearish" ? "S" : "—")).join(" ")}`,
-    "",
-    `Agreement: ${data.comparison.biasAgreement}`,
-    `Price Δ vs our day close: ${data.comparison.priceDeltaPct != null ? data.comparison.priceDeltaPct.toFixed(2) + "%" : "—"}`,
-    "",
-    `<span class="side-${pt.side}">Paper ${pt.side.toUpperCase()}</span> ${pt.quantity} @ ${pt.estFillPrice ?? "—"} = $${pt.notional?.toFixed(2) ?? "—"}`,
-    pt.rationale,
-  ];
-  return lines.join("\n");
-}
-
-async function runPaperProbe() {
-  const sym = document.getElementById("paperSymbol").value.trim().toUpperCase();
-  const qty = Number(document.getElementById("paperQty").value || 100);
-  const out = document.getElementById("paperOut");
-  const btn = document.getElementById("paperProbe");
-  if (!sym) return;
-  btn.disabled = true;
-  out.textContent = "Probing…";
-  try {
-    let data;
-    if (STATIC) {
-      out.textContent = "Paper probe needs local server (npm run board:serve) for Robinhood official quotes.";
-      return;
-    }
-    const res = await fetch(`/api/paper/probe?symbol=${encodeURIComponent(sym)}&qty=${qty}`);
-    data = await res.json();
-    state.lastProbe = data;
-    out.innerHTML = formatProbe(data);
-    document.getElementById("paperCopy").disabled = false;
-  } catch (e) {
-    out.textContent = String(e);
-  } finally {
-    btn.disabled = false;
-  }
 }
 
 function bind() {
@@ -466,13 +446,16 @@ function bind() {
     });
   }
 
-  document.getElementById("paperProbe").addEventListener("click", runPaperProbe);
-  document.getElementById("paperSymbol").addEventListener("keydown", (e) => {
-    if (e.key === "Enter") runPaperProbe();
+  document.getElementById("tickerInput")?.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      const sym = document.getElementById("tickerInput").value.trim().toUpperCase();
+      if (sym) selectSymbol(sym);
+    }
   });
-  document.getElementById("paperCopy").addEventListener("click", () => {
-    if (!state.lastProbe) return;
-    navigator.clipboard.writeText(JSON.stringify(state.lastProbe, null, 2));
+
+  document.getElementById("paperQty")?.addEventListener("change", () => {
+    const sym = document.getElementById("tickerInput")?.value.trim();
+    if (sym && window.PaperBrief) window.PaperBrief.load(sym);
   });
 
   document.querySelectorAll("th.sortable").forEach((th) => {
@@ -512,5 +495,16 @@ async function refreshLivePage() {
 }
 
 bind();
+
+window.FlipBoard = {
+  getRow: (sym) =>
+    state.allRows.find((r) => r.id === sym || r.yahoo === sym || r.id === sym?.toUpperCase()),
+  profitMeta,
+  get watchlists() {
+    return state.watchlists;
+  },
+  filteredCount: () => getFilteredRows().length,
+};
+
 if (STATIC) loadStatic();
 else loadFiltersApi().then(loadBoardApi);

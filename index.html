@@ -5,23 +5,126 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Flip Board — Robinhood Crossovers</title>
   <link rel="stylesheet" href="/crossover/styles.css" />
+  <link rel="stylesheet" href="/crossover/paper-brief.css" />
 </head>
 <body>
   <div class="app-shell">
     <aside class="paper-panel" id="paperPanel">
-      <h2>Paper Trade Lab</h2>
-      <p class="panel-sub">Probe Robinhood official quotes vs our MACD/BB — AI can search &amp; test here.</p>
-      <label class="field">
-        <span>Symbol</span>
-        <input id="paperSymbol" type="search" placeholder="AAPL, GLD, BTC-USD…" autocomplete="off" />
+      <label class="page__search">
+        Ticker
+        <input type="text" id="tickerInput" placeholder="AAPL, GLD…" autocomplete="off" />
       </label>
-      <label class="field">
-        <span>Qty (paper)</span>
+      <label class="paperBrief__qty">
+        Qty (paper)
         <input id="paperQty" type="number" value="100" min="1" step="1" />
       </label>
-      <button id="paperProbe" type="button" class="primary">Probe RH vs Ours</button>
-      <button id="paperCopy" type="button" class="ghost" disabled>Copy JSON for AI</button>
-      <div id="paperOut" class="paper-out muted">Enter a symbol and probe to compare Robinhood's built-in price estimation with flip-board signals.</div>
+
+      <aside
+        class="paperBrief paperBrief--portrait"
+        id="paperBrief"
+        aria-label="Paper trading confluence brief"
+        hidden
+      >
+        <div class="paperBrief__head">
+          <div>
+            <span class="paperBrief__eyebrow muted">Paper brief</span>
+            <span class="paperBrief__ticker" id="paperBriefTicker">—</span>
+          </div>
+          <span class="paperBrief__phase muted" id="paperBriefPhaseBadge">Paper · demo</span>
+        </div>
+
+        <div class="paperBrief__quote" aria-label="Reference quote">
+          <div class="paperBrief__quoteRow" id="paperBriefChgRow">
+            <span class="muted">Last</span>
+            <span id="paperBriefLast">—</span>
+          </div>
+          <div class="paperBrief__quoteRow">
+            <span class="muted">Chg</span>
+            <span id="paperBriefChg">—</span>
+          </div>
+          <div class="paperBrief__quoteRow">
+            <span class="muted">Prev</span>
+            <span id="paperBriefPrev">—</span>
+          </div>
+        </div>
+
+        <section class="paperBrief__block" aria-label="Technical structure">
+          <div class="paperBrief__blockLabel muted">Structure · TA</div>
+          <div class="paperBrief__kv">
+            <span class="muted">Trend</span>
+            <span id="paperBriefTaTrend">—</span>
+          </div>
+          <div class="paperBrief__kv">
+            <span class="muted">Level</span>
+            <span id="paperBriefTaLevel">—</span>
+          </div>
+          <div class="paperBrief__kv">
+            <span class="muted">Pattern</span>
+            <span id="paperBriefTaPattern">—</span>
+          </div>
+          <div class="paperBrief__kv">
+            <span class="muted">TA bias</span>
+            <span class="paperBrief__pill" id="paperBriefTaBias" data-kind="neutral">—</span>
+          </div>
+        </section>
+
+        <section class="paperBrief__block" aria-label="Strategy signal">
+          <div class="paperBrief__blockLabel muted">Flip signal · MACD/BB</div>
+          <div class="paperBrief__kv">
+            <span class="muted">Track</span>
+            <span id="paperBriefTrack">day</span>
+          </div>
+          <div class="paperBrief__kv">
+            <span class="muted">Score</span>
+            <span id="paperBriefScore">—</span>
+          </div>
+          <div class="paperBrief__kv">
+            <span class="muted">Status</span>
+            <span class="paperBrief__pill" id="paperBriefStatusPill" data-kind="neutral">—</span>
+          </div>
+          <div class="paperBrief__kv">
+            <span class="muted">Signal bias</span>
+            <span id="paperBriefSignalBias">—</span>
+          </div>
+        </section>
+
+        <div class="paperBrief__confluence" id="paperBriefConfluence" data-kind="pending" aria-live="polite">
+          <span class="paperBrief__confluenceLabel muted">Confluence</span>
+          <span class="paperBrief__confluenceReadout" id="paperBriefConfluenceReadout">Select a symbol</span>
+        </div>
+
+        <p class="paperBrief__actionHint" id="paperBriefActionHint">
+          Entertainment only — not financial advice.
+        </p>
+
+        <div class="paperBrief__ledger" aria-label="Paper position">
+          <div class="paperBrief__ledgerRow">
+            <span class="muted">Position</span>
+            <span id="paperBriefPosShares">—</span>
+          </div>
+          <div class="paperBrief__ledgerRow">
+            <span class="muted">Entry</span>
+            <span id="paperBriefPosEntry">—</span>
+          </div>
+          <div class="paperBrief__ledgerRow">
+            <span class="muted">Day P&amp;L</span>
+            <span id="paperBriefPosPnl">—</span>
+          </div>
+        </div>
+
+        <div class="paperBrief__actions">
+          <button type="button" class="miniBtn primaryBtn" id="paperBriefReviewBtn" disabled>
+            Review order
+          </button>
+          <button type="button" class="miniBtn" id="paperBriefLogBtn" disabled>
+            Log decision
+          </button>
+        </div>
+
+        <p class="fieldHint muted paperBrief__footStatus" id="paperBriefFootStatus" aria-live="polite">
+          Click a table row or enter a ticker.
+        </p>
+      </aside>
     </aside>
 
     <main class="main-pane">
@@ -50,6 +153,59 @@
           <button id="reload" type="button">Reload</button>
         </div>
       </header>
+
+      <section class="rh-list-header" id="rhListHeader">
+        <div class="rh-list-top">
+          <div>
+            <h2 class="rh-list-title" id="listTitle">All symbols</h2>
+            <p class="rh-list-meta">
+              <span class="rh-check">✓</span>
+              <span id="listOwner">Robinhood</span>
+              ·
+              <span id="listCount">—</span> items
+            </p>
+          </div>
+          <a class="rh-follow" id="listRhLink" href="https://robinhood.com/lists/robinhood" target="_blank" rel="noopener">Open in RH</a>
+        </div>
+
+        <div class="rh-filter-card">
+          <div class="rh-filter-col">
+            <span class="rh-filter-label">Day MACD bias</span>
+            <canvas id="listDistChart" height="56" aria-label="Day bias distribution"></canvas>
+          </div>
+          <div class="rh-filter-col">
+            <span class="rh-filter-label">Change · flips</span>
+            <div class="rh-filter-chips" id="listChangeSummary"></div>
+          </div>
+          <div class="rh-filter-col rh-filter-col--wide">
+            <span class="rh-filter-label">About</span>
+            <p class="rh-list-blurb" id="listBlurb">Multi-timeframe MACD &amp; Bollinger flips from Robinhood lists.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="chart-panel" id="chartPanel">
+        <div class="chart-head">
+          <div class="chart-title">
+            <span class="chart-symbol" id="chartSymbol">—</span>
+            <span class="chart-meta muted" id="chartMeta">Click a symbol to view MACD / Bollinger flips</span>
+          </div>
+          <div class="chart-tfs">
+            <button type="button" class="chart-tf" data-tf="quarter">Q</button>
+            <button type="button" class="chart-tf" data-tf="month">M</button>
+            <button type="button" class="chart-tf" data-tf="week">W</button>
+            <button type="button" class="chart-tf active" data-tf="day">D</button>
+            <button type="button" class="chart-tf" data-tf="5h">5h</button>
+            <button type="button" class="chart-tf" data-tf="1h">1h</button>
+          </div>
+          <span class="chart-status muted" id="chartStatus"></span>
+        </div>
+        <div class="chart-canvases">
+          <canvas id="chartPrice" aria-label="Price and Bollinger Bands"></canvas>
+          <canvas id="chartMacd" aria-label="MACD histogram"></canvas>
+        </div>
+        <div class="chart-flips" id="chartFlips"></div>
+      </section>
 
       <section class="legend">
         <span><i class="profit-ring demo long"></i> Profit rings (Q→D alignment)</span>
@@ -88,6 +244,9 @@
     </main>
   </div>
 
+  <script src="/crossover/list-header.js"></script>
+  <script src="/crossover/chart.js"></script>
+  <script src="/crossover/paper-brief.js"></script>
   <script src="/crossover/app.js"></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-06-10T23:01:23.106168+00:00",
-  "preset": "focus",
-  "symbolCount": 52,
+  "generatedAt": "2026-06-11T00:21:32.312970+00:00",
+  "preset": "robinhood",
+  "symbolCount": 3,
   "errors": 0,
   "timeframes": [
     "quarter",
@@ -14,10 +14,10 @@
   ],
   "sources": {
     "daily": "yahoo/train",
-    "intraday": "yahoo 60m",
+    "intraday": "not fetched",
     "live": "flip-board server /api/live"
   },
-  "publishedAt": "2026-06-10T23:49:31.636759+00:00",
+  "publishedAt": "2026-06-11T00:28:54.662474+00:00",
   "listCount": 12,
   "watchlistSymbols": 5458
 }
