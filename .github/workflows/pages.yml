@@ -28,9 +28,19 @@ jobs:
       - name: Verify site files
         run: test -f index.html && test -f data/rows.json && test -f data/watchlists.json
 
-      - uses: actions/upload-pages-artifact@v3
+      # Chart cache (~280MB, 5000+ files) exceeds GitHub artifact limits — deploy without it.
+      # Static site uses Yahoo via chart-closes fallback when cache missing.
+      - name: Stage site (exclude chart cache)
+        run: |
+          mkdir -p _site
+          rsync -a             --exclude 'data/charts'             --exclude '.git'             --exclude '_site'             --exclude 'node_modules'             ./ _site/
+          touch _site/.nojekyll
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v4
         with:
-          path: .
+          path: _site
 
       - uses: actions/deploy-pages@v4
         id: deployment

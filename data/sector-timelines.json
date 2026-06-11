@@ -1,0 +1,112 @@
+{
+  "generatedAt": "2026-06-11T22:45:00+00:00",
+  "sources": [
+    "Robinhood curated watchlist metadata (robinhood-watchlists.json)",
+    "fornevercollective/grok-repo-template docs/assets/pages-configurator.js (TIMELINE_* events)",
+    "data/grok-template-timeline-raw.json"
+  ],
+  "eras": {
+    "pre_ai": {
+      "label": "Pre-xAI / pre-Grok",
+      "start": "2013-01-01",
+      "end": "2023-06-30"
+    },
+    "ai_wave": {
+      "label": "xAI & Grok launch wave",
+      "start": "2023-07-01",
+      "end": "2024-08-31"
+    },
+    "colossus_scale": {
+      "label": "Colossus scale-up",
+      "start": "2024-09-01",
+      "end": "2025-12-31"
+    },
+    "ipo_roadshow": {
+      "label": "IPO / roadshow window",
+      "start": "2025-01-01",
+      "end": "2026-12-31"
+    }
+  },
+  "sectors": {
+    "Technology": {
+      "rhList": "Technology",
+      "itemCount": 991,
+      "sectorLaunch": "2013-01-01",
+      "notes": "Core RH curated tech list; AI names accelerate post-2023 xAI era.",
+      "primaryEra": "ai_wave",
+      "grokMilestones": ["xai-founded", "grok-preview", "grok-1", "grok-1-oss", "series-b", "grok-2"],
+      "marketMilestones": [
+        { "sort": "2023-07", "id": "xai-founded", "title": "xAI announced" },
+        { "sort": "2023-11", "id": "grok-preview", "title": "Grok preview on X Premium+" },
+        { "sort": "2024-03", "id": "grok-1-oss", "title": "Grok-1 open source" }
+      ]
+    },
+    "ETFs": {
+      "rhList": "ETFs",
+      "itemCount": 2920,
+      "sectorLaunch": "2015-06-01",
+      "notes": "Broad ETF universe; regime shifts track index volatility (VIX spikes).",
+      "primaryEra": "pre_ai",
+      "grokMilestones": ["colossus-announce", "colossus-live"],
+      "marketMilestones": [
+        { "sort": "2020-03", "id": "covid-crash", "title": "COVID market shock (approx)" },
+        { "sort": "2022-01", "id": "fed-hike-cycle", "title": "Fed tightening cycle (approx)" }
+      ]
+    },
+    "China": {
+      "rhList": "China",
+      "itemCount": 302,
+      "sectorLaunch": "2018-06-01",
+      "notes": "US-listed China ADRs; geopolitical headline sensitivity.",
+      "primaryEra": "pre_ai",
+      "grokMilestones": [],
+      "marketMilestones": [
+        { "sort": "2018-07", "id": "us-china-tariffs", "title": "US–China tariff escalation (approx)" },
+        { "sort": "2021-07", "id": "china-tech-crackdown", "title": "China tech regulation wave (approx)" }
+      ]
+    },
+    "Energy & Water": {
+      "rhList": "Energy & Water",
+      "itemCount": 333,
+      "sectorLaunch": "2019-01-01",
+      "notes": "Energy transition + utilities; oil/gas cyclicality.",
+      "primaryEra": "pre_ai",
+      "grokMilestones": ["terrafab-pilot"],
+      "marketMilestones": [
+        { "sort": "2022-03", "id": "energy-shock", "title": "Post-Ukraine energy shock (approx)" }
+      ]
+    },
+    "Manufacturing & Materials": {
+      "rhList": "Manufacturing & Materials",
+      "itemCount": 1404,
+      "sectorLaunch": "2016-01-01",
+      "notes": "Industrials, materials, fab supply chain.",
+      "primaryEra": "colossus_scale",
+      "grokMilestones": ["terrafab-pilot", "colossus-live"],
+      "marketMilestones": [
+        { "sort": "2024-06", "id": "colossus-announce", "title": "Colossus announced · fab/GPU demand" }
+      ]
+    },
+    "IPO Access": {
+      "rhList": "IPO Access",
+      "itemCount": 45,
+      "sectorLaunch": "2021-04-14",
+      "notes": "Robinhood IPO Access product era; fresh listings, high volatility.",
+      "primaryEra": "ipo_roadshow",
+      "grokMilestones": ["spacex-ipo-rumor"],
+      "marketMilestones": [
+        { "sort": "2021-04", "id": "rh-ipo-access", "title": "Robinhood IPO Access launch (approx)" },
+        { "sort": "2021-04", "id": "coin-ipo", "title": "Coinbase IPO (COIN)" }
+      ]
+    }
+  },
+  "eraForDate": {
+    "description": "Map YYYY-MM-DD to era id via eras.start/end",
+    "rules": [
+      { "era": "pre_ai", "before": "2023-07-01" },
+      { "era": "ai_wave", "from": "2023-07-01", "before": "2024-09-01" },
+      { "era": "colossus_scale", "from": "2024-09-01", "before": "2025-01-01" },
+      { "era": "ipo_roadshow", "from": "2025-01-01" }
+    ]
+  }
+}
