@@ -27,20 +27,26 @@
       return;
     }
 
+    const tradeCount = Number(s.tradeCount).toLocaleString("en-US");
     const sectors = Object.entries(s.bySector || {})
       .sort((a, b) => b[1].trades - a[1].trades)
-      .slice(0, 4)
       .map(
         ([name, v]) =>
-          `<span class="backtest-sector"><b>${name}</b> ${v.trades}t · ${v.winRate}% win · ${fmtPct(v.avgReturnPct)}</span>`,
+          `<span class="backtest-sector"><b>${name}</b> ${Number(v.trades).toLocaleString("en-US")}t · ${v.winRate}% win · ${fmtPct(v.avgReturnPct)}</span>`,
       )
       .join("");
 
+    const maxDd =
+      s.maxDrawdownPct != null
+        ? `<span class="backtest-stat"><b>${fmtPct(-Math.abs(s.maxDrawdownPct))}</b> max DD</span>`
+        : "";
+
     el.innerHTML = `
       <div class="backtest-stats">
-        <span class="backtest-stat"><b>${s.tradeCount}</b> trades</span>
+        <span class="backtest-stat"><b>${tradeCount}</b> trades</span>
         <span class="backtest-stat"><b>${s.winRate}%</b> win</span>
         <span class="backtest-stat"><b>${fmtPct(s.avgReturnPct)}</b> avg</span>
+        ${maxDd}
         <span class="backtest-stat muted">${w?.months ?? "?"}mo · ${w?.start ?? ""} → ${w?.end ?? ""}</span>
       </div>
       <p class="backtest-note muted">Q→D fresh-flip entries · Yahoo daily · optional RH/Polygon via env</p>
