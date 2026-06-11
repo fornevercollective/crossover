@@ -2,6 +2,54 @@
  * Robinhood-style list header + mini distribution chart for filtered universe.
  */
 (function () {
+  const PAL = {
+    canvasTop: "#151a22",
+    canvasBot: "#1a2130",
+    bull: ["#2ee89a", "#3dd68c"],
+    bear: ["#ff8a93", "#f07178"],
+    neutral: ["#4a5268", "#6b7280"],
+    accent: "#7aa2f7",
+    gold: "#e6c068",
+    text: "#9aa0a6",
+    textBright: "#e8eaed",
+    longMid: ["#5ee0a8", "#3dd68c"],
+    shortMid: ["#ffb0b6", "#f07178"],
+    flat: ["#3d4558", "#565f75"],
+  };
+
+  function fillCanvasBg(ctx, w, h) {
+    const g = ctx.createLinearGradient(0, 0, 0, h);
+    g.addColorStop(0, PAL.canvasTop);
+    g.addColorStop(1, PAL.canvasBot);
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, w, h);
+  }
+
+  function barGradient(ctx, x, y, h, colors) {
+    const g = ctx.createLinearGradient(x, y, x, y + h);
+    g.addColorStop(0, colors[0]);
+    g.addColorStop(1, colors[1]);
+    return g;
+  }
+
+  function roundBar(ctx, x, y, w, h, fill, r) {
+    if (h < 1) return;
+    const rad = Math.min(r, w / 2, h / 2);
+    ctx.beginPath();
+    ctx.moveTo(x + rad, y);
+    ctx.lineTo(x + w - rad, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + rad);
+    ctx.lineTo(x + w, y + h - rad);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - rad, y + h);
+    ctx.lineTo(x + rad, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - rad);
+    ctx.lineTo(x, y + rad);
+    ctx.quadraticCurveTo(x, y, x + rad, y);
+    ctx.closePath();
+    ctx.fillStyle = fill;
+    ctx.fill();
+  }
+
   const LIST_BLURBS = {
     China: "Explore ADRs and China-exposed names on Robinhood.",
     Technology: "Software, semiconductors, and tech leaders from Robinhood curated lists.",
@@ -81,8 +129,7 @@
     if (!setup) return;
     const { ctx, w, h } = setup;
 
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(0, 0, w, h);
+    fillCanvasBg(ctx, w, h);
 
     let bull = 0;
     let bear = 0;
@@ -95,20 +142,19 @@
     }
     const total = Math.max(1, bull + bear + neutral);
     const bars = [
-      { label: "Bull D", value: bull, color: "#00c805" },
-      { label: "Bear D", value: bear, color: "#ff5000" },
-      { label: "Flat", value: neutral, color: "#cccccc" },
+      { label: "Bull D", value: bull, colors: PAL.bull },
+      { label: "Bear D", value: bear, colors: PAL.bear },
+      { label: "Flat", value: neutral, colors: PAL.neutral },
     ];
 
     const pad = 8;
     const barW = (w - pad * 2) / bars.length - 6;
     bars.forEach((b, i) => {
       const x = pad + i * (barW + 6);
-      const bh = ((h - 24) * b.value) / total;
+      const bh = Math.max(2, ((h - 24) * b.value) / total);
       const y = h - 16 - bh;
-      ctx.fillStyle = b.color;
-      ctx.fillRect(x, y, barW, bh);
-      ctx.fillStyle = "#666";
+      roundBar(ctx, x, y, barW, bh, barGradient(ctx, x, y, bh, b.colors), 4);
+      ctx.fillStyle = PAL.text;
       ctx.font = "9px system-ui,sans-serif";
       ctx.textAlign = "center";
       ctx.fillText(b.label, x + barW / 2, h - 4);
@@ -121,8 +167,7 @@
     if (!setup) return;
     const { ctx, w, h } = setup;
 
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(0, 0, w, h);
+    fillCanvasBg(ctx, w, h);
 
     const bySector = new Map();
     for (const row of rows) {
@@ -138,7 +183,7 @@
 
     const sectors = [...bySector.entries()].sort((a, b) => b[1].total - a[1].total).slice(0, 8);
     if (!sectors.length) {
-      ctx.fillStyle = "#9ca3af";
+      ctx.fillStyle = PAL.text;
       ctx.font = "11px system-ui,sans-serif";
       ctx.textAlign = "center";
       ctx.fillText("No sector data", w / 2, h / 2);
@@ -161,25 +206,26 @@
       const bw = stats.total * scale;
       let x = barX;
 
-      ctx.fillStyle = "#374151";
+      ctx.fillStyle = PAL.textBright;
       ctx.textAlign = "right";
       const short = name.length > 14 ? `${name.slice(0, 13)}…` : name;
       ctx.fillText(short, labelW, y);
 
       const segments = [
-        { n: stats.bull, color: "#00c805" },
-        { n: stats.bear, color: "#ff5000" },
-        { n: stats.neutral, color: "#d1d5db" },
+        { n: stats.bull, colors: PAL.bull },
+        { n: stats.bear, colors: PAL.bear },
+        { n: stats.neutral, colors: PAL.neutral },
       ];
       for (const seg of segments) {
         if (!seg.n) continue;
         const sw = (seg.n / stats.total) * bw;
-        ctx.fillStyle = seg.color;
-        ctx.fillRect(x, y - rowH / 2 + 1, sw, rowH - 2);
+        const by = y - rowH / 2 + 1;
+        const bh = rowH - 2;
+        roundBar(ctx, x, by, sw, bh, barGradient(ctx, x, by, bh, seg.colors), 3);
         x += sw;
       }
 
-      ctx.fillStyle = "#6b7280";
+      ctx.fillStyle = PAL.accent;
       ctx.textAlign = "left";
       ctx.fillText(String(stats.total), barX + bw + 4, y);
     });
@@ -191,16 +237,15 @@
     if (!setup) return;
     const { ctx, w, h } = setup;
 
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(0, 0, w, h);
+    fillCanvasBg(ctx, w, h);
 
     const profitMeta = window.FlipBoard?.profitMeta;
     const buckets = [
-      { key: "highLong", label: "High long", color: "#00a804", min: 70, side: "long" },
-      { key: "midLong", label: "Mid long", color: "#7dd87f", min: 40, side: "long" },
-      { key: "neutral", label: "Low / flat", color: "#d1d5db", min: 0, side: "neutral" },
-      { key: "midShort", label: "Mid short", color: "#ff9a66", min: 40, side: "short" },
-      { key: "highShort", label: "High short", color: "#ff5000", min: 70, side: "short" },
+      { key: "highLong", label: "High long", colors: PAL.bull },
+      { key: "midLong", label: "Mid long", colors: PAL.longMid },
+      { key: "neutral", label: "Low / flat", colors: PAL.flat },
+      { key: "midShort", label: "Mid short", colors: PAL.shortMid },
+      { key: "highShort", label: "High short", colors: PAL.bear },
     ];
     const counts = Object.fromEntries(buckets.map((b) => [b.key, 0]));
     let scoreSum = 0;
@@ -237,16 +282,15 @@
     buckets.forEach((b, i) => {
       const x = pad + i * (barW + 4);
       const val = counts[b.key];
-      const bh = ((h - 28) * val) / max;
+      const bh = Math.max(2, ((h - 28) * val) / max);
       const y = h - 18 - bh;
-      ctx.fillStyle = b.color;
-      ctx.fillRect(x, y, barW, bh);
-      ctx.fillStyle = "#374151";
+      roundBar(ctx, x, y, barW, bh, barGradient(ctx, x, y, bh, b.colors), 4);
+      ctx.fillStyle = PAL.text;
       ctx.font = "8px system-ui,sans-serif";
       ctx.textAlign = "center";
       ctx.fillText(b.label, x + barW / 2, h - 6);
       if (val > 0) {
-        ctx.fillStyle = "#111827";
+        ctx.fillStyle = PAL.textBright;
         ctx.font = "9px system-ui,sans-serif";
         ctx.fillText(String(val), x + barW / 2, y - 3);
       }
@@ -256,7 +300,7 @@
     if (statsEl) {
       const avg = scoreN ? Math.round(scoreSum / scoreN) : 0;
       statsEl.innerHTML = `
-        <span><strong>Avg score</strong> ${avg}%</span>
+        <span class="rh-profit-stat--accent"><strong>Avg score</strong> ${avg}%</span>
         <span class="rh-profit-stat--long"><strong>Day bull</strong> ${dayBull.toLocaleString()}</span>
         <span class="rh-profit-stat--short"><strong>Day bear</strong> ${dayBear.toLocaleString()}</span>
         <span class="rh-profit-stat--long"><strong>High long</strong> ${counts.highLong.toLocaleString()}</span>
@@ -284,8 +328,8 @@
       if (flip.includes("bearish") || flip.includes("breakdown")) falling++;
     }
     el.innerHTML = `
-      <button type="button" class="rh-filter-chip" data-filter="bull">Rising flips ${rising}</button>
-      <button type="button" class="rh-filter-chip" data-filter="bear">Falling flips ${falling}</button>
+      <button type="button" class="rh-filter-chip rh-filter-chip--rising" data-filter="bull">↑ Rising flips <strong>${rising.toLocaleString()}</strong></button>
+      <button type="button" class="rh-filter-chip rh-filter-chip--falling" data-filter="bear">↓ Falling flips <strong>${falling.toLocaleString()}</strong></button>
     `;
   }
 
