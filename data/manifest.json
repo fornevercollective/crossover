@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-06-11T00:21:32.312970+00:00",
+  "generatedAt": "2026-06-11T01:11:10.038848+00:00",
   "preset": "robinhood",
-  "symbolCount": 3,
-  "errors": 0,
+  "symbolCount": 5458,
+  "errors": 115,
   "timeframes": [
     "quarter",
     "month",
@@ -17,7 +17,7 @@
     "intraday": "not fetched",
     "live": "flip-board server /api/live"
   },
-  "publishedAt": "2026-06-11T00:28:54.662474+00:00",
+  "publishedAt": "2026-06-11T01:11:21.988967+00:00",
   "listCount": 12,
-  "watchlistSymbols": 5458
+  "watchlistSymbols": 5727
 }

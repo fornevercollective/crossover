@@ -1,12 +1,12 @@
 {
-  "exportedAt": "2026-06-11T00:28:01.468280+00:00",
+  "exportedAt": "2026-06-11T00:31:28.343514+00:00",
   "catalog": {
     "followedLists": 11,
     "curatedLists": 6,
     "customLists": 4,
     "discoverable": 12,
     "indexes": 7,
-    "unique_symbols": 5458
+    "unique_symbols": 5727
   },
   "sections": [
     {
@@ -1633,14 +1633,342 @@
       "id": "2ac39394-043f-41dc-9af4-a11c2393f261",
       "display_name": "Energy & Water",
       "owner_type": "robinhood",
-      "item_count": 5,
+      "item_count": 333,
       "section": "curated",
       "symbols": [
         "XOM",
+        "CAT",
         "CVX",
+        "SHEL",
+        "CSUAY",
         "COP",
+        "ENB",
+        "BP",
+        "PBR",
+        "PBR.A",
+        "MTSUY",
+        "EQNR",
+        "CNQ",
+        "SBS",
+        "ITOCY",
+        "WMB",
+        "GLNCY",
+        "MITSY",
         "SLB",
-        "EOG"
+        "EPD",
+        "MPC",
+        "VLO",
+        "EOG",
+        "SU",
+        "PSX",
+        "KMI",
+        "TRP",
+        "ET",
+        "BKR",
+        "TRGP",
+        "IMO",
+        "MPLX",
+        "OKE",
+        "OXY",
+        "FANG",
+        "DVN",
+        "CVE",
+        "LNG",
+        "MARUY",
+        "WDS",
+        "CCJ",
+        "EC",
+        "HAL",
+        "VG",
+        "EQT",
+        "TS",
+        "CQP",
+        "PBA",
+        "YZCAY",
+        "FTI",
+        "TDY",
+        "IPXHY",
+        "MTZ",
+        "TPL",
+        "NTOIY",
+        "AWK",
+        "AKRBY",
+        "YPF",
+        "L",
+        "OMVKY",
+        "EXE",
+        "PAGP",
+        "SSLZY",
+        "TRMLF",
+        "PEXNY",
+        "WES",
+        "PR",
+        "ITT",
+        "GLPEY",
+        "OVV",
+        "PAA",
+        "KPELY",
+        "WCPRF",
+        "DTM",
+        "SUN",
+        "APA",
+        "UUGRY",
+        "AETUF",
+        "MSLOY",
+        "DINO",
+        "STRNY",
+        "AR",
+        "WTRG",
+        "MGYOY",
+        "SUBCY",
+        "AM",
+        "RRC",
+        "SSL",
+        "FRO",
+        "HESM",
+        "KNTK",
+        "SM",
+        "SOBO",
+        "CHRD",
+        "NOV",
+        "UGI",
+        "NE",
+        "NFG",
+        "DCCPY",
+        "WFRD",
+        "GGDVY",
+        "VIST",
+        "MTDR",
+        "HBRIY",
+        "VBREY",
+        "KGS",
+        "RIG",
+        "AROC",
+        "VAL",
+        "CTXAY",
+        "NXE",
+        "MUR",
+        "NJR",
+        "MGY",
+        "CRC",
+        "GLNG",
+        "LB",
+        "PBF",
+        "HCC",
+        "SEI",
+        "IEP",
+        "TGS",
+        "PAM",
+        "SR",
+        "CNX",
+        "AQN",
+        "WHD",
+        "TNEYF",
+        "CMBT",
+        "UEC",
+        "LBRT",
+        "CNR",
+        "PUTKY",
+        "PTEN",
+        "INSW",
+        "USAC",
+        "STNG",
+        "HP",
+        "CRK",
+        "OII",
+        "CRGY",
+        "PEYUF",
+        "EE",
+        "WBI",
+        "HAFN",
+        "TDW",
+        "ITRI",
+        "BTE",
+        "BWLP",
+        "UUUU",
+        "SECYF",
+        "SUNC",
+        "TOIPY",
+        "ARLP",
+        "BTU",
+        "PRMRF",
+        "PEGRY",
+        "CVI",
+        "TGSGY",
+        "AWR",
+        "CLMT",
+        "GPOR",
+        "CPK",
+        "TRMD",
+        "DK",
+        "EFXT",
+        "PARR",
+        "BKV",
+        "DKL",
+        "SDRL",
+        "CWT",
+        "DHT",
+        "WTTR",
+        "TALO",
+        "DNN",
+        "TNK",
+        "AMR",
+        "HTO",
+        "NESR",
+        "NOG",
+        "NEXT",
+        "FLOC",
+        "AESI",
+        "NGL",
+        "INVX",
+        "BCHEY",
+        "SGHIY",
+        "ECO",
+        "GEL",
+        "XPRO",
+        "LPG",
+        "PUMP",
+        "SOC",
+        "KOS",
+        "VET",
+        "GLP",
+        "FLNG",
+        "WKC",
+        "SFL",
+        "RES",
+        "NBR",
+        "HLX",
+        "TTI",
+        "BORR",
+        "NRP",
+        "NVGS",
+        "ACDC",
+        "SPH",
+        "VTOL",
+        "PDS",
+        "AAVVF",
+        "SPKOY",
+        "TBN",
+        "TOLWF",
+        "NAT",
+        "TEN",
+        "TK",
+        "DEC",
+        "HPK",
+        "KRNGY",
+        "MSEX",
+        "HNTIY",
+        "APC",
+        "METC",
+        "HMH",
+        "ARKO",
+        "METCB",
+        "INR",
+        "VLERF",
+        "CAPL",
+        "REPX",
+        "PSYTF",
+        "SXC",
+        "VTS",
+        "OBE",
+        "HNRG",
+        "GFR",
+        "ZPTAF",
+        "GPRK",
+        "ASC",
+        "GRNT",
+        "WTI",
+        "TOTZF",
+        "CLB",
+        "SMC",
+        "FET",
+        "URG",
+        "EGY",
+        "ISOU",
+        "SD",
+        "NGS",
+        "EROK",
+        "OIS",
+        "YORW",
+        "CWCO",
+        "SBOEY",
+        "NUAI",
+        "CLNE",
+        "NINE",
+        "SGU",
+        "NC",
+        "RNGR",
+        "KNOP",
+        "FTW",
+        "GASS",
+        "CTJHY",
+        "IPOOF",
+        "ARTNA",
+        "OPAL",
+        "UNTC",
+        "CDZI",
+        "REI",
+        "PNRG",
+        "GTE",
+        "TUWOY",
+        "PCYO",
+        "EU",
+        "ANNA",
+        "IMPP",
+        "IMPPP",
+        "AREC",
+        "CMDXF",
+        "GWRS",
+        "SMHI",
+        "KGEI",
+        "OMSE",
+        "AMPY",
+        "PED",
+        "EPSN",
+        "TUSK",
+        "EPM",
+        "DWSN",
+        "NFE",
+        "TORO",
+        "BOOM",
+        "NCSM",
+        "DLNG",
+        "GLND",
+        "EP",
+        "MMLP",
+        "GEOS",
+        "DTI",
+        "SLNG",
+        "PROP",
+        "STAK",
+        "LSE",
+        "AEC",
+        "LGO",
+        "KLXE",
+        "BSIN",
+        "AGIG",
+        "MIND",
+        "PXS",
+        "BATL",
+        "INDO",
+        "JAGU",
+        "EONR",
+        "UFG",
+        "FNUC",
+        "PSHG",
+        "TMDE",
+        "FMST",
+        "MXC",
+        "BRN",
+        "TPET",
+        "CETY",
+        "DLXY",
+        "SKYQ",
+        "HKIT",
+        "RBNE",
+        "TOPS",
+        "VIVK",
+        "RUBI"
       ]
     },
     {
@@ -6292,7 +6620,8 @@
       "China"
     ],
     "CSUAY": [
-      "China"
+      "China",
+      "Energy & Water"
     ],
     "PNGAY": [
       "China"
@@ -6339,6 +6668,7 @@
     ],
     "YZCAY": [
       "China",
+      "Energy & Water",
       "Manufacturing & Materials"
     ],
     "CMAKY": [
@@ -6774,7 +7104,8 @@
       "Technology"
     ],
     "STAK": [
-      "China"
+      "China",
+      "Energy & Water"
     ],
     "WTG": [
       "China"
@@ -6791,7 +7122,8 @@
       "Manufacturing & Materials"
     ],
     "LSE": [
-      "China"
+      "China",
+      "Energy & Water"
     ],
     "AUC": [
       "China"
@@ -7118,7 +7450,8 @@
     ],
     "HKIT": [
       "China",
-      "Technology"
+      "Technology",
+      "Energy & Water"
     ],
     "CDTG": [
       "China",
@@ -8132,7 +8465,8 @@
       "Technology"
     ],
     "DCCPY": [
-      "Technology"
+      "Technology",
+      "Energy & Water"
     ],
     "DNPLY": [
       "Technology",
@@ -9518,7 +9852,8 @@
       "Technology"
     ],
     "PROP": [
-      "Technology"
+      "Technology",
+      "Energy & Water"
     ],
     "DTCX": [
       "Technology"
@@ -10103,16 +10438,1032 @@
     "XOM": [
       "Energy & Water"
     ],
+    "CAT": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
     "CVX": [
+      "Energy & Water"
+    ],
+    "SHEL": [
       "Energy & Water"
     ],
     "COP": [
       "Energy & Water"
     ],
+    "ENB": [
+      "Energy & Water"
+    ],
+    "BP": [
+      "Energy & Water"
+    ],
+    "PBR": [
+      "Energy & Water"
+    ],
+    "PBR.A": [
+      "Energy & Water"
+    ],
+    "MTSUY": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "EQNR": [
+      "Energy & Water"
+    ],
+    "CNQ": [
+      "Energy & Water"
+    ],
+    "SBS": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "ITOCY": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "WMB": [
+      "Energy & Water"
+    ],
+    "GLNCY": [
+      "Energy & Water",
+      "Manufacturing & Materials",
+      "M"
+    ],
+    "MITSY": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
     "SLB": [
       "Energy & Water"
     ],
+    "EPD": [
+      "Energy & Water"
+    ],
+    "MPC": [
+      "Energy & Water"
+    ],
+    "VLO": [
+      "Energy & Water"
+    ],
     "EOG": [
+      "Energy & Water"
+    ],
+    "SU": [
+      "Energy & Water"
+    ],
+    "PSX": [
+      "Energy & Water"
+    ],
+    "KMI": [
+      "Energy & Water"
+    ],
+    "TRP": [
+      "Energy & Water"
+    ],
+    "ET": [
+      "Energy & Water"
+    ],
+    "BKR": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "TRGP": [
+      "Energy & Water"
+    ],
+    "IMO": [
+      "Energy & Water"
+    ],
+    "MPLX": [
+      "Energy & Water"
+    ],
+    "OKE": [
+      "Energy & Water"
+    ],
+    "OXY": [
+      "Energy & Water"
+    ],
+    "FANG": [
+      "Energy & Water"
+    ],
+    "DVN": [
+      "Energy & Water"
+    ],
+    "CVE": [
+      "Energy & Water"
+    ],
+    "LNG": [
+      "Energy & Water"
+    ],
+    "MARUY": [
+      "Energy & Water"
+    ],
+    "WDS": [
+      "Energy & Water"
+    ],
+    "CCJ": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "EC": [
+      "Energy & Water"
+    ],
+    "HAL": [
+      "Energy & Water"
+    ],
+    "VG": [
+      "Energy & Water"
+    ],
+    "EQT": [
+      "Energy & Water"
+    ],
+    "TS": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "CQP": [
+      "Energy & Water"
+    ],
+    "PBA": [
+      "Energy & Water"
+    ],
+    "FTI": [
+      "Energy & Water"
+    ],
+    "TDY": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "IPXHY": [
+      "Energy & Water"
+    ],
+    "MTZ": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "TPL": [
+      "Energy & Water"
+    ],
+    "NTOIY": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "AWK": [
+      "Energy & Water"
+    ],
+    "AKRBY": [
+      "Energy & Water"
+    ],
+    "YPF": [
+      "Energy & Water"
+    ],
+    "L": [
+      "Energy & Water"
+    ],
+    "OMVKY": [
+      "Energy & Water"
+    ],
+    "EXE": [
+      "Energy & Water"
+    ],
+    "PAGP": [
+      "Energy & Water"
+    ],
+    "SSLZY": [
+      "Energy & Water"
+    ],
+    "TRMLF": [
+      "Energy & Water"
+    ],
+    "PEXNY": [
+      "Energy & Water"
+    ],
+    "WES": [
+      "Energy & Water"
+    ],
+    "PR": [
+      "Energy & Water"
+    ],
+    "ITT": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "GLPEY": [
+      "Energy & Water"
+    ],
+    "OVV": [
+      "Energy & Water"
+    ],
+    "PAA": [
+      "Energy & Water"
+    ],
+    "KPELY": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "WCPRF": [
+      "Energy & Water"
+    ],
+    "DTM": [
+      "Energy & Water"
+    ],
+    "SUN": [
+      "Energy & Water"
+    ],
+    "APA": [
+      "Energy & Water"
+    ],
+    "UUGRY": [
+      "Energy & Water"
+    ],
+    "AETUF": [
+      "Energy & Water"
+    ],
+    "MSLOY": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "DINO": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "STRNY": [
+      "Energy & Water"
+    ],
+    "AR": [
+      "Energy & Water"
+    ],
+    "WTRG": [
+      "Energy & Water"
+    ],
+    "MGYOY": [
+      "Energy & Water"
+    ],
+    "SUBCY": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "AM": [
+      "Energy & Water"
+    ],
+    "RRC": [
+      "Energy & Water"
+    ],
+    "SSL": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "FRO": [
+      "Energy & Water"
+    ],
+    "HESM": [
+      "Energy & Water"
+    ],
+    "KNTK": [
+      "Energy & Water"
+    ],
+    "SM": [
+      "Energy & Water"
+    ],
+    "SOBO": [
+      "Energy & Water"
+    ],
+    "CHRD": [
+      "Energy & Water"
+    ],
+    "NOV": [
+      "Energy & Water"
+    ],
+    "UGI": [
+      "Energy & Water"
+    ],
+    "NE": [
+      "Energy & Water"
+    ],
+    "NFG": [
+      "Energy & Water"
+    ],
+    "WFRD": [
+      "Energy & Water"
+    ],
+    "GGDVY": [
+      "Energy & Water"
+    ],
+    "VIST": [
+      "Energy & Water"
+    ],
+    "MTDR": [
+      "Energy & Water"
+    ],
+    "HBRIY": [
+      "Energy & Water"
+    ],
+    "VBREY": [
+      "Energy & Water"
+    ],
+    "KGS": [
+      "Energy & Water"
+    ],
+    "RIG": [
+      "Energy & Water"
+    ],
+    "AROC": [
+      "Energy & Water"
+    ],
+    "VAL": [
+      "Energy & Water"
+    ],
+    "CTXAY": [
+      "Energy & Water"
+    ],
+    "NXE": [
+      "Energy & Water"
+    ],
+    "MUR": [
+      "Energy & Water"
+    ],
+    "NJR": [
+      "Energy & Water"
+    ],
+    "MGY": [
+      "Energy & Water"
+    ],
+    "CRC": [
+      "Energy & Water"
+    ],
+    "GLNG": [
+      "Energy & Water"
+    ],
+    "LB": [
+      "Energy & Water"
+    ],
+    "PBF": [
+      "Energy & Water"
+    ],
+    "HCC": [
+      "Energy & Water"
+    ],
+    "SEI": [
+      "Energy & Water"
+    ],
+    "IEP": [
+      "Energy & Water"
+    ],
+    "TGS": [
+      "Energy & Water"
+    ],
+    "PAM": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "SR": [
+      "Energy & Water"
+    ],
+    "CNX": [
+      "Energy & Water"
+    ],
+    "AQN": [
+      "Energy & Water"
+    ],
+    "WHD": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "TNEYF": [
+      "Energy & Water"
+    ],
+    "CMBT": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "UEC": [
+      "Energy & Water"
+    ],
+    "LBRT": [
+      "Energy & Water"
+    ],
+    "CNR": [
+      "Energy & Water"
+    ],
+    "PUTKY": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "PTEN": [
+      "Energy & Water"
+    ],
+    "INSW": [
+      "Energy & Water"
+    ],
+    "USAC": [
+      "Energy & Water"
+    ],
+    "STNG": [
+      "Energy & Water"
+    ],
+    "HP": [
+      "Energy & Water"
+    ],
+    "CRK": [
+      "Energy & Water"
+    ],
+    "OII": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "CRGY": [
+      "Energy & Water"
+    ],
+    "PEYUF": [
+      "Energy & Water"
+    ],
+    "EE": [
+      "Energy & Water"
+    ],
+    "WBI": [
+      "Energy & Water"
+    ],
+    "HAFN": [
+      "Energy & Water"
+    ],
+    "TDW": [
+      "Energy & Water"
+    ],
+    "ITRI": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "BTE": [
+      "Energy & Water"
+    ],
+    "BWLP": [
+      "Energy & Water"
+    ],
+    "UUUU": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "SECYF": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "SUNC": [
+      "Energy & Water"
+    ],
+    "TOIPY": [
+      "Energy & Water"
+    ],
+    "ARLP": [
+      "Energy & Water"
+    ],
+    "BTU": [
+      "Energy & Water"
+    ],
+    "PRMRF": [
+      "Energy & Water"
+    ],
+    "PEGRY": [
+      "Energy & Water"
+    ],
+    "CVI": [
+      "Energy & Water"
+    ],
+    "TGSGY": [
+      "Energy & Water"
+    ],
+    "AWR": [
+      "Energy & Water"
+    ],
+    "CLMT": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "GPOR": [
+      "Energy & Water"
+    ],
+    "CPK": [
+      "Energy & Water"
+    ],
+    "TRMD": [
+      "Energy & Water"
+    ],
+    "DK": [
+      "Energy & Water"
+    ],
+    "EFXT": [
+      "Energy & Water"
+    ],
+    "PARR": [
+      "Energy & Water"
+    ],
+    "BKV": [
+      "Energy & Water"
+    ],
+    "DKL": [
+      "Energy & Water"
+    ],
+    "SDRL": [
+      "Energy & Water"
+    ],
+    "CWT": [
+      "Energy & Water"
+    ],
+    "DHT": [
+      "Energy & Water"
+    ],
+    "WTTR": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "TALO": [
+      "Energy & Water"
+    ],
+    "DNN": [
+      "Energy & Water"
+    ],
+    "TNK": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "AMR": [
+      "Energy & Water"
+    ],
+    "HTO": [
+      "Energy & Water"
+    ],
+    "NESR": [
+      "Energy & Water"
+    ],
+    "NOG": [
+      "Energy & Water"
+    ],
+    "NEXT": [
+      "Energy & Water"
+    ],
+    "FLOC": [
+      "Energy & Water"
+    ],
+    "AESI": [
+      "Energy & Water"
+    ],
+    "NGL": [
+      "Energy & Water"
+    ],
+    "INVX": [
+      "Energy & Water"
+    ],
+    "BCHEY": [
+      "Energy & Water"
+    ],
+    "SGHIY": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "ECO": [
+      "Energy & Water"
+    ],
+    "GEL": [
+      "Energy & Water"
+    ],
+    "XPRO": [
+      "Energy & Water"
+    ],
+    "LPG": [
+      "Energy & Water"
+    ],
+    "PUMP": [
+      "Energy & Water"
+    ],
+    "SOC": [
+      "Energy & Water"
+    ],
+    "KOS": [
+      "Energy & Water"
+    ],
+    "VET": [
+      "Energy & Water"
+    ],
+    "GLP": [
+      "Energy & Water"
+    ],
+    "FLNG": [
+      "Energy & Water"
+    ],
+    "WKC": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "SFL": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "RES": [
+      "Energy & Water"
+    ],
+    "NBR": [
+      "Energy & Water"
+    ],
+    "HLX": [
+      "Energy & Water"
+    ],
+    "TTI": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "BORR": [
+      "Energy & Water"
+    ],
+    "NRP": [
+      "Energy & Water"
+    ],
+    "NVGS": [
+      "Energy & Water"
+    ],
+    "ACDC": [
+      "Energy & Water"
+    ],
+    "SPH": [
+      "Energy & Water"
+    ],
+    "VTOL": [
+      "Energy & Water"
+    ],
+    "PDS": [
+      "Energy & Water"
+    ],
+    "AAVVF": [
+      "Energy & Water"
+    ],
+    "SPKOY": [
+      "Energy & Water"
+    ],
+    "TBN": [
+      "Energy & Water"
+    ],
+    "TOLWF": [
+      "Energy & Water"
+    ],
+    "NAT": [
+      "Energy & Water"
+    ],
+    "TEN": [
+      "Energy & Water"
+    ],
+    "TK": [
+      "Energy & Water"
+    ],
+    "DEC": [
+      "Energy & Water"
+    ],
+    "HPK": [
+      "Energy & Water"
+    ],
+    "KRNGY": [
+      "Energy & Water"
+    ],
+    "MSEX": [
+      "Energy & Water"
+    ],
+    "HNTIY": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "APC": [
+      "Energy & Water"
+    ],
+    "METC": [
+      "Energy & Water"
+    ],
+    "HMH": [
+      "Energy & Water"
+    ],
+    "ARKO": [
+      "Energy & Water"
+    ],
+    "METCB": [
+      "Energy & Water"
+    ],
+    "INR": [
+      "Energy & Water"
+    ],
+    "VLERF": [
+      "Energy & Water"
+    ],
+    "CAPL": [
+      "Energy & Water"
+    ],
+    "REPX": [
+      "Energy & Water"
+    ],
+    "PSYTF": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "SXC": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "VTS": [
+      "Energy & Water"
+    ],
+    "OBE": [
+      "Energy & Water"
+    ],
+    "HNRG": [
+      "Energy & Water"
+    ],
+    "GFR": [
+      "Energy & Water"
+    ],
+    "ZPTAF": [
+      "Energy & Water"
+    ],
+    "GPRK": [
+      "Energy & Water"
+    ],
+    "ASC": [
+      "Energy & Water"
+    ],
+    "GRNT": [
+      "Energy & Water"
+    ],
+    "WTI": [
+      "Energy & Water"
+    ],
+    "TOTZF": [
+      "Energy & Water"
+    ],
+    "CLB": [
+      "Energy & Water"
+    ],
+    "SMC": [
+      "Energy & Water"
+    ],
+    "FET": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "URG": [
+      "Energy & Water"
+    ],
+    "EGY": [
+      "Energy & Water"
+    ],
+    "ISOU": [
+      "Energy & Water"
+    ],
+    "SD": [
+      "Energy & Water"
+    ],
+    "NGS": [
+      "Energy & Water"
+    ],
+    "EROK": [
+      "Energy & Water"
+    ],
+    "OIS": [
+      "Energy & Water"
+    ],
+    "YORW": [
+      "Energy & Water"
+    ],
+    "CWCO": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "SBOEY": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "NUAI": [
+      "Energy & Water"
+    ],
+    "CLNE": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "NINE": [
+      "Energy & Water"
+    ],
+    "SGU": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "NC": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "RNGR": [
+      "Energy & Water"
+    ],
+    "KNOP": [
+      "Energy & Water"
+    ],
+    "FTW": [
+      "Energy & Water"
+    ],
+    "GASS": [
+      "Energy & Water"
+    ],
+    "CTJHY": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "IPOOF": [
+      "Energy & Water"
+    ],
+    "ARTNA": [
+      "Energy & Water"
+    ],
+    "OPAL": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "UNTC": [
+      "Energy & Water"
+    ],
+    "CDZI": [
+      "Energy & Water"
+    ],
+    "REI": [
+      "Energy & Water"
+    ],
+    "PNRG": [
+      "Energy & Water"
+    ],
+    "GTE": [
+      "Energy & Water"
+    ],
+    "TUWOY": [
+      "Energy & Water"
+    ],
+    "PCYO": [
+      "Energy & Water"
+    ],
+    "EU": [
+      "Energy & Water"
+    ],
+    "ANNA": [
+      "Energy & Water"
+    ],
+    "IMPP": [
+      "Energy & Water"
+    ],
+    "IMPPP": [
+      "Energy & Water"
+    ],
+    "AREC": [
+      "Energy & Water"
+    ],
+    "CMDXF": [
+      "Energy & Water"
+    ],
+    "GWRS": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "SMHI": [
+      "Energy & Water"
+    ],
+    "KGEI": [
+      "Energy & Water"
+    ],
+    "OMSE": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "AMPY": [
+      "Energy & Water"
+    ],
+    "PED": [
+      "Energy & Water"
+    ],
+    "EPSN": [
+      "Energy & Water"
+    ],
+    "TUSK": [
+      "Energy & Water"
+    ],
+    "EPM": [
+      "Energy & Water"
+    ],
+    "DWSN": [
+      "Energy & Water"
+    ],
+    "NFE": [
+      "Energy & Water"
+    ],
+    "TORO": [
+      "Energy & Water"
+    ],
+    "BOOM": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "NCSM": [
+      "Energy & Water"
+    ],
+    "DLNG": [
+      "Energy & Water"
+    ],
+    "GLND": [
+      "Energy & Water"
+    ],
+    "EP": [
+      "Energy & Water"
+    ],
+    "MMLP": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "GEOS": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "DTI": [
+      "Energy & Water"
+    ],
+    "SLNG": [
+      "Energy & Water"
+    ],
+    "AEC": [
+      "Energy & Water"
+    ],
+    "LGO": [
+      "Energy & Water"
+    ],
+    "KLXE": [
+      "Energy & Water"
+    ],
+    "BSIN": [
+      "Energy & Water"
+    ],
+    "AGIG": [
+      "Energy & Water"
+    ],
+    "MIND": [
+      "Energy & Water"
+    ],
+    "PXS": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "BATL": [
+      "Energy & Water"
+    ],
+    "INDO": [
+      "Energy & Water"
+    ],
+    "JAGU": [
+      "Energy & Water"
+    ],
+    "EONR": [
+      "Energy & Water"
+    ],
+    "UFG": [
+      "Energy & Water"
+    ],
+    "FNUC": [
+      "Energy & Water"
+    ],
+    "PSHG": [
+      "Energy & Water"
+    ],
+    "TMDE": [
+      "Energy & Water"
+    ],
+    "FMST": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "MXC": [
+      "Energy & Water"
+    ],
+    "BRN": [
+      "Energy & Water"
+    ],
+    "TPET": [
+      "Energy & Water"
+    ],
+    "CETY": [
+      "Energy & Water",
+      "Manufacturing & Materials"
+    ],
+    "DLXY": [
+      "Energy & Water"
+    ],
+    "SKYQ": [
+      "Energy & Water"
+    ],
+    "RBNE": [
+      "Energy & Water"
+    ],
+    "TOPS": [
+      "Energy & Water"
+    ],
+    "VIVK": [
+      "Energy & Water"
+    ],
+    "RUBI": [
       "Energy & Water"
     ],
     "VOO": [
@@ -18885,9 +20236,6 @@
       "Manufacturing & Materials",
       "M"
     ],
-    "CAT": [
-      "Manufacturing & Materials"
-    ],
     "LIN": [
       "Manufacturing & Materials"
     ],
@@ -18924,9 +20272,6 @@
     "PH": [
       "Manufacturing & Materials"
     ],
-    "MTSUY": [
-      "Manufacturing & Materials"
-    ],
     "HWM": [
       "Manufacturing & Materials"
     ],
@@ -18939,13 +20284,7 @@
     "PWR": [
       "Manufacturing & Materials"
     ],
-    "SBS": [
-      "Manufacturing & Materials"
-    ],
     "GD": [
-      "Manufacturing & Materials"
-    ],
-    "ITOCY": [
       "Manufacturing & Materials"
     ],
     "WM": [
@@ -18954,17 +20293,10 @@
     "FCX": [
       "Manufacturing & Materials"
     ],
-    "GLNCY": [
-      "Manufacturing & Materials",
-      "M"
-    ],
     "CMI": [
       "Manufacturing & Materials"
     ],
     "CSX": [
-      "Manufacturing & Materials"
-    ],
-    "MITSY": [
       "Manufacturing & Materials"
     ],
     "JCI": [
@@ -19034,9 +20366,6 @@
       "Manufacturing & Materials"
     ],
     "RNMBY": [
-      "Manufacturing & Materials"
-    ],
-    "BKR": [
       "Manufacturing & Materials"
     ],
     "B": [
@@ -19126,9 +20455,6 @@
     "FSUGY": [
       "Manufacturing & Materials"
     ],
-    "CCJ": [
-      "Manufacturing & Materials"
-    ],
     "FANUY": [
       "Manufacturing & Materials"
     ],
@@ -19198,9 +20524,6 @@
     "MLM": [
       "Manufacturing & Materials"
     ],
-    "TS": [
-      "Manufacturing & Materials"
-    ],
     "CKHUY": [
       "Manufacturing & Materials"
     ],
@@ -19249,9 +20572,6 @@
     "AMRZ": [
       "Manufacturing & Materials"
     ],
-    "TDY": [
-      "Manufacturing & Materials"
-    ],
     "IR": [
       "Manufacturing & Materials"
     ],
@@ -19265,9 +20585,6 @@
       "Manufacturing & Materials"
     ],
     "TTNDY": [
-      "Manufacturing & Materials"
-    ],
-    "MTZ": [
       "Manufacturing & Materials"
     ],
     "JBHT": [
@@ -19295,9 +20612,6 @@
       "Manufacturing & Materials"
     ],
     "PPG": [
-      "Manufacturing & Materials"
-    ],
-    "NTOIY": [
       "Manufacturing & Materials"
     ],
     "ATI": [
@@ -19498,9 +20812,6 @@
     "KGSPY": [
       "Manufacturing & Materials"
     ],
-    "ITT": [
-      "Manufacturing & Materials"
-    ],
     "ARXS": [
       "Manufacturing & Materials"
     ],
@@ -19547,9 +20858,6 @@
       "Manufacturing & Materials"
     ],
     "KWHIY": [
-      "Manufacturing & Materials"
-    ],
-    "KPELY": [
       "Manufacturing & Materials"
     ],
     "EBCOY": [
@@ -19660,16 +20968,10 @@
     "KNX": [
       "Manufacturing & Materials"
     ],
-    "MSLOY": [
-      "Manufacturing & Materials"
-    ],
     "JHX": [
       "Manufacturing & Materials"
     ],
     "MOG.B": [
-      "Manufacturing & Materials"
-    ],
-    "DINO": [
       "Manufacturing & Materials"
     ],
     "SWRAY": [
@@ -19769,9 +21071,6 @@
       "Manufacturing & Materials"
     ],
     "R": [
-      "Manufacturing & Materials"
-    ],
-    "SUBCY": [
       "Manufacturing & Materials"
     ],
     "SKBSY": [
@@ -19917,9 +21216,6 @@
       "Agentic"
     ],
     "ACM": [
-      "Manufacturing & Materials"
-    ],
-    "SSL": [
       "Manufacturing & Materials"
     ],
     "BVN": [
@@ -20348,9 +21644,6 @@
     "ESYJY": [
       "Manufacturing & Materials"
     ],
-    "PAM": [
-      "Manufacturing & Materials"
-    ],
     "RXO": [
       "Manufacturing & Materials"
     ],
@@ -20376,12 +21669,6 @@
     "MTRN": [
       "Manufacturing & Materials"
     ],
-    "WHD": [
-      "Manufacturing & Materials"
-    ],
-    "CMBT": [
-      "Manufacturing & Materials"
-    ],
     "ALK": [
       "Manufacturing & Materials"
     ],
@@ -20392,9 +21679,6 @@
       "Manufacturing & Materials"
     ],
     "GEF.B": [
-      "Manufacturing & Materials"
-    ],
-    "PUTKY": [
       "Manufacturing & Materials"
     ],
     "WYGPY": [
@@ -20505,9 +21789,6 @@
     "NDGPY": [
       "Manufacturing & Materials"
     ],
-    "OII": [
-      "Manufacturing & Materials"
-    ],
     "SOHVY": [
       "Manufacturing & Materials"
     ],
@@ -20547,9 +21828,6 @@
     "BFLBY": [
       "Manufacturing & Materials"
     ],
-    "ITRI": [
-      "Manufacturing & Materials"
-    ],
     "MAUTF": [
       "Manufacturing & Materials"
     ],
@@ -20560,12 +21838,6 @@
       "Manufacturing & Materials"
     ],
     "NCTKY": [
-      "Manufacturing & Materials"
-    ],
-    "UUUU": [
-      "Manufacturing & Materials"
-    ],
-    "SECYF": [
       "Manufacturing & Materials"
     ],
     "SMR": [
@@ -20626,9 +21898,6 @@
       "Manufacturing & Materials"
     ],
     "SBLK": [
-      "Manufacturing & Materials"
-    ],
-    "CLMT": [
       "Manufacturing & Materials"
     ],
     "WDFC": [
@@ -20739,9 +22008,6 @@
     "ATS": [
       "Manufacturing & Materials"
     ],
-    "WTTR": [
-      "Manufacturing & Materials"
-    ],
     "CSAN": [
       "Manufacturing & Materials"
     ],
@@ -20755,9 +22021,6 @@
       "Manufacturing & Materials"
     ],
     "ANDE": [
-      "Manufacturing & Materials"
-    ],
-    "TNK": [
       "Manufacturing & Materials"
     ],
     "DNOW": [
@@ -20907,9 +22170,6 @@
     "MOPHY": [
       "Manufacturing & Materials"
     ],
-    "SGHIY": [
-      "Manufacturing & Materials"
-    ],
     "SMTGY": [
       "Manufacturing & Materials"
     ],
@@ -20977,12 +22237,6 @@
       "Manufacturing & Materials"
     ],
     "VOSSY": [
-      "Manufacturing & Materials"
-    ],
-    "WKC": [
-      "Manufacturing & Materials"
-    ],
-    "SFL": [
       "Manufacturing & Materials"
     ],
     "NEXA": [
@@ -21073,9 +22327,6 @@
       "Manufacturing & Materials"
     ],
     "LWLG": [
-      "Manufacturing & Materials"
-    ],
-    "TTI": [
       "Manufacturing & Materials"
     ],
     "CARCY": [
@@ -21265,9 +22516,6 @@
     "MJDLF": [
       "Manufacturing & Materials"
     ],
-    "HNTIY": [
-      "Manufacturing & Materials"
-    ],
     "GLGDF": [
       "Manufacturing & Materials"
     ],
@@ -21335,12 +22583,6 @@
       "Manufacturing & Materials"
     ],
     "OIO": [
-      "Manufacturing & Materials"
-    ],
-    "PSYTF": [
-      "Manufacturing & Materials"
-    ],
-    "SXC": [
       "Manufacturing & Materials"
     ],
     "NRGV": [
@@ -21460,9 +22702,6 @@
     "MLAB": [
       "Manufacturing & Materials"
     ],
-    "FET": [
-      "Manufacturing & Materials"
-    ],
     "KRT": [
       "Manufacturing & Materials"
     ],
@@ -21551,12 +22790,6 @@
     "RR": [
       "Manufacturing & Materials"
     ],
-    "CWCO": [
-      "Manufacturing & Materials"
-    ],
-    "SBOEY": [
-      "Manufacturing & Materials"
-    ],
     "ASTL": [
       "Manufacturing & Materials"
     ],
@@ -21611,9 +22844,6 @@
     "ELVA": [
       "Manufacturing & Materials"
     ],
-    "CLNE": [
-      "Manufacturing & Materials"
-    ],
     "ALTO": [
       "Manufacturing & Materials"
     ],
@@ -21630,9 +22860,6 @@
       "Manufacturing & Materials"
     ],
     "MTW": [
-      "Manufacturing & Materials"
-    ],
-    "SGU": [
       "Manufacturing & Materials"
     ],
     "ABAT": [
@@ -21663,9 +22890,6 @@
       "Manufacturing & Materials"
     ],
     "DLNDY": [
-      "Manufacturing & Materials"
-    ],
-    "NC": [
       "Manufacturing & Materials"
     ],
     "SES": [
@@ -21719,17 +22943,11 @@
     "CMCO": [
       "Manufacturing & Materials"
     ],
-    "CTJHY": [
-      "Manufacturing & Materials"
-    ],
     "REA": [
       "Manufacturing & Materials",
       "IPO Access"
     ],
     "FJET": [
-      "Manufacturing & Materials"
-    ],
-    "OPAL": [
       "Manufacturing & Materials"
     ],
     "ITFS": [
@@ -21901,16 +23119,10 @@
     "EAF": [
       "Manufacturing & Materials"
     ],
-    "GWRS": [
-      "Manufacturing & Materials"
-    ],
     "FF": [
       "Manufacturing & Materials"
     ],
     "GORO": [
-      "Manufacturing & Materials"
-    ],
-    "OMSE": [
       "Manufacturing & Materials"
     ],
     "GLDG": [
@@ -21997,9 +23209,6 @@
     "CITR": [
       "Manufacturing & Materials"
     ],
-    "BOOM": [
-      "Manufacturing & Materials"
-    ],
     "HURC": [
       "Manufacturing & Materials"
     ],
@@ -22060,9 +23269,6 @@
     "ULBI": [
       "Manufacturing & Materials"
     ],
-    "MMLP": [
-      "Manufacturing & Materials"
-    ],
     "BAER": [
       "Manufacturing & Materials"
     ],
@@ -22085,9 +23291,6 @@
       "Manufacturing & Materials"
     ],
     "HOVR": [
-      "Manufacturing & Materials"
-    ],
-    "GEOS": [
       "Manufacturing & Materials"
     ],
     "FURY": [
@@ -22231,9 +23434,6 @@
     "LOOP": [
       "Manufacturing & Materials"
     ],
-    "PXS": [
-      "Manufacturing & Materials"
-    ],
     "PPSI": [
       "Manufacturing & Materials"
     ],
@@ -22360,9 +23560,6 @@
     "EVTV": [
       "Manufacturing & Materials"
     ],
-    "FMST": [
-      "Manufacturing & Materials"
-    ],
     "EFOI": [
       "Manufacturing & Materials"
     ],
@@ -22463,9 +23660,6 @@
       "Manufacturing & Materials"
     ],
     "INEO": [
-      "Manufacturing & Materials"
-    ],
-    "CETY": [
       "Manufacturing & Materials"
     ],
     "GCDT": [
