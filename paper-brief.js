@@ -224,7 +224,13 @@
 
     $("paperBrief").hidden = false;
     $("paperBriefTicker").textContent = ticker;
-    $("paperBriefPhaseBadge").textContent = quoteWrap.source === "robinhood" ? "Paper · RH quote" : "Paper · Yahoo";
+    const phase =
+      quoteWrap.source === "robinhood"
+        ? "Paper · RH quote"
+        : quoteWrap.source === "coinbase"
+          ? "Coinbase · extended"
+          : "Paper · Yahoo";
+    $("paperBriefPhaseBadge").textContent = phase;
 
     $("paperBriefLast").textContent = fmtPrice(quoteWrap.last);
     $("paperBriefChg").textContent = fmtPct(quoteWrap.chg);

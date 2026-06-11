@@ -298,13 +298,28 @@ button:disabled { opacity: 0.45; cursor: not-allowed; }
   font-size: 12px;
 }
 
-.imminent-flips-list {
+.imminent-flips-list,
+.coinbase-crypto-list {
   display: flex;
   flex-direction: column;
   gap: 4px;
   max-height: 220px;
   overflow-y: auto;
   padding-right: 4px;
+}
+
+.coinbase-ext-row {
+  grid-template-columns: 36px 72px 1fr 64px 56px 48px auto;
+}
+
+.coinbase-ext-badge {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(0, 81, 193, 0.25);
+  color: #7aa2f7;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .imminent-row {

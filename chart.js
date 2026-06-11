@@ -404,6 +404,13 @@
     return data;
   }
 
+  function useCoinbaseChart(sym) {
+    if (!sym || !/^[A-Z0-9]+-USD$/.test(sym)) return false;
+    if (window.CoinbaseCrypto?.isExtended?.(sym)) return true;
+    const row = window.FlipBoard?.getRow?.(sym);
+    return !row;
+  }
+
   async function loadChart() {
     if (!state.symbol) return;
     const reqId = ++state.reqId;
@@ -413,6 +420,17 @@
       let data;
       if (STATIC) {
         data = await fetchChartClient(state.yahoo || state.symbol, state.symbol, state.tf, state.limit);
+      } else if (useCoinbaseChart(state.symbol)) {
+        const p = new URLSearchParams({
+          product: state.symbol,
+          tf: state.tf,
+          limit: String(state.limit),
+        });
+        const res = await fetch(`/api/coinbase/chart?${p}`);
+        const json = await res.json();
+        if (!res.ok) throw new Error(json.error || res.statusText);
+        data = enrichChartPayload(json);
+        setStatus("Coinbase · extended");
       } else {
         const p = new URLSearchParams({
           symbol: state.symbol,

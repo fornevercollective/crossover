@@ -227,6 +227,24 @@
           </div>
         </div>
 
+        <div class="rh-filter-card rh-filter-card--coinbase collapsible-panel" id="coinbaseCryptoPanel">
+          <div class="rh-filter-col rh-filter-col--full">
+            <div class="imminent-head panel-collapse-head">
+              <div class="panel-collapse-title">
+                <span class="rh-filter-label">Coinbase Extended · crypto gap</span>
+                <span class="imminent-count muted" id="coinbaseCryptoCount">—</span>
+              </div>
+              <button type="button" class="panel-collapse-toggle" aria-label="Toggle Coinbase Extended panel" aria-expanded="true" aria-controls="coinbaseCryptoBody">
+                <span class="panel-collapse-chevron" aria-hidden="true"></span>
+              </button>
+            </div>
+            <div class="panel-collapse-body" id="coinbaseCryptoBody">
+              <p class="imminent-blurb muted">Spot pairs on Coinbase not in Robinhood watchlists — quotes via CDP public API (<code>npm run coinbase:sync</code>).</p>
+              <div class="coinbase-crypto-list" id="coinbaseCryptoList" aria-label="Coinbase extended crypto"></div>
+            </div>
+          </div>
+        </div>
+
         <div class="rh-filter-card rh-filter-card--imminent collapsible-panel" id="imminentFlipsPanel">
           <div class="rh-filter-col rh-filter-col--full">
             <div class="imminent-head panel-collapse-head">
@@ -349,6 +367,7 @@
   <script src="/crossover/squeeze.js"></script>
   <script src="/crossover/chart-closes.js"></script>
   <script src="/crossover/trading-concepts.js"></script>
+  <script src="/crossover/coinbase-crypto.js"></script>
   <script src="/crossover/imminent-flips.js"></script>
   <script src="/crossover/swing-breakouts.js"></script>
   <script src="/crossover/skim-scanner.js"></script>
