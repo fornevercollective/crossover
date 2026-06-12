@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-06-12T00:30:58.151498+00:00",
+  "generatedAt": "2026-06-12T04:05:15.251948+00:00",
   "sources": [
     "Robinhood curated watchlist metadata",
-    "https://fornevercollective.github.io/grok-repo-template/docs/assets/pages-configurator.js",
+    "/Volumes/qbitOS/00.dev/cursor/grok-repo-template/docs/assets/pages-configurator.js",
     "data/grok-template-timeline-raw.json"
   ],
   "eras": {
@@ -178,5 +178,5 @@
       }
     ]
   },
-  "grokEventCount": 67
+  "grokEventCount": 76
 }

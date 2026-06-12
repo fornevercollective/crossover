@@ -34,6 +34,8 @@ jobs:
         run: |
           mkdir -p _site
           rsync -a             --exclude 'data/charts'             --exclude '.git'             --exclude '_site'             --exclude 'node_modules'             ./ _site/
+          # Drop symlinks under data/ — artifact tar fails on broken/out-of-repo links
+          find _site/data -type l -delete 2>/dev/null || true
           touch _site/.nojekyll
 
       - uses: actions/configure-pages@v5

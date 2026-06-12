@@ -1304,6 +1304,31 @@ footer {
   gap: 12px;
 }
 
+.sector-activity-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 14px;
+}
+
+.sector-activity-chip {
+  font: inherit;
+  font-size: 11px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--panel2);
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.sector-activity-chip:hover,
+.sector-activity-chip.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(122, 162, 247, 0.1);
+}
+
 .tl-group {
   --group-accent: var(--accent);
   border: 1px solid var(--border);

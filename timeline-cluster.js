@@ -11,6 +11,8 @@
     month: "#7aa2f7",
     week: "#3dd68c",
     day: "#bb9af7",
+    "5h": "#f7768e",
+    "1h": "#73daca",
     macd: "#7aa2f7",
     histogram: "#bb9af7",
     bollinger: "#e6c068",
@@ -100,6 +102,69 @@
 
   function drawCalendarHeatmap(canvas, events, color) {
     if (!canvas) return;
+    const container = canvas.parentElement;
+    if (typeof echarts !== "undefined" && container) {
+      const chartHost = canvas.nextElementSibling?.classList?.contains("tl-echarts-host")
+        ? canvas.nextElementSibling
+        : null;
+      let host = chartHost;
+      if (!host) {
+        host = document.createElement("div");
+        host.className = "tl-echarts-host";
+        host.style.height = "120px";
+        canvas.insertAdjacentElement("afterend", host);
+      }
+      canvas.hidden = true;
+      host.hidden = false;
+      if (host.dataset.chartReady === "1") return;
+      const calData = expandEventsToCalendarData(events);
+      if (!calData.length) {
+        canvas.hidden = false;
+        host.hidden = true;
+        return;
+      }
+      const [rangeStart, rangeEnd] = calendarRange(events);
+      const range = rangeStart === rangeEnd ? rangeStart : [rangeStart, rangeEnd];
+      const chart = echarts.init(host, null, { renderer: "canvas" });
+      chart.setOption({
+        backgroundColor: "#12151a",
+        tooltip: {
+          backgroundColor: "#1a1f28",
+          borderColor: "#2a3140",
+          textStyle: { color: "#e5e7eb", fontSize: 11 },
+          formatter: (p) => `${p.data[0]}<br/>${p.data[1]} flip${p.data[1] === 1 ? "" : "s"}`,
+        },
+        visualMap: {
+          min: 0,
+          max: Math.max(2, ...calData.map((d) => d[1])),
+          show: false,
+          inRange: { color: heatmapScale(color) },
+        },
+        calendar: {
+          range,
+          cellSize: ["auto", 10],
+          top: 4,
+          left: 12,
+          right: 8,
+          bottom: 4,
+          itemStyle: { borderWidth: 2, borderColor: "#12151a", color: "#1a1f28" },
+          yearLabel: { show: false },
+          monthLabel: { color: "#9aa0a6", fontSize: 9, nameMap: "en", margin: 6 },
+          dayLabel: {
+            firstDay: 0,
+            color: "#9aa0a6",
+            fontSize: 8,
+            nameMap: ["", "M", "", "W", "", "F", ""],
+          },
+          splitLine: { show: false },
+        },
+        series: [{ type: "heatmap", coordinateSystem: "calendar", data: calData }],
+      });
+      host.dataset.chartReady = "1";
+      state.charts.push(chart);
+      return;
+    }
+    canvas.hidden = false;
     const dpr = window.devicePixelRatio || 1;
     const rect = canvas.getBoundingClientRect();
     canvas.width = Math.floor(rect.width * dpr);
@@ -202,6 +267,11 @@
   function renderGroups(data) {
     const root = $("timelineClusterBranches");
     if (!root) return;
+    renderGroupsInto(data, root);
+  }
+
+  function renderGroupsInto(data, root) {
+    if (!root) return;
     state.charts = [];
 
     const groups = (data.groups || []).map((group, index) => ({
@@ -303,12 +373,15 @@
   async function loadTimeline(symbol, yahoo) {
     const sym = symbol?.toUpperCase();
     if (!sym) return null;
-    const y = encodeURIComponent(yahoo || sym);
-    try {
-      const res = await fetch(asset(`/data/timelines/${y}.json`));
-      if (res.ok) return res.json();
-    } catch {
-      /* fallback below */
+    const row = window.FlipBoard?.getRow?.(symbol);
+    const keys = [...new Set([sym, yahoo, row?.yahoo, row?.id].filter(Boolean))];
+    for (const key of keys) {
+      try {
+        const res = await fetch(asset(`/data/timelines/${encodeURIComponent(key)}.json`));
+        if (res.ok) return res.json();
+      } catch {
+        /* try next key */
+      }
     }
     return null;
   }
@@ -402,6 +475,6 @@
     });
   }
 
-  window.TimelineCluster = { update, hide };
+  window.TimelineCluster = { update, hide, renderGroups, renderGroupsInto };
   bind();
 })();

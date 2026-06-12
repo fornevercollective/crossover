@@ -304,6 +304,18 @@
         </div>
       </section>
 
+      <section class="sector-activity-panel timeline-cluster-panel" id="sectorActivityPanel" hidden>
+        <div class="timeline-cluster-head">
+          <div>
+            <span class="timeline-cluster-eyebrow muted">Sector activity</span>
+            <h2 class="timeline-cluster-title" id="sectorActivityTitle">Flip clusters by list</h2>
+            <p class="timeline-cluster-meta muted" id="sectorActivityMeta">Q · M · W · D · 5h · 1h flips in backtest window</p>
+          </div>
+        </div>
+        <div class="sector-activity-chips" id="sectorActivityChips" aria-label="Select sector"></div>
+        <div id="sectorActivityBranches" class="timeline-cluster-branches" aria-label="Sector flip activity by timeframe"></div>
+      </section>
+
       <section class="chart-panel" id="chartPanel">
         <div class="chart-head">
           <div class="chart-title">
@@ -385,6 +397,7 @@
     </main>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
   <script src="/crossover/sector-colors.js"></script>
   <script src="/crossover/squeeze.js"></script>
   <script src="/crossover/chart-closes.js"></script>
@@ -398,6 +411,7 @@
   <script src="/crossover/panel-collapse.js"></script>
   <script src="/crossover/chart.js"></script>
   <script src="/crossover/timeline-cluster.js"></script>
+  <script src="/crossover/sector-activity.js"></script>
   <script src="/crossover/paper-brief.js"></script>
   <script src="/crossover/app.js"></script>
 </body>
