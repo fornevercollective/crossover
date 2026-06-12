@@ -288,6 +288,15 @@
     if (data.backtest?.trades) {
       parts.push(`backtest ${data.backtest.winRate}% win (${data.backtest.trades}t)`);
     }
+    const row = window.FlipBoard?.getRow?.(data.symbol);
+    const pots = row?.potentials;
+    if (pots) {
+      const chips = ["day", "week", "month"]
+        .filter((f) => pots[f]?.pct != null)
+        .map((f) => `${f[0].toUpperCase()} ${pots[f].pct > 0 ? "+" : ""}${pots[f].pct}%`)
+        .join(" · ");
+      if (chips) parts.push(`pot ${chips}`);
+    }
     if (meta) meta.textContent = parts.join(" · ");
   }
 

@@ -993,6 +993,107 @@ td.meta { color: var(--muted); max-width: 120px; overflow: hidden; text-overflow
 .cell.bear { background: rgba(240, 113, 120, 0.15); color: var(--bear); }
 .cell.na { color: var(--neutral); }
 
+.pot-chip {
+  display: inline-block;
+  margin-left: 4px;
+  padding: 0 4px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  vertical-align: middle;
+}
+
+.pot-chip.pot-pos,
+.pot-col.pot-pos,
+.pot-td.pot-pos {
+  color: var(--bull);
+}
+
+.pot-chip.pot-pos { background: rgba(61, 214, 140, 0.18); }
+.pot-chip.pot-neg,
+.pot-col.pot-neg,
+.pot-td.pot-neg {
+  color: var(--bear);
+}
+
+.pot-chip.pot-neg { background: rgba(240, 113, 120, 0.18); }
+
+.pot-col,
+.pot-td {
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.pot-col.na,
+.pot-td.na {
+  color: var(--neutral);
+  font-weight: 400;
+}
+
+.coh-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.coh-control input {
+  width: 72px;
+  padding: 4px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: inherit;
+  font-variant-numeric: tabular-nums;
+}
+
+.coh-batch-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: rgba(122, 162, 247, 0.08);
+  border: 1px solid rgba(122, 162, 247, 0.2);
+  font-size: 12px;
+}
+
+.coh-batch-label {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.coh-batch-chip {
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  font-variant-numeric: tabular-nums;
+}
+
+.coh-batch-chip:hover {
+  border-color: var(--gold);
+}
+
+.coh-batch-meta {
+  margin-left: auto;
+  font-size: 11px;
+}
+
+.coh-batch-empty {
+  font-size: 12px;
+}
+
 .rh-sector-legend {
   display: flex;
   flex-wrap: wrap;

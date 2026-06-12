@@ -1,6 +1,8 @@
 const FRAMES = ["quarter", "month", "week", "day", "5h", "1h", "live"];
 const ALIGN_TFS = ["quarter", "month", "week", "day"];
+const POT_FRAMES = ["day", "week", "month"];
 const PAGE = 150;
+const COH_STORAGE_KEY = "flipBoardCohUsd";
 
 const htmlRoot = document.documentElement;
 const BASE = htmlRoot.dataset.base || "";
@@ -12,9 +14,11 @@ const state = {
   rows: [],
   allRows: [],
   liveCache: {},
-  sortKey: "sector",
-  sortDir: 1,
+  sortKey: "evPot",
+  sortDir: -1,
   sectorFilter: "",
+  cohUsd: 200,
+  backtest: null,
   manifest: {},
   watchlists: { lists: [], sections: [] },
   lastProbe: null,
@@ -44,6 +48,60 @@ const FLIP_SHORT = {
 
 function asset(path) {
   return `${BASE}${path}`;
+}
+
+function loadCohFromStorage() {
+  try {
+    const v = localStorage.getItem(COH_STORAGE_KEY);
+    if (v != null) {
+      const n = Number(v);
+      if (Number.isFinite(n) && n > 0) state.cohUsd = n;
+    }
+  } catch {
+    /* ignore */
+  }
+}
+
+function saveCohToStorage() {
+  try {
+    localStorage.setItem(COH_STORAGE_KEY, String(state.cohUsd));
+  } catch {
+    /* ignore */
+  }
+}
+
+function fmtPotPct(n) {
+  if (n == null || Number.isNaN(n)) return "";
+  const sign = n > 0 ? "+" : "";
+  return `${sign}${n.toFixed(1)}%`;
+}
+
+function winRateForRow(row) {
+  const pot = row.potentials?.day;
+  if (pot?.winRate != null) return pot.winRate;
+  const sector = sectorKey(row);
+  const bySec = state.backtest?.summary?.bySector || {};
+  if (bySec[sector]?.winRate != null) return bySec[sector].winRate;
+  return state.backtest?.summary?.winRate ?? 35;
+}
+
+function evPotForRow(row) {
+  const pot = row.potentials?.day;
+  if (pot?.evPct != null) return pot.evPct;
+  const pct = pot?.pct;
+  if (pct == null) return null;
+  return (pct * winRateForRow(row)) / 100;
+}
+
+function cohMeta(row) {
+  const pot = row.potentials?.day;
+  const entry = pot?.entry ?? row.frames?.day?.close;
+  if (!entry || entry <= 0) return null;
+  const shares = Math.floor(state.cohUsd / entry);
+  const wr = winRateForRow(row);
+  const potPct = pot?.pct ?? null;
+  const ev = pot?.evPct ?? (potPct != null ? (potPct * wr) / 100 : null);
+  return { shares, entry, wr, potPct, ev };
 }
 
 function selectSymbol(sym, row) {
@@ -104,6 +162,10 @@ function biasRank(bias) {
 
 function sortValue(row, key) {
   if (key === "profit") return profitMeta(row).score;
+  if (key === "dPot") return row.potentials?.day?.pct ?? -9999;
+  if (key === "wPot") return row.potentials?.week?.pct ?? -9999;
+  if (key === "mPot") return row.potentials?.month?.pct ?? -9999;
+  if (key === "evPot") return evPotForRow(row) ?? -9999;
   if (key === "id") return row.id.toLowerCase();
   if (key === "exchange") return `${row.exchange}|${row.country}`.toLowerCase();
   if (key === "sector") {
@@ -181,12 +243,34 @@ function sortRows(rows) {
   return sorted;
 }
 
-function cellHtml(frame, st) {
+function potChipHtml(frame, row) {
+  const pot = row.potentials?.[frame];
+  if (!pot || pot.pct == null) return "";
+  const cls = pot.pct >= 0 ? "pot-pos" : "pot-neg";
+  const coh = cohMeta(row);
+  const cohTip = coh
+    ? ` · COH $${state.cohUsd.toLocaleString()} → ~${coh.shares} @ $${coh.entry.toFixed(2)} · EV ${fmtPotPct(coh.ev)} · ${coh.wr}% win`
+    : "";
+  const tip = [
+    `${frame.toUpperCase()} pot ${fmtPotPct(pot.pct)}`,
+    `entry $${pot.entry} · floor $${pot.floor} · ceiling $${pot.ceiling}`,
+    `flip ${pot.flipType} ${pot.flipDate}`,
+    `${pot.horizonDays}d window · ${pot.side}`,
+    pot.evPct != null ? `EV ${fmtPotPct(pot.evPct)} (${pot.winRate}% win)` : "",
+    cohTip,
+  ]
+    .filter(Boolean)
+    .join(" · ");
+  return `<span class="pot-chip ${cls}" title="${tip}">${fmtPotPct(pot.pct)}</span>`;
+}
+
+function cellHtml(frame, st, row) {
   if (!st) return '<span class="cell na">—</span>';
   const bias = st.macdBias === "bullish" ? "bull" : st.macdBias === "bearish" ? "bear" : "na";
   const flip = st.lastFlip?.type;
   const tag = FLIP_SHORT[flip] ?? (st.macdBias === "bullish" ? "M+" : "M-");
   const age = st.daysSinceFlip != null ? ` ${st.daysSinceFlip}d` : "";
+  const potChip = POT_FRAMES.includes(frame) ? potChipHtml(frame, row) : "";
   const tip = [
     `TF: ${frame}`,
     st.asOf ? `as of ${st.asOf}` : "",
@@ -194,10 +278,13 @@ function cellHtml(frame, st) {
     st.macdBias ? `MACD ${st.macdBias}` : "",
     st.bbPosition ? `BB ${st.bbPosition}` : "",
     flip ? `last ${flip}` : "",
+    row.potentials?.[frame]
+      ? `pot ${fmtPotPct(row.potentials[frame].pct)} · floor ${row.potentials[frame].floor} · ceiling ${row.potentials[frame].ceiling}`
+      : "",
   ]
     .filter(Boolean)
     .join(" · ");
-  return `<span class="cell ${bias}" title="${tip}">${tag}${age}</span>`;
+  return `<span class="cell ${bias}" title="${tip}">${tag}${age}${potChip}</span>`;
 }
 
 function sectorChipHtml(name) {
@@ -208,24 +295,49 @@ function sectorChipHtml(name) {
 function renderGroupHeader(sector, count) {
   const c = sectorColor(sector);
   return `<tr class="sector-group-header" data-sector-group="${sector}" style="--sector-color:${c}">
-    <td colspan="11"><span class="sector-group-label"><i></i>${sector}</span><span class="sector-group-count">${count.toLocaleString()}</span></td>
+    <td colspan="15"><span class="sector-group-label"><i></i>${sector}</span><span class="sector-group-count">${count.toLocaleString()}</span></td>
   </tr>`;
+}
+
+function potCellHtml(frame, row) {
+  const pot = row.potentials?.[frame];
+  if (!pot || pot.pct == null) return '<span class="pot-col na">—</span>';
+  const cls = pot.pct >= 0 ? "pot-pos" : "pot-neg";
+  const coh = cohMeta(row);
+  const tip = [
+    `entry $${pot.entry}`,
+    `floor $${pot.floor} · ceiling $${pot.ceiling}`,
+    coh ? `COH $${state.cohUsd} → ~${coh.shares} shares` : "",
+    pot.evPct != null ? `EV ${fmtPotPct(pot.evPct)}` : "",
+  ]
+    .filter(Boolean)
+    .join(" · ");
+  return `<span class="pot-col ${cls}" title="${tip}">${fmtPotPct(pot.pct)}</span>`;
 }
 
 function renderRow(row) {
   const livePatch = state.liveCache[row.yahoo]?.frames ?? {};
   const frames = { ...row.frames, ...livePatch };
-  const cells = FRAMES.map((f) => `<td>${cellHtml(f, frames[f])}</td>`).join("");
+  const cells = FRAMES.map((f) => `<td>${cellHtml(f, frames[f], row)}</td>`).join("");
+  const potCols = POT_FRAMES.map((f) => `<td class="pot-td">${potCellHtml(f, row)}</td>`).join("");
+  const ev = evPotForRow(row);
+  const evCls = ev == null ? "na" : ev >= 0 ? "pot-pos" : "pot-neg";
+  const coh = cohMeta(row);
+  const evTip = coh
+    ? `day pot × ${coh.wr}% win · COH $${state.cohUsd} → ~${coh.shares} @ $${coh.entry.toFixed(2)}`
+    : "Expected value = day pot% × backtest win rate";
   const sk = sectorKey(row);
   const c = sectorColor(sk);
   const listHint = (row.lists || []).slice(0, 2).join(", ");
   const sectorLabel = row.sector || listHint || "—";
   return `<tr data-symbol="${row.id}" data-sector="${sk}" style="--sector-color:${c}"${row.buildError ? ' class="row-error sector-row"' : ' class="sector-row"'}>
     <td>${profitCirclesHtml(row)}</td>
+    <td class="pot-td ${evCls}" title="${evTip}">${ev != null ? fmtPotPct(ev) : "—"}</td>
     <td class="sym" title="${row.name}${row.buildError ? " · " + row.buildError : ""}${row.lists?.length ? " · " + row.lists.join(", ") : ""}">${row.id}<br><small>${row.yahoo}</small></td>
     <td class="meta">${row.exchange || "—"}<br>${row.country || "—"}</td>
     <td class="meta sector-cell" title="${(row.lists || []).join(", ")}">${sectorChipHtml(sk !== "Other" ? sk : sectorLabel)}</td>
     ${cells}
+    ${potCols}
   </tr>`;
 }
 
@@ -268,6 +380,34 @@ function buildTableBody(rows, fullFiltered) {
     parts.push(renderRow(row));
   }
   return parts.join("");
+}
+
+function renderCohBatchBar(filtered) {
+  const el = document.getElementById("cohBatchBar");
+  if (!el) return;
+  const ranked = filtered
+    .map((row) => ({ row, ev: evPotForRow(row), coh: cohMeta(row) }))
+    .filter((x) => x.ev != null && x.coh?.shares > 0)
+    .sort((a, b) => b.ev - a.ev);
+  const top = ranked.slice(0, 5);
+  if (!top.length) {
+    el.innerHTML = `<span class="coh-batch-empty muted">COH $${state.cohUsd.toLocaleString()} — no EV-ranked entries in filtered set</span>`;
+    return;
+  }
+  const chips = top
+    .map(({ row, ev, coh }) => {
+      const cls = ev >= 0 ? "pot-pos" : "pot-neg";
+      return `<button type="button" class="coh-batch-chip ${cls}" data-symbol="${row.id}" title="EV ${fmtPotPct(ev)} · ~${coh.shares} shares @ $${coh.entry.toFixed(2)}">${row.id} ${fmtPotPct(ev)}</button>`;
+    })
+    .join("");
+  el.innerHTML = `<span class="coh-batch-label">COH $${state.cohUsd.toLocaleString()} · top EV batch:</span>${chips}<span class="coh-batch-meta muted">${ranked.length} fit · ${filtered.length} filtered</span>`;
+  el.querySelectorAll(".coh-batch-chip").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const sym = btn.dataset.symbol;
+      const row = state.allRows.find((r) => r.id === sym);
+      selectSymbol(sym, row);
+    });
+  });
 }
 
 function renderSectorChips(rows) {
@@ -332,6 +472,7 @@ function renderBoard() {
   document.getElementById("next").disabled = state.offset + PAGE >= state.total;
   updateSortHeaders();
   updateHeroCounts(state.total);
+  renderCohBatchBar(filtered);
 }
 
 async function refreshScanners(filtered) {
@@ -415,7 +556,20 @@ function updateMeta() {
     `${man.preset ?? "?"} · ${man.generatedAt?.slice(0, 19) ?? ""} · ${cat.followedLists ?? "?"} RH lists · ${cat.discoverable ?? 0} more in app`;
 }
 
+async function loadBacktestReport() {
+  try {
+    const res = await fetch(asset("/data/paper-backtest/report.json"));
+    if (res.ok) state.backtest = await res.json();
+  } catch {
+    state.backtest = null;
+  }
+}
+
 async function loadStatic() {
+  loadCohFromStorage();
+  const cohInput = document.getElementById("cohUsd");
+  if (cohInput) cohInput.value = String(state.cohUsd);
+  await loadBacktestReport();
   const [rowsRes, manRes, wlRes] = await Promise.all([
     fetch(asset("/data/rows.json")),
     fetch(asset("/data/manifest.json")),
@@ -484,6 +638,10 @@ async function loadFiltersApi() {
 }
 
 async function loadBoardApi() {
+  loadCohFromStorage();
+  const cohInput = document.getElementById("cohUsd");
+  if (cohInput) cohInput.value = String(state.cohUsd);
+  await loadBacktestReport();
   const p = new URLSearchParams();
   const q = document.getElementById("search").value.trim();
   const country = document.getElementById("country").value;
@@ -506,6 +664,20 @@ async function loadBoardApi() {
 }
 
 function bind() {
+  loadCohFromStorage();
+  const cohInput = document.getElementById("cohUsd");
+  if (cohInput) {
+    cohInput.value = String(state.cohUsd);
+    cohInput.addEventListener("change", () => {
+      const n = Number(cohInput.value);
+      if (Number.isFinite(n) && n > 0) {
+        state.cohUsd = n;
+        saveCohToStorage();
+        renderBoard();
+      }
+    });
+  }
+
   if (STATIC) {
     document.getElementById("refreshLive").style.display = "none";
     document.getElementById("reload").textContent = "Reload page";
@@ -566,7 +738,8 @@ function bind() {
       if (state.sortKey === key) state.sortDir *= -1;
       else {
         state.sortKey = key;
-        state.sortDir = key === "profit" || FRAMES.includes(key) ? -1 : 1;
+        const descKeys = ["profit", "evPot", "dPot", "wPot", "mPot", ...FRAMES];
+        state.sortDir = descKeys.includes(key) ? -1 : 1;
       }
       state.offset = 0;
       renderBoard();
@@ -603,7 +776,12 @@ window.FlipBoard = {
     state.allRows.find((r) => r.id === sym || r.yahoo === sym || r.id === sym?.toUpperCase()),
   getAllRows: () => state.allRows,
   profitMeta,
+  cohMeta,
+  evPotForRow,
   selectSymbol,
+  get cohUsd() {
+    return state.cohUsd;
+  },
   get watchlists() {
     return state.watchlists;
   },

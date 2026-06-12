@@ -180,6 +180,10 @@
             <option value="bullish">Day bullish</option>
             <option value="bearish">Day bearish</option>
           </select>
+          <label class="coh-control" title="Cash on hand for batch sizing">
+            COH $
+            <input id="cohUsd" type="number" value="200" min="1" step="1" />
+          </label>
           <button id="refreshLive" type="button">Refresh live</button>
           <button id="reload" type="button">Reload</button>
         </div>
@@ -341,8 +345,10 @@
         <span><i class="bull"></i> Bullish MACD</span>
         <span><i class="bear"></i> Bearish MACD</span>
         <span>Click headers to sort · grouped by sector</span>
-        <span class="frames">Q · M · W · D · 5h · 1h · Live</span>
+        <span class="frames">Q · M · W · D · 5h · 1h · Live · D/W/M pot%</span>
       </section>
+
+      <div class="coh-batch-bar" id="cohBatchBar" aria-label="COH portfolio batch summary"></div>
 
       <div class="sector-filters" id="sectorChips" aria-label="Filter by Robinhood list category"></div>
 
@@ -351,6 +357,7 @@
           <thead>
             <tr>
               <th data-sort="profit" class="sortable">Profit</th>
+              <th data-sort="evPot" class="sortable" title="Day pot% × backtest win rate">EV</th>
               <th data-sort="id" class="sortable">Symbol</th>
               <th data-sort="exchange" class="sortable">Market</th>
               <th data-sort="sector" class="sortable">Sector / List</th>
@@ -361,6 +368,9 @@
               <th data-sort="5h" class="sortable">5h</th>
               <th data-sort="1h" class="sortable">1h</th>
               <th data-sort="live" class="sortable">Live</th>
+              <th data-sort="dPot" class="sortable">D pot%</th>
+              <th data-sort="wPot" class="sortable">W pot%</th>
+              <th data-sort="mPot" class="sortable">M pot%</th>
             </tr>
           </thead>
           <tbody id="tbody"></tbody>
