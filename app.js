@@ -477,9 +477,13 @@ function renderBoard() {
 
 async function refreshScanners(filtered) {
   const reqId = ++state.scannerReqId;
-  if (window.ChartCloses) {
+  const chartsAvailable = (state.manifest?.chartCacheFiles ?? 0) > 0;
+  if (window.ChartCloses && (!STATIC || chartsAvailable)) {
     try {
-      await window.ChartCloses.prefetch(filtered, { max: 300, concurrency: 12 });
+      await window.ChartCloses.prefetch(filtered, {
+        max: STATIC ? 0 : 300,
+        concurrency: STATIC ? 1 : 12,
+      });
     } catch {
       /* ranking still works from board-only signals */
     }
@@ -566,21 +570,44 @@ async function loadBacktestReport() {
 }
 
 async function loadStatic() {
-  loadCohFromStorage();
-  const cohInput = document.getElementById("cohUsd");
-  if (cohInput) cohInput.value = String(state.cohUsd);
-  await loadBacktestReport();
-  const [rowsRes, manRes, wlRes] = await Promise.all([
-    fetch(asset("/data/rows.json")),
-    fetch(asset("/data/manifest.json")),
-    fetch(asset("/data/watchlists.json")),
-  ]);
-  state.allRows = await rowsRes.json();
-  state.manifest = await manRes.json();
-  state.watchlists = await wlRes.json();
-  populateFilters(state.allRows);
-  updateMeta();
-  renderBoard();
+  const board = document.getElementById("board");
+  const tbody = document.getElementById("tbody");
+  const meta = document.getElementById("meta");
+  try {
+    loadCohFromStorage();
+    const cohInput = document.getElementById("cohUsd");
+    if (cohInput) cohInput.value = String(state.cohUsd);
+    if (meta) meta.textContent = "Loading flip board…";
+    if (tbody) {
+      tbody.innerHTML =
+        '<tr><td colspan="15" class="muted" style="padding:24px;text-align:center">Loading symbols…</td></tr>';
+    }
+    await loadBacktestReport();
+    const [rowsRes, manRes, wlRes] = await Promise.all([
+      fetch(asset("/data/rows.json")),
+      fetch(asset("/data/manifest.json")),
+      fetch(asset("/data/watchlists.json")),
+    ]);
+    if (!rowsRes.ok) throw new Error(`rows.json HTTP ${rowsRes.status}`);
+    if (!manRes.ok) throw new Error(`manifest HTTP ${manRes.status}`);
+    if (!wlRes.ok) throw new Error(`watchlists HTTP ${wlRes.status}`);
+    state.allRows = await rowsRes.json();
+    state.manifest = await manRes.json();
+    state.manifest.chartCacheFiles = state.manifest.chartCacheFiles ?? 0;
+    state.watchlists = await wlRes.json();
+    populateFilters(state.allRows);
+    updateMeta();
+    renderBoard();
+  } catch (err) {
+    console.error("loadStatic failed", err);
+    if (meta) meta.textContent = "Failed to load board data";
+    if (tbody) {
+      tbody.innerHTML = `<tr><td colspan="15" class="muted" style="padding:24px;text-align:center">
+        Could not load data (${err?.message || err}). <button type="button" id="reloadBoardBtn">Retry</button>
+      </td></tr>`;
+      document.getElementById("reloadBoardBtn")?.addEventListener("click", () => loadStatic());
+    }
+  }
 }
 
 async function loadFiltersApi() {

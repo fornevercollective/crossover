@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-12T02:39:19.446662+00:00",
+  "generatedAt": "2026-06-12T04:31:49.369008+00:00",
   "window": {
     "start": "2025-12-14",
     "end": "2026-06-12",
@@ -17,7 +17,7 @@
       "sector": "China",
       "slug": "china",
       "symbolCount": 299,
-      "eventCount": 16996,
+      "eventCount": 1542,
       "file": "china.json"
     },
     {
@@ -31,7 +31,7 @@
       "sector": "ETFs",
       "slug": "etfs",
       "symbolCount": 2831,
-      "eventCount": 188449,
+      "eventCount": 1600,
       "file": "etfs.json"
     },
     {
@@ -45,7 +45,7 @@
       "sector": "IPO Access",
       "slug": "ipo-access",
       "symbolCount": 23,
-      "eventCount": 1204,
+      "eventCount": 616,
       "file": "ipo-access.json"
     },
     {
@@ -59,28 +59,28 @@
       "sector": "Manufacturing & Materials",
       "slug": "manufacturing-materials",
       "symbolCount": 1235,
-      "eventCount": 75900,
+      "eventCount": 1600,
       "file": "manufacturing-materials.json"
     },
     {
       "sector": "Market Indexes",
       "slug": "market-indexes",
       "symbolCount": 7,
-      "eventCount": 498,
+      "eventCount": 493,
       "file": "market-indexes.json"
     },
     {
       "sector": "My First List",
       "slug": "my-first-list",
       "symbolCount": 46,
-      "eventCount": 2917,
+      "eventCount": 952,
       "file": "my-first-list.json"
     },
     {
       "sector": "Technology",
       "slug": "technology",
       "symbolCount": 892,
-      "eventCount": 54365,
+      "eventCount": 1600,
       "file": "technology.json"
     }
   ]
