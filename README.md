@@ -1,3 +1,4 @@
+<img width="1190" height="757" alt="Screenshot 2026-06-18 at 11 00 03 am" src="https://github.com/user-attachments/assets/4a61bc25-0b72-4543-ba99-9a6163286267" />
 # crossover
 
 Multi-timeframe MACD / Bollinger flip board for Robinhood watchlists.
