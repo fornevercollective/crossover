@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live % Converter • Trade Sizing | Crossover</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="paper-brief.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root { --accent: #7aa2f7; --bull: #3dd68c; --bear: #f07178; --panel: #171a1f; --bg: #0f1114; --text: #e8eaed; --border: #2a3038; }
+    body { background: var(--bg); color: var(--text); font-family: ui-sans-serif, system-ui, sans-serif; }
+    .trading-mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-variant-numeric: tabular-nums; }
+    .section-card { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; }
+    .big-price { font-size: 2.25rem; line-height: 2.5rem; font-weight: 700; letter-spacing: -.02em; }
+    .metric-label { font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: #9aa0a6; }
+    .sync-input { transition: all .1s ease; }
+    .sync-input:focus { outline: none; box-shadow: 0 0 0 3px rgba(122, 162, 247, .2); border-color: var(--accent); }
+    .bull { color: var(--bull) !important; }
+    .bear { color: var(--bear) !important; }
+    .trade-copy-btn { transition: all .1s; }
+    .trade-copy-btn:hover { background: var(--accent); color: white; }
+    .preset-btn { font-size: 11px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); background: rgba(255,255,255,.03); }
+    .preset-btn:hover { border-color: var(--accent); background: rgba(122,162,247,.1); }
+    .converter-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 16px; }
+    @media (max-width: 900px) { .converter-grid { grid-template-columns: 1fr; } }
+    .value-display { font-size: 1.35rem; font-weight: 600; }
+    .live-dot { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+    .toast { animation: slideUp 0.2s ease forwards; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
+    @keyframes slideUp { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  </style>
+</head>
+<body class="min-h-screen">
+  <div class="max-w-[1180px] mx-auto p-4 md:p-6">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+      <div class="flex items-center gap-x-3">
+        <div class="w-9 h-9 rounded-xl bg-[#7aa2f7] flex items-center justify-center text-[#0f1114] font-bold text-xl tracking-tighter">%</div>
+        <div>
+          <div class="text-2xl font-semibold tracking-tight">LIVE % CONVERTER</div>
+          <div class="text-[11px] text-[#9aa0a6] -mt-0.5">POSITION SIZING • PORTION &amp; DOLLAR CALCS @ 1-TICK | RH + COINBASE</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-x-2">
+        <a href="./" class="px-4 py-1.5 text-sm rounded-lg border border-[#2a3038] hover:bg-[#171a1f] flex items-center gap-x-1.5 text-[#9aa0a6] hover:text-white">
+          <span>←</span> <span>Flip Board</span>
+        </a>
+        <a href="https://github.com/qbitOS/qbitos-freya" target="_blank" class="px-3 py-1.5 text-xs rounded-lg border border-[#2a3038] hover:bg-[#171a1f] text-[#9aa0a6]">FreyaUnits</a>
+      </div>
+    </div>
+
+    <div class="converter-grid">
+      <!-- LEFT: Holdings + Live Price -->
+      <div class="space-y-4">
+        <!-- Holdings Card -->
+        <div class="section-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <div class="metric-label">Current Holdings in Market</div>
+            <button onclick="resetHoldings()" class="text-[10px] px-2 py-0.5 rounded border border-[#2a3038] hover:bg-[#1e2229]">RESET</button>
+          </div>
+          <div class="flex items-end gap-x-3">
+            <div class="flex-1">
+              <div class="metric-label mb-1">Portfolio / Account Value (USD)</div>
+              <div class="flex items-center border border-[#2a3038] rounded-xl px-4 bg-[#0f1114]">
+                <span class="text-[#9aa0a6] text-xl">$</span>
+                <input id="holdingsInput" type="number" step="100" value="25000" class="sync-input flex-1 bg-transparent text-3xl font-semibold py-2.5 outline-none trading-mono" oninput="onHoldingsChange()">
+              </div>
+            </div>
+            <div class="text-right">
+              <div class="metric-label">Risk per Trade</div>
+              <div class="text-xs text-[#9aa0a6]">Typical 1-5%</div>
+            </div>
+          </div>
+          <div class="mt-3 text-[10px] text-[#6b7280]">Enter your total liquid holdings or buying power. Used as base for % allocation. Persisted locally.</div>
+        </div>
+
+        <!-- Live Price Card -->
+        <div class="section-card p-5">
+          <div class="flex justify-between items-center mb-3">
+            <div class="metric-label">LIVE 1-TICK PRICE</div>
+            <div class="flex items-center gap-x-2">
+              <div id="priceSource" class="text-[10px] px-2 py-px rounded-full bg-[#171a1f] border border-[#2a3038] text-[#9aa0a6]">CoinGecko</div>
+              <button onclick="manualPriceOverride()" class="text-[10px] px-2.5 py-px rounded border border-[#2a3038] hover:bg-[#1e2229]">MANUAL</button>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-x-4">
+            <div class="flex-1">
+              <div class="flex items-center gap-x-2 mb-1.5">
+                <input id="symbolInput" list="coinList" value="SOL" placeholder="SOL / bitcoin / PEPE" class="sync-input flex-1 bg-[#0f1114] border border-[#2a3038] rounded-xl px-4 py-2 text-xl font-semibold tracking-wider outline-none" onblur="onSymbolChange()" onkeyup="if(event.key==='Enter') onSymbolChange()">
+                <datalist id="coinList">
+                  <option value="BTC">Bitcoin</option>
+                  <option value="ETH">Ethereum</option>
+                  <option value="SOL">Solana</option>
+                  <option value="XRP">XRP</option>
+                  <option value="DOGE">Dogecoin</option>
+                  <option value="AVAX">Avalanche</option>
+                  <option value="LINK">Chainlink</option>
+                  <option value="ADA">Cardano</option>
+                  <option value="DOT">Polkadot</option>
+                  <option value="TON">Toncoin</option>
+                  <option value="SHIB">Shiba Inu</option>
+                  <option value="PEPE">Pepe</option>
+                  <option value="WIF">dogwifhat</option>
+                  <option value="BONK">Bonk</option>
+                  <option value="SUI">Sui</option>
+                  <option value="APT">Aptos</option>
+                </datalist>
+                <button onclick="onSymbolChange()" class="px-4 py-2 rounded-xl bg-[#7aa2f7] text-[#0f1114] text-sm font-semibold active:scale-[0.985]">LOAD</button>
+              </div>
+              <div id="coinName" class="text-sm text-[#9aa0a6] pl-1">Solana</div>
+            </div>
+
+            <div class="text-right min-w-[148px]">
+              <div id="livePrice" class="big-price trading-mono text-white">—</div>
+              <div class="flex items-center justify-end gap-x-1.5 mt-0.5">
+                <div id="priceChange" class="text-sm font-medium px-2 py-px rounded">—</div>
+                <div id="lastUpdated" class="text-[10px] text-[#6b7280] trading-mono">—</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between mt-4 pt-3 border-t border-[#2a3038]">
+            <div class="flex items-center gap-x-2">
+              <button onclick="refreshPrice(true)" class="flex items-center gap-x-1.5 px-3 py-1 text-xs rounded-lg border border-[#2a3038] hover:bg-[#1e2229] active:bg-[#171a1f]">
+                <span class="live-dot inline-block w-1.5 h-1.5 bg-[#3dd68c] rounded-full"></span>
+                <span>1-TICK REFRESH</span>
+              </button>
+              <label class="flex items-center gap-x-1.5 text-xs cursor-pointer select-none">
+                <input type="checkbox" id="autoTick" checked onchange="toggleAutoTick()" class="accent-[#7aa2f7]"> 
+                <span class="text-[#9aa0a6]">AUTO 4s</span>
+              </label>
+            </div>
+            <div id="tickStatus" class="text-[10px] text-[#3dd68c]">LIVE</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Main Converter -->
+      <div class="section-card p-5 flex flex-col">
+        <div class="metric-label mb-2">LIVE CONVERSION • SYNCED</div>
+        <div class="text-[10px] text-[#9aa0a6] mb-4">Change any field — others update instantly based on live price &amp; holdings</div>
+
+        <!-- % of Holdings -->
+        <div class="mb-5">
+          <div class="flex justify-between items-baseline mb-1.5">
+            <div class="flex items-center gap-x-2">
+              <span class="font-semibold">% of Holdings</span>
+              <span class="text-[10px] px-1.5 py-px bg-[#171a1f] rounded text-[#9aa0a6]">PORTION</span>
+            </div>
+            <input id="pctInput" type="number" step="0.1" value="2.5" class="sync-input w-20 text-right bg-transparent border border-[#2a3038] rounded-lg px-3 py-1 text-xl font-semibold trading-mono" oninput="onPctInput()">
+            <span class="text-xl text-[#9aa0a6]">%</span>
+          </div>
+          <input type="range" id="pctSlider" min="0.1" max="25" step="0.1" value="2.5" class="w-full accent-[#7aa2f7]" oninput="onPctSlider()">
+          <div class="flex justify-between text-[10px] text-[#6b7280] mt-0.5"><div>0.1%</div><div>Conservative</div><div>25% (aggressive)</div></div>
+        </div>
+
+        <!-- USD Amount -->
+        <div class="mb-5">
+          <div class="flex justify-between items-baseline mb-1.5">
+            <span class="font-semibold">Dollar Amount (USD)</span>
+            <span class="text-[10px] px-1.5 py-px bg-[#171a1f] rounded text-[#9aa0a6]">TO TRADE</span>
+          </div>
+          <div class="flex items-center border border-[#2a3038] rounded-2xl px-4 bg-[#0f1114]">
+            <span class="text-[#9aa0a6] text-2xl">$</span>
+            <input id="usdInput" type="number" step="0.01" value="625" class="sync-input flex-1 bg-transparent text-4xl font-semibold py-3 outline-none tracking-tighter trading-mono" oninput="onUsdInput()">
+          </div>
+          <div id="usdOfPortfolio" class="text-right text-xs text-[#9aa0a6] mt-0.5"></div>
+        </div>
+
+        <!-- Coin Quantity -->
+        <div class="flex-1">
+          <div class="flex justify-between items-baseline mb-1.5">
+            <span class="font-semibold">Coin Quantity to Enter</span>
+            <span id="qtySymbol" class="text-[10px] px-1.5 py-px bg-[#171a1f] rounded text-[#9aa0a6]">SOL</span>
+          </div>
+          <div class="flex items-center border border-[#2a3038] rounded-2xl px-4 bg-[#0f1114]">
+            <input id="qtyInput" type="number" step="0.00000001" value="3.85" class="sync-input flex-1 bg-transparent text-4xl font-semibold py-3 outline-none tracking-tighter trading-mono" oninput="onQtyInput()">
+            <span id="qtyUnit" class="text-2xl text-[#9aa0a6] pl-2">SOL</span>
+          </div>
+          <div id="qtyNote" class="text-[10px] text-[#6b7280] mt-1 pl-1">Recommended precision: 4 decimals • Adjust for your exchange tick size</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trade Entry Helper -->
+    <div class="section-card mt-4 p-5">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <div class="font-semibold flex items-center gap-x-2">WHAT TO ENTER IN LIVE TRADE</div>
+          <div class="text-xs text-[#9aa0a6]">Copy exact values for Robinhood or Coinbase order ticket (market or limit)</div>
+        </div>
+        <div class="flex gap-x-2">
+          <button onclick="copyTradeEntry('qty')" class="trade-copy-btn flex items-center gap-x-2 px-4 py-2 text-sm rounded-2xl border border-[#2a3038] hover:border-[#7aa2f7] bg-[#171a1f]">
+            <span>Copy Qty</span> <span class="text-xs opacity-60">⎘</span>
+          </button>
+          <button onclick="copyTradeEntry('usd')" class="trade-copy-btn flex items-center gap-x-2 px-4 py-2 text-sm rounded-2xl border border-[#2a3038] hover:border-[#7aa2f7] bg-[#171a1f]">
+            <span>Copy $ Amount</span> <span class="text-xs opacity-60">⎘</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- RH / Coinbase Qty entry -->
+        <div class="bg-[#0f1114] border border-[#2a3038] rounded-2xl p-4">
+          <div class="text-xs uppercase tracking-widest text-[#9aa0a6] mb-1">ROBINHOOD / COINBASE • COIN AMOUNT</div>
+          <div id="entryQty" class="trading-mono text-2xl font-semibold text-white break-all">—</div>
+          <div class="text-[10px] text-[#6b7280] mt-2">Enter this exact quantity in the crypto amount field. Use market or limit @ current tick.</div>
+        </div>
+        <div class="bg-[#0f1114] border border-[#2a3038] rounded-2xl p-4">
+          <div class="text-xs uppercase tracking-widest text-[#9aa0a6] mb-1">USD / NOTIONAL VALUE</div>
+          <div id="entryUsd" class="trading-mono text-2xl font-semibold text-white break-all">—</div>
+          <div class="text-[10px] text-[#6b7280] mt-2">Alternative: many apps let you enter USD value directly (they convert at live price).</div>
+        </div>
+      </div>
+
+      <div class="mt-4 flex flex-wrap gap-2 text-xs">
+        <div class="px-3 py-1 bg-[#171a1f] rounded-full border border-[#2a3038] flex items-center gap-x-1">
+          <span class="text-[#3dd68c]">✓</span> <span>Fees ~0-0.6% (toggle below)</span>
+        </div>
+        <label class="flex items-center gap-x-1.5 px-3 py-1 bg-[#171a1f] rounded-full border border-[#2a3038] cursor-pointer text-xs">
+          <input type="checkbox" id="includeFees" onchange="recalculateAll()" class="accent-[#7aa2f7]"> 
+          <span>Adjust for ~0.5% fees</span>
+        </label>
+        <div onclick="showPrecisionHelp()" class="px-3 py-1 bg-[#171a1f] rounded-full border border-[#2a3038] cursor-pointer hover:border-[#7aa2f7]">Precision tips</div>
+      </div>
+    </div>
+
+    <!-- Presets -->
+    <div class="mt-4">
+      <div class="metric-label mb-2">QUICK PRESETS • CLICK TO APPLY</div>
+      <div class="flex flex-wrap gap-2">
+        <button onclick="applyPreset(0.5)" class="preset-btn">0.5% Portfolio</button>
+        <button onclick="applyPreset(1)" class="preset-btn">1% Standard</button>
+        <button onclick="applyPreset(2)" class="preset-btn">2% Swing</button>
+        <button onclick="applyPreset(3.5)" class="preset-btn">3.5% Active</button>
+        <button onclick="applyPreset(5)" class="preset-btn">5% Conviction</button>
+        <button onclick="applyPreset(10)" class="preset-btn">10% Max</button>
+        <button onclick="applyPreset(100)" class="preset-btn border-[#f07178] text-[#f07178]">100% (Full)</button>
+        <button onclick="applyHalfPosition()" class="preset-btn">Scale Out 50%</button>
+      </div>
+    </div>
+
+    <div class="mt-6 text-center text-[10px] text-[#6b7280]">
+      Built for fornevercollective / qbitos-freya workflow • Live prices via public CoinGecko API (no keys) • Data persisted in browser • Not financial advice • DYOR • 1-tick = frequent poll for latest market price
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="hidden fixed bottom-4 right-4 bg-[#171a1f] border border-[#7aa2f7] text-sm px-4 py-2 rounded-2xl shadow-xl flex items-center gap-x-2 toast">
+    <span id="toastMsg"></span>
+  </div>
+
+<script>
+// Tailwind script
+(function(){
+  const style = document.createElement('style');
+  style.innerHTML = `@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap'); body { font-family: 'Inter', system-ui, sans-serif; } .font-display { font-family: 'Space Grotesk', system-ui, sans-serif; }`;
+  document.head.append(style);
+})();
+
+let currentPrice = 0;
+let currentCoinId = 'solana';
+let currentSymbol = 'SOL';
+let autoTickInterval = null;
+let lastCalcSource = null;
+
+const symbolToId = {
+  'BTC': 'bitcoin', 'ETH': 'ethereum', 'SOL': 'solana', 'XRP': 'ripple', 'DOGE': 'dogecoin',
+  'AVAX': 'avalanche-2', 'LINK': 'chainlink', 'ADA': 'cardano', 'DOT': 'polkadot', 'TON': 'toncoin',
+  'SHIB': 'shiba-inu', 'PEPE': 'pepe', 'WIF': 'dogwifhat', 'BONK': 'bonk', 'SUI': 'sui',
+  'APT': 'aptos', 'LTC': 'litecoin', 'BCH': 'bitcoin-cash', 'ETC': 'ethereum-classic', 'FIL': 'filecoin',
+  'NEAR': 'near', 'HBAR': 'hedera-hashgraph', 'VET': 'vechain', 'GRT': 'the-graph', 'AAVE': 'aave'
+};
+
+function showToast(msg, ms = 2200) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.remove('hidden');
+  t.classList.add('flex');
+  setTimeout(() => {
+    t.classList.remove('flex');
+    t.classList.add('hidden');
+  }, ms);
+}
+
+function getPrecision(price) {
+  if (!price || price <= 0) return 4;
+  if (price > 10000) return 4;
+  if (price > 1000) return 5;
+  if (price > 100) return 6;
+  if (price > 10) return 7;
+  return 8;
+}
+
+function formatQty(qty, price) {
+  const p = getPrecision(price);
+  return parseFloat(qty).toFixed(Math.min(p, 8));
+}
+
+function formatPrice(p) {
+  if (!p || isNaN(p)) return '—';
+  if (p >= 10000) return p.toLocaleString('en-US', {maximumFractionDigits: 2});
+  if (p >= 1000) return p.toLocaleString('en-US', {maximumFractionDigits: 2});
+  if (p >= 1) return p.toLocaleString('en-US', {maximumFractionDigits: 4});
+  return p.toLocaleString('en-US', {maximumFractionDigits: 6});
+}
+
+function formatChange(ch) {
+  if (ch == null || isNaN(ch)) return '—';
+  const sign = ch >= 0 ? '+' : '';
+  return sign + ch.toFixed(2) + '%';
+}
+
+async function fetchLivePrice(symbolOrId) {
+  let id = symbolOrId.toLowerCase();
+  const upper = symbolOrId.toUpperCase();
+  if (symbolToId[upper]) id = symbolToId[upper];
+  
+  try {
+    const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${id}&vs_currencies=usd&include_24hr_change=true`, {
+      headers: { 'Accept': 'application/json' }
+    });
+    if (!res.ok) throw new Error('API error');
+    const data = await res.json();
+    if (!data[id]) throw new Error('Coin not found');
+    
+    const price = data[id].usd;
+    const change = data[id].usd_24h_change;
+    
+    currentPrice = price;
+    currentCoinId = id;
+    currentSymbol = upper in symbolToId ? upper : symbolOrId.toUpperCase();
+    
+    return { price, change24h: change, id, symbol: currentSymbol };
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+}
+
+function updatePriceUI(data) {
+  if (!data) {
+    document.getElementById('livePrice').textContent = 'ERR';
+    document.getElementById('priceChange').textContent = '—';
+    return;
+  }
+  const priceEl = document.getElementById('livePrice');
+  const changeEl = document.getElementById('priceChange');
+  
+  priceEl.textContent = '$' + formatPrice(data.price);
+  changeEl.textContent = formatChange(data.change24h);
+  changeEl.className = data.change24h >= 0 ? 'bull text-sm font-medium px-2 py-px rounded' : 'bear text-sm font-medium px-2 py-px rounded';
+  
+  document.getElementById('lastUpdated').textContent = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+  document.getElementById('qtyUnit').textContent = data.symbol;
+  document.getElementById('qtySymbol').textContent = data.symbol;
+  document.getElementById('coinName').textContent = data.id.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+  
+  // flash effect
+  priceEl.style.transition = 'none';
+  priceEl.style.color = data.change24h >= 0 ? 'var(--bull)' : 'var(--bear)';
+  setTimeout(() => { priceEl.style.transition = 'color .6s ease'; priceEl.style.color = 'white'; }, 120);
+  
+  recalculateAll();
+}
+
+async function refreshPrice(manual = false) {
+  const sym = document.getElementById('symbolInput').value.trim() || currentSymbol;
+  const data = await fetchLivePrice(sym);
+  if (data) {
+    updatePriceUI(data);
+    if (manual) showToast('Price updated from market');
+  } else {
+    showToast('Could not fetch price — try different symbol or manual override');
+    document.getElementById('livePrice').textContent = '—';
+  }
+}
+
+function onSymbolChange() {
+  refreshPrice(true);
+}
+
+function manualPriceOverride() {
+  const newPrice = prompt('Enter manual price (USD):', currentPrice || 150);
+  if (newPrice && !isNaN(parseFloat(newPrice))) {
+    currentPrice = parseFloat(newPrice);
+    const priceEl = document.getElementById('livePrice');
+    priceEl.textContent = '$' + formatPrice(currentPrice);
+    document.getElementById('priceChange').textContent = 'MANUAL';
+    document.getElementById('priceChange').className = 'text-sm font-medium px-2 py-px rounded text-[#e6c068]';
+    document.getElementById('lastUpdated').textContent = 'manual';
+    recalculateAll();
+    showToast('Using manual price override');
+  }
+}
+
+function toggleAutoTick() {
+  const chk = document.getElementById('autoTick');
+  if (chk.checked) {
+    if (autoTickInterval) clearInterval(autoTickInterval);
+    autoTickInterval = setInterval(() => {
+      const sym = document.getElementById('symbolInput').value.trim() || currentSymbol;
+      fetchLivePrice(sym).then(data => { if (data) updatePriceUI(data); });
+    }, 4000);
+    document.getElementById('tickStatus').textContent = 'LIVE';
+    document.getElementById('tickStatus').className = 'text-[10px] text-[#3dd68c]';
+  } else {
+    if (autoTickInterval) {
+      clearInterval(autoTickInterval);
+      autoTickInterval = null;
+    }
+    document.getElementById('tickStatus').textContent = 'PAUSED';
+    document.getElementById('tickStatus').className = 'text-[10px] text-[#f07178]';
+  }
+}
+
+function onHoldingsChange() {
+  localStorage.setItem('ltc_holdings', document.getElementById('holdingsInput').value);
+  recalculateAll();
+}
+
+function onPctInput() {
+  lastCalcSource = 'pct';
+  const pct = parseFloat(document.getElementById('pctInput').value) || 0;
+  document.getElementById('pctSlider').value = Math.min(Math.max(pct, 0.1), 25);
+  recalculateAll();
+}
+
+function onPctSlider() {
+  lastCalcSource = 'pct';
+  const val = parseFloat(document.getElementById('pctSlider').value);
+  document.getElementById('pctInput').value = val.toFixed(1);
+  recalculateAll();
+}
+
+function onUsdInput() {
+  lastCalcSource = 'usd';
+  recalculateAll();
+}
+
+function onQtyInput() {
+  lastCalcSource = 'qty';
+  recalculateAll();
+}
+
+function recalculateAll() {
+  const holdings = parseFloat(document.getElementById('holdingsInput').value) || 0;
+  let price = currentPrice || 0;
+  if (price <= 0) return;
+  
+  const includeFees = document.getElementById('includeFees').checked;
+  const feeAdj = includeFees ? 0.995 : 1; // rough 0.5% fee impact on size
+  
+  let pct = parseFloat(document.getElementById('pctInput').value) || 0;
+  let usd = parseFloat(document.getElementById('usdInput').value) || 0;
+  let qty = parseFloat(document.getElementById('qtyInput').value) || 0;
+  
+  if (lastCalcSource === 'pct' || lastCalcSource === null) {
+    usd = holdings * (pct / 100) * feeAdj;
+    qty = usd / price;
+  } else if (lastCalcSource === 'usd') {
+    pct = (usd / holdings) * 100 / feeAdj;
+    qty = usd / price;
+    document.getElementById('pctInput').value = pct.toFixed(2);
+    document.getElementById('pctSlider').value = Math.min(Math.max(pct, 0.1), 25);
+  } else if (lastCalcSource === 'qty') {
+    usd = qty * price * feeAdj;
+    pct = (usd / holdings) * 100;
+    document.getElementById('pctInput').value = pct.toFixed(2);
+    document.getElementById('pctSlider').value = Math.min(Math.max(pct, 0.1), 25);
+    document.getElementById('usdInput').value = usd.toFixed(2);
+  }
+  
+  // update displays
+  if (lastCalcSource !== 'usd') {
+    document.getElementById('usdInput').value = usd.toFixed(2);
+  }
+  if (lastCalcSource !== 'qty') {
+    document.getElementById('qtyInput').value = formatQty(qty, price);
+  }
+  
+  // update trade entry
+  document.getElementById('entryQty').textContent = formatQty(qty, price) + ' ' + currentSymbol;
+  document.getElementById('entryUsd').textContent = '$' + usd.toFixed(2);
+  
+  // % of portfolio note
+  const pctNote = document.getElementById('usdOfPortfolio');
+  if (holdings > 0) {
+    const actualPct = (usd / holdings) * 100;
+    pctNote.innerHTML = `${actualPct.toFixed(2)}% of portfolio`;
+  } else {
+    pctNote.innerHTML = '';
+  }
+  
+  // qty note
+  document.getElementById('qtyNote').innerHTML = `Recommended precision: ${getPrecision(price)} decimals • Current tick price $${formatPrice(price)}`;
+  
+  lastCalcSource = null; // reset for next natural flow
+}
+
+function applyPreset(pct) {
+  document.getElementById('pctInput').value = pct;
+  document.getElementById('pctSlider').value = pct;
+  lastCalcSource = 'pct';
+  recalculateAll();
+  showToast(`Applied ${pct}% allocation`);
+}
+
+function applyHalfPosition() {
+  const currentQty = parseFloat(document.getElementById('qtyInput').value) || 0;
+  if (currentQty > 0) {
+    document.getElementById('qtyInput').value = (currentQty * 0.5).toFixed(getPrecision(currentPrice));
+    lastCalcSource = 'qty';
+    recalculateAll();
+    showToast('Scaled to 50% of calculated position');
+  }
+}
+
+function copyTradeEntry(type) {
+  let text = '';
+  if (type === 'qty') {
+    text = document.getElementById('entryQty').textContent;
+  } else {
+    text = document.getElementById('entryUsd').textContent.replace('$', '');
+  }
+  if (!text || text.includes('—')) {
+    showToast('Calculate a position first');
+    return;
+  }
+  navigator.clipboard.writeText(text).then(() => {
+    showToast(`Copied: ${text}`);
+  }).catch(() => {
+    // fallback
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    showToast(`Copied: ${text}`);
+  });
+}
+
+function showPrecisionHelp() {
+  alert('Precision tips:\n\n• BTC/ETH/high $ coins: 4-6 decimals usually sufficient\n• SOL/ mid: 4-5 decimals\n• Low price alts (<$1): 6-8 decimals to avoid rounding loss\n\nRobinhood & Coinbase accept up to 8-18 decimals internally but UI often shows 4-6.\nAlways double-check the order preview before submitting.');
+}
+
+function resetHoldings() {
+  document.getElementById('holdingsInput').value = '25000';
+  localStorage.setItem('ltc_holdings', '25000');
+  recalculateAll();
+}
+
+function loadSaved() {
+  const savedHoldings = localStorage.getItem('ltc_holdings');
+  if (savedHoldings) document.getElementById('holdingsInput').value = savedHoldings;
+  
+  // default symbol
+  document.getElementById('symbolInput').value = localStorage.getItem('ltc_last_symbol') || 'SOL';
+}
+
+function init() {
+  loadSaved();
+  
+  // initial price load
+  setTimeout(() => {
+    refreshPrice();
+  }, 180);
+  
+  // start auto tick
+  setTimeout(() => {
+    const chk = document.getElementById('autoTick');
+    if (chk.checked) {
+      autoTickInterval = setInterval(() => {
+        const sym = document.getElementById('symbolInput').value.trim() || currentSymbol;
+        fetchLivePrice(sym).then(data => { if (data) updatePriceUI(data); });
+      }, 4000);
+    }
+  }, 1200);
+  
+  // initial calc after price settles
+  setTimeout(() => {
+    if (currentPrice > 0) recalculateAll();
+  }, 900);
+  
+  // persist symbol
+  document.getElementById('symbolInput').addEventListener('blur', () => {
+    localStorage.setItem('ltc_last_symbol', document.getElementById('symbolInput').value.trim());
+  });
+  
+  // keyboard hint
+  document.addEventListener('keydown', (e) => {
+    if (e.key === '/' && document.activeElement.tagName === 'BODY') {
+      e.preventDefault();
+      document.getElementById('symbolInput').focus();
+      document.getElementById('symbolInput').select();
+    }
+  });
+  
+  // seed a reasonable starting calc
+  setTimeout(() => {
+    if (!document.getElementById('usdInput').value || document.getElementById('usdInput').value === '0') {
+      document.getElementById('pctInput').value = '2.5';
+      document.getElementById('pctSlider').value = '2.5';
+      lastCalcSource = 'pct';
+      if (currentPrice > 0) recalculateAll();
+    }
+  }, 1400);
+  
+  console.log('%c[Live % Converter] Initialized for crossover trading workflow', 'color:#7aa2f7');
+}
+
+// boot
+window.onload = init;
+</script>
+</body>
+</html>

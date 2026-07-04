@@ -1,27 +1,39 @@
-<img width="1190" height="757" alt="Screenshot 2026-06-18 at 11 00 03 am" src="https://github.com/user-attachments/assets/4a61bc25-0b72-4543-ba99-9a6163286267" />
 # crossover
+
+stock BolingerBands/MACD/  
 
 Multi-timeframe MACD / Bollinger flip board for Robinhood watchlists.
 
-Live site: https://fornevercollective.github.io/crossover/
+**Live site:** https://fornevercollective.github.io/crossover/
 
-## Local preview
+**Local preview:** `python3 -m http.server 8080` (open http://localhost:8080/crossover/)
 
-```bash
-python3 -m http.server 8080
-# open http://localhost:8080/crossover/
-```
+## New: Live Trade Percentage Converter
 
-## Refresh data (from robinhood-agentic repo)
+Interactive position sizing tool for crypto & altcoins.
 
-Grok milestone overlay reads local clone when present:
-`/Volumes/qbitOS/00.dev/cursor/grok-repo-template` (override with `GROK_TEMPLATE_REPO`).
+- Convert live between **% of holdings** ↔ **USD dollar amount** ↔ **coin quantity** at real-time 1-tick prices.
+- What to enter directly into Robinhood or Coinbase trade tickets.
+- Supports popular altcoins + any CoinGecko id.
+- Auto-refreshing price feed, fee adjustment, presets, copy-to-clipboard entry strings.
+- Perfect companion to the Flip Board signals.
 
-```bash
-npm run watchlists:export
-npm run board:build:robinhood   # daily Q/M/W/D for all lists (~1h)
-npm run sector:activity         # sector Q/M/W/D/5h/1h flip heatmaps
-npm run site:publish            # symlinks charts (no duplicate in workspace)
-npm run site:publish:push       # copies charts for git push
-git add -A && git commit -m "update flip board" && git push
-```
+**Open converter:** https://fornevercollective.github.io/crossover/live-percentage-converter.html
+
+## Data refresh (from robinhood-agentic repo)
+
+- `npm run watchlists:export`
+- `npm run board:build:robinhood` (daily Q/M/W/D for all lists, ~1h)
+- `npm run sector:activity` (sector Q/M/W/D/5h/1h flip heatmaps)
+- `npm run site:publish` (symlinks charts)
+- `npm run site:publish:push` (copies charts for git push)
+- `git add -A && git commit -m "update flip board" && git push`
+
+## About
+
+stock BolingerBands/MACD/  
+Link: https://fornevercollective.github.io/crossover/
+
+---
+
+*Part of fornevercollective trading & qbitOS ecosystem. See also freya.qbitos.ai for units/market converters.*
