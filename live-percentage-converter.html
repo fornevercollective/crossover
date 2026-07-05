@@ -2,551 +2,140 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Live % Converter • Multi | Crossover</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <title>Live % Converter • Mobile | Crossover</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="paper-brief.css">
   <style>
     :root { --accent: #7aa2f7; --bull: #3dd68c; --bear: #f07178; --panel: #171a1f; --bg: #0f1114; --text: #e8eaed; --border: #2a3038; }
-    body { background: var(--bg); color: var(--text); font-family: ui-sans-serif, system-ui, sans-serif; }
+    body { background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, sans-serif; padding: 12px; }
     .trading-mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-variant-numeric: tabular-nums; }
-    .section-card { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; }
-    .metric-label { font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: #9aa0a6; }
-    .sync-input { transition: all .1s ease; }
-    .sync-input:focus { outline: none; box-shadow: 0 0 0 2px rgba(122, 162, 247, .25); border-color: var(--accent); }
-    .bull { color: var(--bull) !important; }
-    .bear { color: var(--bear) !important; }
-    .converter-slot { border: 1px solid var(--border); border-radius: 8px; background: #121418; }
-    .price-row { transition: background .1s; }
-    .price-row:hover { background: rgba(122,162,247,.08); }
-    .slot-header { background: #1a1e24; }
-    .mini-btn { font-size: 10px; padding: 2px 8px; border-radius: 4px; border: 1px solid var(--border); background: transparent; }
-    .mini-btn:hover { border-color: var(--accent); }
-    .toast { animation: slideUp .2s ease forwards; }
-    @keyframes slideUp { from { transform: translateY(8px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .section-card { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 16px; margin-bottom: 16px; }
+    .metric-label { font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: #9aa0a6; margin-bottom: 6px; }
+    input { width: 100%; background: #0f1114; border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; font-size: 1.25rem; color: white; text-align: center; }
+    .increment-group { display: flex; gap: 4px; margin-top: 6px; }
+    .inc-btn { flex: 1; padding: 10px; background: #1a1e24; border: 1px solid var(--border); border-radius: 10px; font-size: 13px; }
   </style>
 </head>
-<body class="min-h-screen p-4 md:p-6 max-w-[1280px] mx-auto">
-  <!-- Header -->
-  <div class="flex items-center justify-between mb-5">
-    <div class="flex items-center gap-x-3">
-      <div class="w-8 h-8 rounded-lg bg-[#7aa2f7] flex items-center justify-center text-[#0f1114] font-bold text-lg">%</div>
-      <div>
-        <div class="text-xl font-semibold tracking-tight">LIVE % CONVERTER • MULTI</div>
-        <div class="text-[10px] text-[#9aa0a6] -mt-0.5">6 ACTIVE FORKS / CONVERSIONS • LIVE ALL COINS | RH + COINBASE</div>
+<body>
+  <div class="max-w-lg mx-auto">
+    <div class="flex justify-between items-center mb-5">
+      <div class="text-xl font-semibold">Live % Converter</div>
+      <a href="./" class="text-sm text-[#7aa2f7]">← Flip Board</a>
+    </div>
+
+    <!-- Portfolio -->
+    <div class="section-card">
+      <div class="metric-label">PORTFOLIO VALUE (USD)</div>
+      <input id="holdingsInput" type="number" value="25000" oninput="recalculate()">
+      <div class="increment-group">
+        <button onclick="adjustHoldings(100)" class="inc-btn">+100</button>
+        <button onclick="adjustHoldings(500)" class="inc-btn">+500</button>
+        <button onclick="adjustHoldings(1000)" class="inc-btn">+1k</button>
+        <button onclick="adjustHoldings(-100)" class="inc-btn">-100</button>
+        <button onclick="adjustHoldings(-500)" class="inc-btn">-500</button>
       </div>
     </div>
-    <div class="flex items-center gap-x-2 text-sm">
-      <a href="./" class="px-3 py-1 rounded border border-[#2a3038] hover:bg-[#171a1f]">← Flip Board</a>
-      <a href="https://github.com/qbitOS/qbitos-freya" target="_blank" class="px-2 py-1 text-xs rounded border border-[#2a3038] hover:bg-[#171a1f]">FreyaUnits</a>
-    </div>
-  </div>
 
-  <!-- Global Portfolio -->
-  <div class="section-card p-4 mb-5">
-    <div class="flex items-center justify-between mb-2">
-      <div class="metric-label">GLOBAL PORTFOLIO / ACCOUNT VALUE (USD)</div>
-      <button onclick="resetHoldings()" class="mini-btn">RESET</button>
+    <!-- Price -->
+    <div class="section-card">
+      <div class="metric-label">COIN SYMBOL</div>
+      <input id="symbolInput" value="SOL" style="font-size:1.25rem">
+      <button onclick="refreshPrice()" class="mt-3 w-full bg-[#7aa2f7] text-black py-3.5 font-semibold rounded-2xl">LOAD LIVE PRICE</button>
+      <div id="priceDisplay" class="mt-5 text-4xl font-semibold trading-mono text-center">—</div>
     </div>
-    <div class="flex items-center gap-x-4 flex-wrap">
-      <div class="flex items-center border border-[#2a3038] rounded-xl px-4 bg-[#0f1114] flex-1 min-w-[220px]">
-        <span class="text-[#9aa0a6] text-2xl">$</span>
-        <input id="holdingsInput" type="number" step="100" value="25000" class="sync-input flex-1 bg-transparent text-3xl font-semibold py-2 outline-none trading-mono" oninput="onHoldingsChange(); updateAllSlots()">
+
+    <!-- Converter -->
+    <div class="section-card">
+      <div class="metric-label">% OF PORTFOLIO</div>
+      <input id="pctInput" type="number" step="0.1" value="2.5" oninput="recalculate()">
+      <div class="increment-group">
+        <button onclick="adjustPct(-0.5)" class="inc-btn">-0.5%</button>
+        <button onclick="adjustPct(0.5)" class="inc-btn">+0.5%</button>
+        <button onclick="adjustPct(1)" class="inc-btn">+1%</button>
+        <button onclick="adjustPct(2)" class="inc-btn">+2%</button>
       </div>
-      <!-- Quick Incrementals -->
-      <div class="flex flex-wrap gap-1 text-xs">
-        <button onclick="adjustHoldings(100)" class="mini-btn">+100</button>
-        <button onclick="adjustHoldings(500)" class="mini-btn">+500</button>
-        <button onclick="adjustHoldings(1000)" class="mini-btn">+1k</button>
-        <button onclick="adjustHoldings(5000)" class="mini-btn">+5k</button>
-        <button onclick="adjustHoldings(-100)" class="mini-btn">-100</button>
-        <button onclick="adjustHoldings(-500)" class="mini-btn">-500</button>
-        <button onclick="adjustHoldings(-1000)" class="mini-btn">-1k</button>
+
+      <div class="metric-label mt-5">USD AMOUNT</div>
+      <input id="usdInput" type="number" oninput="recalculate()">
+      <div class="increment-group">
+        <button onclick="adjustUsd(-100)" class="inc-btn">-100</button>
+        <button onclick="adjustUsd(100)" class="inc-btn">+100</button>
+        <button onclick="adjustUsd(500)" class="inc-btn">+500</button>
       </div>
+
+      <div class="metric-label mt-5">COIN QUANTITY</div>
+      <input id="qtyInput" type="number" oninput="recalculate()">
     </div>
-    <div class="text-[10px] text-[#6b7280] mt-1.5">Shared across all 6 converter slots. Quick increments for fast scenario testing.</div>
-  </div>
 
-  <!-- Live Multi-Coin Prices -->
-  <div class="section-card p-4 mb-5">
-    <div class="flex items-center justify-between mb-3">
-      <div class="metric-label">LIVE PRICES • ALL COINS (auto 8s refresh)</div>
-      <div class="flex gap-x-2">
-        <button onclick="refreshAllPrices()" class="mini-btn flex items-center gap-x-1">
-          <span class="inline-block w-1.5 h-1.5 bg-[#3dd68c] rounded-full animate-pulse"></span> REFRESH ALL
-        </button>
-        <button onclick="clearPriceCache()" class="mini-btn">CLEAR CACHE</button>
-      </div>
+    <!-- Trade -->
+    <div class="section-card">
+      <button onclick="copyQty()" class="w-full py-4 bg-[#171a1f] border border-[#2a3038] mb-3 rounded-2xl">COPY COIN QUANTITY</button>
+      <button onclick="copyUsd()" class="w-full py-4 bg-[#171a1f] border border-[#2a3038] rounded-2xl">COPY USD AMOUNT</button>
     </div>
-    <div id="priceTable" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-2 text-sm max-h-[220px] overflow-auto pr-1">
-      <!-- Populated by JS -->
-    </div>
-    <div class="text-[10px] text-[#6b7280] mt-2">Click any coin row to load into next available slot. Prices from CoinGecko public API.</div>
-  </div>
-
-  <!-- 6 Active Converter Slots -->
-  <div class="mb-2 flex items-center justify-between">
-    <div class="metric-label">6 ACTIVE CONVERTER SLOTS / FORKS (independent calculations)</div>
-    <button onclick="resetAllSlots()" class="mini-btn text-xs">RESET ALL SLOTS</button>
-  </div>
-
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="slotsContainer">
-    <!-- 6 slots injected by JS -->
-  </div>
-
-  <div class="mt-6 text-center text-[10px] text-[#6b7280]">
-    Simple multi-fork position sizing tool • Global holdings shared • Live multi-coin prices • Copy exact trade entries for RH/Coinbase • Persisted locally
-  </div>
-
-  <!-- Toast -->
-  <div id="toast" class="hidden fixed bottom-4 right-4 bg-[#171a1f] border border-[#7aa2f7] text-sm px-4 py-2 rounded-2xl shadow-xl flex items-center gap-x-2 toast">
-    <span id="toastMsg"></span>
   </div>
 
 <script>
-// Popular coins list (expandable)
-const POPULAR_COINS = [
-  {sym: 'BTC', id: 'bitcoin'},
-  {sym: 'ETH', id: 'ethereum'},
-  {sym: 'SOL', id: 'solana'},
-  {sym: 'XRP', id: 'ripple'},
-  {sym: 'DOGE', id: 'dogecoin'},
-  {sym: 'AVAX', id: 'avalanche-2'},
-  {sym: 'LINK', id: 'chainlink'},
-  {sym: 'ADA', id: 'cardano'},
-  {sym: 'DOT', id: 'polkadot'},
-  {sym: 'TON', id: 'toncoin'},
-  {sym: 'SHIB', id: 'shiba-inu'},
-  {sym: 'PEPE', id: 'pepe'},
-  {sym: 'WIF', id: 'dogwifhat'},
-  {sym: 'BONK', id: 'bonk'},
-  {sym: 'SUI', id: 'sui'},
-  {sym: 'APT', id: 'aptos'},
-  {sym: 'LTC', id: 'litecoin'},
-  {sym: 'NEAR', id: 'near'},
-  {sym: 'HBAR', id: 'hedera-hashgraph'},
-  {sym: 'VET', id: 'vechain'},
-  {sym: 'GRT', id: 'the-graph'},
-  {sym: 'AAVE', id: 'aave'},
-  {sym: 'FIL', id: 'filecoin'},
-  {sym: 'ETC', id: 'ethereum-classic'},
-  {sym: 'BCH', id: 'bitcoin-cash'}
-];
+let currentPrice = 0;
+let currentSymbol = "SOL";
 
-let priceCache = {};
-let autoRefreshInterval = null;
-let slots = []; // array of 6 slot objects
-
-// Load holdings from storage
-function loadHoldings() {
-  const saved = localStorage.getItem('ltc_holdings');
-  if (saved) document.getElementById('holdingsInput').value = saved;
+function recalculate() {
+  const holdings = parseFloat(document.getElementById('holdingsInput').value) || 0;
+  const pct = parseFloat(document.getElementById('pctInput').value) || 0;
+  if (currentPrice > 0) {
+    const usd = holdings * (pct / 100);
+    const qty = usd / currentPrice;
+    document.getElementById('usdInput').value = usd.toFixed(2);
+    document.getElementById('qtyInput').value = qty.toFixed(6);
+  }
 }
 
-function saveHoldings() {
-  localStorage.setItem('ltc_holdings', document.getElementById('holdingsInput').value);
-}
-
-function onHoldingsChange() {
-  saveHoldings();
-  updateAllSlots();
-}
-
-function adjustHoldings(delta) {
-  const input = document.getElementById('holdingsInput');
-  let val = parseFloat(input.value) || 0;
-  val = Math.max(0, val + delta);
-  input.value = val;
-  saveHoldings();
-  updateAllSlots();
-}
-
-function resetHoldings() {
-  document.getElementById('holdingsInput').value = '25000';
-  saveHoldings();
-  updateAllSlots();
-}
-
-// Fetch multiple prices at once
-async function fetchPrices(ids) {
-  if (!ids || ids.length === 0) return {};
-  const idList = ids.join(',');
+async function refreshPrice() {
+  let sym = document.getElementById('symbolInput').value.trim().toUpperCase() || 'SOL';
+  currentSymbol = sym;
+  let id = sym.toLowerCase();
+  const map = {'BTC':'bitcoin','ETH':'ethereum','SOL':'solana','XRP':'ripple','DOGE':'dogecoin','PEPE':'pepe','AVAX':'avalanche-2'};
+  if (map[sym]) id = map[sym];
   try {
-    const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${idList}&vs_currencies=usd&include_24hr_change=true`);
-    if (!res.ok) throw new Error('Price fetch failed');
-    return await res.json();
-  } catch (e) {
-    console.error(e);
-    return {};
-  }
+    const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${id}&vs_currencies=usd`);
+    const data = await res.json();
+    currentPrice = data[id].usd;
+    document.getElementById('priceDisplay').innerHTML = '$' + currentPrice.toLocaleString();
+    recalculate();
+  } catch(e) { document.getElementById('priceDisplay').innerHTML = 'ERROR'; }
 }
 
-// Refresh all popular prices
-function refreshAllPrices() {
-  const ids = POPULAR_COINS.map(c => c.id);
-  fetchPrices(ids).then(data => {
-    priceCache = { ...priceCache, ...data };
-    renderPriceTable();
-    updateAllSlots();
-    showToast('All prices refreshed');
-  });
+function adjustHoldings(delta) { 
+  let val = parseFloat(document.getElementById('holdingsInput').value) || 0;
+  document.getElementById('holdingsInput').value = Math.max(0, val + delta);
+  recalculate();
 }
 
-function clearPriceCache() {
-  priceCache = {};
-  renderPriceTable();
-  showToast('Price cache cleared');
+function adjustPct(delta) {
+  let val = parseFloat(document.getElementById('pctInput').value) || 0;
+  document.getElementById('pctInput').value = (val + delta).toFixed(1);
+  recalculate();
 }
 
-// Render the multi-coin price table
-function renderPriceTable() {
-  const container = document.getElementById('priceTable');
-  container.innerHTML = '';
-  
-  POPULAR_COINS.forEach(coin => {
-    const data = priceCache[coin.id] || {};
-    const price = data.usd;
-    const ch = data.usd_24h_change;
-    
-    const row = document.createElement('div');
-    row.className = `price-row flex justify-between items-center px-2.5 py-1.5 rounded border border-[#2a3038] text-xs cursor-pointer`;
-    row.innerHTML = `
-      <div class="flex items-center gap-x-2">
-        <span class="font-mono font-semibold w-10">${coin.sym}</span>
-        <span class="text-[#9aa0a6] text-[10px]">${coin.id.length > 12 ? coin.id.substring(0,10)+'...' : coin.id}</span>
-      </div>
-      <div class="text-right">
-        <div class="trading-mono font-semibold">${price ? '$' + (price >= 1000 ? price.toLocaleString() : price.toFixed(price < 1 ? 6 : 2)) : '—'}</div>
-        <div class="${ch >= 0 ? 'bull' : 'bear'} text-[10px]">${ch != null ? (ch >= 0 ? '+' : '') + ch.toFixed(1) + '%' : '—'}</div>
-      </div>
-    `;
-    
-    // Click to load into next empty slot or first available
-    row.onclick = () => loadCoinIntoNextSlot(coin);
-    container.appendChild(row);
-  });
+function adjustUsd(delta) {
+  let val = parseFloat(document.getElementById('usdInput').value) || 0;
+  document.getElementById('usdInput').value = (val + delta).toFixed(2);
+  recalculate();
 }
 
-// Load a coin into the next available slot
-function loadCoinIntoNextSlot(coin) {
-  // Find first empty or first slot
-  let targetSlot = slots.find(s => !s.coin);
-  if (!targetSlot) targetSlot = slots[0]; // overwrite first if all full
-  
-  targetSlot.coin = coin;
-  targetSlot.price = priceCache[coin.id] ? priceCache[coin.id].usd : null;
-  
-  renderSlot(targetSlot);
-  updateSlotCalculations(targetSlot);
-  showToast(`Loaded ${coin.sym} into Slot ${targetSlot.id}`);
+function copyQty() {
+  const qty = document.getElementById('qtyInput').value;
+  navigator.clipboard.writeText(qty + ' ' + currentSymbol);
 }
 
-// Create a converter slot object
-function createSlot(id) {
-  return {
-    id: id,
-    coin: null,
-    price: null,
-    pct: 2.5,
-    usd: 0,
-    qty: 0
-  };
+function copyUsd() {
+  const usd = document.getElementById('usdInput').value;
+  navigator.clipboard.writeText(usd);
 }
 
-// Render one slot card
-function renderSlot(slot) {
-  const container = document.getElementById('slotsContainer');
-  let el = document.getElementById(`slot-${slot.id}`);
-  
-  if (!el) {
-    el = document.createElement('div');
-    el.id = `slot-${slot.id}`;
-    el.className = 'converter-slot p-3 flex flex-col';
-    container.appendChild(el);
-  }
-  
-  const coinName = slot.coin ? slot.coin.sym : '—';
-  const priceStr = slot.price ? '$' + (slot.price >= 1000 ? slot.price.toLocaleString() : slot.price.toFixed(slot.price < 1 ? 5 : 2)) : '—';
-  
-  el.innerHTML = `
-    <div class="slot-header flex items-center justify-between px-2 py-1 rounded-t">
-      <div class="flex items-center gap-x-2">
-        <span class="font-semibold text-sm">SLOT ${slot.id}</span>
-        <span class="text-xs px-1.5 py-px rounded bg-[#2a3038]">${coinName}</span>
-      </div>
-      <div class="flex gap-x-1">
-        <button onclick="clearSlot(${slot.id})" class="mini-btn">CLEAR</button>
-        <button onclick="copySlotTrade(${slot.id}, 'qty')" class="mini-btn">COPY QTY</button>
-        <button onclick="copySlotTrade(${slot.id}, 'usd')" class="mini-btn">COPY $</button>
-      </div>
-    </div>
-    
-    <div class="px-2 pt-3 pb-1 flex-1">
-      <!-- Coin / Price -->
-      <div class="flex justify-between items-end mb-2">
-        <div>
-          <div class="metric-label mb-0.5">COIN @ LIVE PRICE</div>
-          <div class="flex items-center gap-x-2">
-            <select id="coinSelect-${slot.id}" class="bg-[#0f1114] border border-[#2a3038] rounded px-2 py-0.5 text-sm" onchange="changeSlotCoin(${slot.id}, this.value)">
-              <option value="">Select coin...</option>
-              ${POPULAR_COINS.map(c => `<option value="${c.sym}" ${slot.coin && slot.coin.sym === c.sym ? 'selected' : ''}>${c.sym} (${c.id})</option>`).join('')}
-            </select>
-            <div class="text-right">
-              <div class="trading-mono text-lg font-semibold">${priceStr}</div>
-              <div class="text-[10px] text-[#6b7280]">live</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- % -->
-      <div class="mb-2">
-        <div class="flex justify-between text-xs mb-0.5">
-          <span>% of Portfolio</span>
-          <input id="pct-${slot.id}" type="number" step="0.1" value="${slot.pct}" class="sync-input w-16 text-right bg-transparent border border-[#2a3038] rounded px-1 py-0 text-sm" oninput="updateSlotFromPct(${slot.id})">
-          <span>%</span>
-        </div>
-        <input type="range" id="slider-${slot.id}" min="0.1" max="25" step="0.1" value="${slot.pct}" class="w-full accent-[#7aa2f7]" oninput="updateSlotFromSlider(${slot.id})">
-      </div>
-      
-      <!-- USD -->
-      <div class="mb-2">
-        <div class="metric-label mb-0.5">USD AMOUNT</div>
-        <div class="flex items-center border border-[#2a3038] rounded px-2 bg-[#0f1114]">
-          <span class="text-[#9aa0a6]">$</span>
-          <input id="usd-${slot.id}" type="number" step="0.01" value="${slot.usd.toFixed(2)}" class="sync-input flex-1 bg-transparent py-1 text-xl font-semibold outline-none trading-mono" oninput="updateSlotFromUsd(${slot.id})">
-        </div>
-      </div>
-      
-      <!-- QTY -->
-      <div>
-        <div class="metric-label mb-0.5">COIN QUANTITY</div>
-        <div class="flex items-center border border-[#2a3038] rounded px-2 bg-[#0f1114]">
-          <input id="qty-${slot.id}" type="number" step="0.00000001" value="${slot.qty.toFixed(6)}" class="sync-input flex-1 bg-transparent py-1 text-xl font-semibold outline-none trading-mono" oninput="updateSlotFromQty(${slot.id})">
-          <span class="text-[#9aa0a6] pl-1 text-sm">${coinName}</span>
-        </div>
-      </div>
-    </div>
-  `;
-  
-  // Attach change handlers after render
-  setTimeout(() => {
-    const sel = document.getElementById(`coinSelect-${slot.id}`);
-    if (sel) sel.onchange = () => changeSlotCoin(slot.id, sel.value);
-  }, 10);
-}
-
-// Update a slot when coin changes
-function changeSlotCoin(slotId, sym) {
-  const slot = slots.find(s => s.id === slotId);
-  if (!slot || !sym) return;
-  
-  const coin = POPULAR_COINS.find(c => c.sym === sym);
-  if (!coin) return;
-  
-  slot.coin = coin;
-  slot.price = priceCache[coin.id] ? priceCache[coin.id].usd : null;
-  
-  renderSlot(slot);
-  updateSlotCalculations(slot);
-}
-
-// Calculation functions for a slot
-function updateSlotCalculations(slot) {
-  if (!slot.coin || !slot.price || slot.price <= 0) return;
-  
-  const holdings = parseFloat(document.getElementById('holdingsInput').value) || 0;
-  if (holdings <= 0) return;
-  
-  // Recalculate based on current pct or other
-  const pct = slot.pct || 2.5;
-  const usd = holdings * (pct / 100);
-  const qty = usd / slot.price;
-  
-  slot.usd = usd;
-  slot.qty = qty;
-  
-  // Update DOM
-  const usdEl = document.getElementById(`usd-${slot.id}`);
-  const qtyEl = document.getElementById(`qty-${slot.id}`);
-  const pctEl = document.getElementById(`pct-${slot.id}`);
-  const sliderEl = document.getElementById(`slider-${slot.id}`);
-  
-  if (usdEl) usdEl.value = usd.toFixed(2);
-  if (qtyEl) qtyEl.value = qty.toFixed(6);
-  if (pctEl) pctEl.value = pct.toFixed(1);
-  if (sliderEl) sliderEl.value = pct;
-}
-
-// Update from % input
-function updateSlotFromPct(slotId) {
-  const slot = slots.find(s => s.id === slotId);
-  if (!slot) return;
-  slot.pct = parseFloat(document.getElementById(`pct-${slotId}`).value) || 0;
-  updateSlotCalculations(slot);
-}
-
-function updateSlotFromSlider(slotId) {
-  const slot = slots.find(s => s.id === slotId);
-  if (!slot) return;
-  slot.pct = parseFloat(document.getElementById(`slider-${slotId}`).value);
-  document.getElementById(`pct-${slotId}`).value = slot.pct.toFixed(1);
-  updateSlotCalculations(slot);
-}
-
-function updateSlotFromUsd(slotId) {
-  const slot = slots.find(s => s.id === slotId);
-  if (!slot || !slot.price) return;
-  
-  const holdings = parseFloat(document.getElementById('holdingsInput').value) || 0;
-  const usd = parseFloat(document.getElementById(`usd-${slotId}`).value) || 0;
-  
-  slot.usd = usd;
-  slot.pct = holdings > 0 ? (usd / holdings) * 100 : 0;
-  slot.qty = usd / slot.price;
-  
-  document.getElementById(`pct-${slotId}`).value = slot.pct.toFixed(1);
-  document.getElementById(`slider-${slotId}`).value = slot.pct;
-  document.getElementById(`qty-${slotId}`).value = slot.qty.toFixed(6);
-}
-
-function updateSlotFromQty(slotId) {
-  const slot = slots.find(s => s.id === slotId);
-  if (!slot || !slot.price) return;
-  
-  const holdings = parseFloat(document.getElementById('holdingsInput').value) || 0;
-  const qty = parseFloat(document.getElementById(`qty-${slotId}`).value) || 0;
-  
-  slot.qty = qty;
-  slot.usd = qty * slot.price;
-  slot.pct = holdings > 0 ? (slot.usd / holdings) * 100 : 0;
-  
-  document.getElementById(`pct-${slotId}`).value = slot.pct.toFixed(1);
-  document.getElementById(`slider-${slotId}`).value = slot.pct;
-  document.getElementById(`usd-${slotId}`).value = slot.usd.toFixed(2);
-}
-
-// Update all slots when global holdings or prices change
-function updateAllSlots() {
-  slots.forEach(slot => {
-    if (slot.coin && slot.price) {
-      updateSlotCalculations(slot);
-    }
-  });
-}
-
-// Copy trade entry from a slot
-function copySlotTrade(slotId, type) {
-  const slot = slots.find(s => s.id === slotId);
-  if (!slot || !slot.coin) {
-    showToast('No coin loaded in this slot');
-    return;
-  }
-  
-  let text = '';
-  if (type === 'qty') {
-    text = `${slot.qty.toFixed(6)} ${slot.coin.sym}`;
-  } else {
-    text = slot.usd.toFixed(2);
-  }
-  
-  navigator.clipboard.writeText(text).then(() => {
-    showToast(`Copied: ${text}`);
-  }).catch(() => {
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
-    showToast(`Copied: ${text}`);
-  });
-}
-
-function clearSlot(slotId) {
-  const slot = slots.find(s => s.id === slotId);
-  if (!slot) return;
-  
-  slot.coin = null;
-  slot.price = null;
-  slot.usd = 0;
-  slot.qty = 0;
-  slot.pct = 2.5;
-  
-  renderSlot(slot);
-}
-
-function resetAllSlots() {
-  slots.forEach(slot => {
-    slot.coin = null;
-    slot.price = null;
-    slot.usd = 0;
-    slot.qty = 0;
-    slot.pct = 2.5;
-    renderSlot(slot);
-  });
-  showToast('All slots reset');
-}
-
-// Initialize 6 slots
-function initSlots() {
-  const container = document.getElementById('slotsContainer');
-  container.innerHTML = '';
-  slots = [];
-  
-  for (let i = 1; i <= 6; i++) {
-    const slot = createSlot(i);
-    slots.push(slot);
-    renderSlot(slot);
-  }
-}
-
-function showToast(msg, ms = 1800) {
-  const t = document.getElementById('toast');
-  document.getElementById('toastMsg').textContent = msg;
-  t.classList.remove('hidden');
-  t.classList.add('flex');
-  setTimeout(() => {
-    t.classList.remove('flex');
-    t.classList.add('hidden');
-  }, ms);
-}
-
-// Main init
-function init() {
-  loadHoldings();
-  initSlots();
-  
-  // Initial price load for all popular coins
-  const ids = POPULAR_COINS.map(c => c.id);
-  fetchPrices(ids).then(data => {
-    priceCache = data;
-    renderPriceTable();
-    // Optionally pre-load first 3 slots with popular coins
-    if (slots[0]) { slots[0].coin = POPULAR_COINS[0]; slots[0].price = priceCache['bitcoin']?.usd; renderSlot(slots[0]); updateSlotCalculations(slots[0]); }
-    if (slots[1]) { slots[1].coin = POPULAR_COINS[2]; slots[1].price = priceCache['solana']?.usd; renderSlot(slots[1]); updateSlotCalculations(slots[1]); }
-    if (slots[2]) { slots[2].coin = POPULAR_COINS[1]; slots[2].price = priceCache['ethereum']?.usd; renderSlot(slots[2]); updateSlotCalculations(slots[2]); }
-  });
-  
-  // Auto refresh prices every 8 seconds
-  if (autoRefreshInterval) clearInterval(autoRefreshInterval);
-  autoRefreshInterval = setInterval(() => {
-    refreshAllPrices();
-  }, 8000);
-  
-  // Keyboard shortcut hint
-  document.addEventListener('keydown', (e) => {
-    if (e.key === '/' && document.activeElement.tagName === 'BODY') {
-      e.preventDefault();
-      const firstInput = document.getElementById('holdingsInput');
-      if (firstInput) firstInput.focus();
-    }
-  });
-  
-  console.log('%c[Multi % Converter] 6-slot live multi-coin version ready', 'color:#7aa2f7');
-}
-
-window.onload = init;
+// Init
+document.getElementById('holdingsInput').value = localStorage.getItem('holdings') || 25000;
+setTimeout(() => { refreshPrice(); recalculate(); }, 300);
 </script>
 </body>
 </html>
